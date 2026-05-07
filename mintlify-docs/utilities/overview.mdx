@@ -1,0 +1,304 @@
+---
+title: "Utilities Overview"
+description: "SGDS utility classes powered by Tailwind v4 with the sgds: prefix"
+icon: "paintbrush"
+---
+
+SGDS provides a comprehensive set of utility classes powered by Tailwind v4, all prefixed with `sgds:`. These utilities allow you to apply SGDS design decisions directly in your markup without writing custom CSS.
+
+## The `sgds:` Prefix
+
+All SGDS utility classes use the `sgds:` prefix to avoid conflicts with your existing CSS:
+
+```html
+<!-- ✅ Correct -->
+<div class="sgds:p-4 sgds:bg-primary-default sgds:text-white sgds:rounded-lg">
+  Content with SGDS utilities
+</div>
+
+<!-- ❌ Wrong - missing prefix -->
+<div class="p-4 bg-primary-default text-white rounded-lg">
+  This will not work
+</div>
+```
+
+## Available Utility Categories
+
+<CardGroup cols={3}>
+  <Card title="Colors" icon="palette" href="/utilities/colors">
+    Background, text, and border colors aligned with SGDS design tokens
+  </Card>
+  <Card title="Typography" icon="font" href="/utilities/typography">
+    Font sizes, weights, line heights, and letter spacing
+  </Card>
+  <Card title="Spacing" icon="arrows-left-right" href="/utilities/spacing">
+    Padding, margin, and gap utilities based on SGDS spacing scale
+  </Card>
+  <Card title="Grid" icon="table-cells" href="/utilities/grid">
+    Responsive grid system and layout utilities
+  </Card>
+  <Card title="Borders" icon="border-all" href="/utilities/borders">
+    Border width, radius, and color utilities
+  </Card>
+  <Card title="Elevation" icon="layer-group" href="/utilities/elevation">
+    Box shadow utilities for depth and hierarchy
+  </Card>
+  <Card title="Opacity" icon="droplet" href="/utilities/opacity">
+    Opacity levels for transparency effects
+  </Card>
+  <Card title="Dimension" icon="ruler" href="/utilities/dimension">
+    Width and height utilities
+  </Card>
+</CardGroup>
+
+## Setup
+
+### 1. Import Utility CSS
+
+Import the utility CSS in your main CSS file (the one processed by Tailwind):
+
+```css
+/* globals.css, index.css, or main.css */
+@import "@govtechsg/sgds-web-component/css/utility.css";
+```
+
+<Warning>
+`utility.css` contains Tailwind v4 directives and **must** be imported in a CSS file, not JavaScript. It cannot work without Tailwind's build pipeline.
+</Warning>
+
+### 2. Import Theme Files (Optional)
+
+For theme-aware utilities that support light/dark mode, import the theme files:
+
+```css
+/* globals.css */
+@import "@govtechsg/sgds-web-component/css/utility.css";
+@import "@govtechsg/sgds-web-component/themes/day.css";
+@import "@govtechsg/sgds-web-component/themes/night.css";
+```
+
+## When Theme Setup is Required
+
+Import theme files when using:
+
+- **Background colors**: `sgds:bg-surface-default`, `sgds:bg-primary-default`
+- **Text colors**: `sgds:text-default`, `sgds:text-primary-default`
+- **Border colors**: `sgds:border-default`, `sgds:border-primary-default`
+
+## When Theme Setup is Optional
+
+Theme files are NOT required for:
+
+- **Spacing**: `sgds:p-4`, `sgds:m-2`, `sgds:gap-6`
+- **Typography sizing**: `sgds:text-xl`, `sgds:font-bold`
+- **Border radius**: `sgds:rounded-lg`
+- **Opacity**: `sgds:opacity-50`
+- **Layout**: `sgds:flex`, `sgds:grid`
+
+## Verification
+
+Test that utilities are working correctly:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/css/main.css"> <!-- Your processed CSS -->
+</head>
+<body class="sgds:bg-default sgds:p-6">
+  <div class="sgds:bg-surface-raised sgds:p-4 sgds:rounded-lg">
+    <h1 class="sgds:text-2xl sgds:font-bold sgds:text-primary-default">
+      Hello SGDS!
+    </h1>
+    <p class="sgds:text-subdued sgds:mt-2">
+      If you can see styled content, utilities are working!
+    </p>
+  </div>
+</body>
+</html>
+```
+
+## Theme Switching
+
+Toggle between light and dark themes programmatically:
+
+```html
+<button id="theme-toggle">Toggle Theme</button>
+
+<script>
+  const toggleButton = document.getElementById("theme-toggle");
+  toggleButton.addEventListener("click", () => {
+    document.documentElement.classList.toggle("sgds-theme-night");
+  });
+</script>
+```
+
+Classes using theme-aware tokens automatically update when the theme changes.
+
+## Quick Examples
+
+### Layout & Spacing
+
+```html
+<div class="sgds:flex sgds:gap-4 sgds:p-6">
+  <div class="sgds:flex-1">Column 1</div>
+  <div class="sgds:flex-1">Column 2</div>
+</div>
+```
+
+### Typography
+
+```html
+<h1 class="sgds:text-4xl sgds:font-bold sgds:mb-4">
+  Heading
+</h1>
+<p class="sgds:text-base sgds:leading-relaxed sgds:text-subdued">
+  Paragraph text with proper line height
+</p>
+```
+
+### Colors & Borders
+
+```html
+<div class="sgds:bg-primary-default sgds:text-white sgds:p-4 sgds:rounded-lg sgds:border sgds:border-primary-600">
+  Primary card with border
+</div>
+```
+
+### Responsive Design
+
+Use Tailwind's responsive prefixes with `sgds:` utilities:
+
+```html
+<div class="sgds:p-4 md:sgds:p-6 lg:sgds:p-8">
+  Responsive padding
+</div>
+```
+
+## Framework Integration
+
+<Tabs>
+  <Tab title="React">
+    ```jsx
+    import './globals.css'; // Contains @import utility.css
+
+    function Component() {
+      return (
+        <div className="sgds:bg-surface-default sgds:p-4 sgds:rounded-lg">
+          <h2 className="sgds:text-xl sgds:font-semibold">Title</h2>
+          <p className="sgds:text-subdued sgds:mt-2">Content</p>
+        </div>
+      );
+    }
+    ```
+  </Tab>
+
+  <Tab title="Vue">
+    ```vue
+    <template>
+      <div class="sgds:bg-surface-default sgds:p-4 sgds:rounded-lg">
+        <h2 class="sgds:text-xl sgds:font-semibold">Title</h2>
+        <p class="sgds:text-subdued sgds:mt-2">Content</p>
+      </div>
+    </template>
+
+    <style>
+    @import "@govtechsg/sgds-web-component/css/utility.css";
+    </style>
+    ```
+  </Tab>
+
+  <Tab title="Angular">
+    ```css
+    /* styles.css */
+    @import "@govtechsg/sgds-web-component/css/utility.css";
+    ```
+
+    ```html
+    <!-- component.html -->
+    <div class="sgds:bg-surface-default sgds:p-4 sgds:rounded-lg">
+      <h2 class="sgds:text-xl sgds:font-semibold">Title</h2>
+      <p class="sgds:text-subdued sgds:mt-2">Content</p>
+    </div>
+    ```
+  </Tab>
+</Tabs>
+
+## Design Tokens Integration
+
+SGDS utilities are built on design tokens that ensure consistency across:
+
+- **Components**: SGDS web components use the same tokens
+- **Figma**: Design files reference the same token names
+- **Applications**: Your custom UI matches component styling
+
+```html
+<!-- This div matches the styling of sgds-card -->
+<div class="sgds:bg-surface-raised sgds:p-4 sgds:rounded-lg sgds:border sgds:border-default">
+  Custom card matching SGDS design
+</div>
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Always Use the sgds: Prefix">
+    Never omit the `sgds:` prefix. Without it, utilities won't work.
+  </Accordion>
+
+  <Accordion title="Import in CSS, Not JavaScript">
+    The `utility.css` file must be imported in a CSS file that Tailwind processes, not in JavaScript
+  </Accordion>
+
+  <Accordion title="Use Theme-Aware Tokens">
+    Prefer `sgds:bg-primary-default` over hard-coded colors for automatic dark mode support
+  </Accordion>
+
+  <Accordion title="Leverage Responsive Utilities">
+    Combine with Tailwind's responsive prefixes: `md:sgds:p-6`, `lg:sgds:text-2xl`
+  </Accordion>
+
+  <Accordion title="Compose Utilities">
+    Utilities are designed to be composed. Combine multiple utilities to achieve complex designs
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Utilities not working">
+    **Check:**
+    - Did you import `utility.css` in your main CSS file?
+    - Is Tailwind v4 configured in your project?
+    - Are you using the `sgds:` prefix?
+  </Accordion>
+
+  <Accordion title="Colors not appearing">
+    **Check:**
+    - Did you import theme files (`day.css`, `night.css`)?
+    - Are theme files imported after `utility.css`?
+  </Accordion>
+
+  <Accordion title="Dark mode not working">
+    **Check:**
+    - Did you import `night.css`?
+    - Did you add `sgds-theme-night` class to `<html>` element?
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Color Utilities" icon="palette" href="/utilities/colors">
+    Learn about background, text, and border colors
+  </Card>
+  <Card title="Typography" icon="font" href="/utilities/typography">
+    Master typography utilities for consistent text styling
+  </Card>
+  <Card title="Theming Guide" icon="brush" href="/theming/overview">
+    Customize colors and branding for your product
+  </Card>
+  <Card title="Components" icon="cubes" href="/components/overview">
+    Use utilities alongside SGDS components
+  </Card>
+</CardGroup>

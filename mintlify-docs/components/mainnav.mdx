@@ -1,0 +1,44 @@
+---
+title: "Mainnav"
+description: "Primary navigation bar with dropdown support"
+icon: "bars"
+---
+
+Main navigation component for primary site navigation.
+
+## Basic Usage
+
+```html
+<sgds-mainnav>
+  <img slot="brand" src="/logo.svg" alt="Logo" width="150" />
+  <sgds-mainnav-item href="/">Home</sgds-mainnav-item>
+  <sgds-mainnav-item href="/services">Services</sgds-mainnav-item>
+  <sgds-mainnav-item href="/about">About</sgds-mainnav-item>
+</sgds-mainnav>
+```
+
+## With Dropdown
+
+```html
+<sgds-mainnav>
+  <sgds-mainnav-dropdown>
+    <span slot="toggler">Services</span>
+    <sgds-dropdown-item>Service 1</sgds-dropdown-item>
+    <sgds-dropdown-item>Service 2</sgds-dropdown-item>
+  </sgds-mainnav-dropdown>
+</sgds-mainnav>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `variant` | `string` | `'default'` | Navigation variant |
+
+### Slots
+| Slot | Description |
+|------|-------------|
+| `brand` | Brand logo |
+| `default` | Navigation items |
+| `end` | Right-aligned items |

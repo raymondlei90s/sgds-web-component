@@ -1,0 +1,144 @@
+---
+title: "Input"
+description: "Text input component with validation and feedback"
+icon: "input-text"
+---
+
+The input component provides accessible text input with built-in validation support.
+
+## Basic Usage
+
+```html
+<sgds-input label="Email" type="email" placeholder="your.email@example.com"></sgds-input>
+<sgds-input label="Password" type="password"></sgds-input>
+<sgds-input label="Name" required></sgds-input>
+```
+
+## Input Types
+
+```html
+<sgds-input type="text" label="Text"></sgds-input>
+<sgds-input type="email" label="Email"></sgds-input>
+<sgds-input type="password" label="Password"></sgds-input>
+<sgds-input type="number" label="Number"></sgds-input>
+<sgds-input type="tel" label="Phone"></sgds-input>
+<sgds-input type="url" label="URL"></sgds-input>
+<sgds-input type="search" label="Search"></sgds-input>
+```
+
+## States
+
+```html
+<sgds-input label="Disabled" disabled></sgds-input>
+<sgds-input label="Read Only" readonly value="Cannot edit"></sgds-input>
+<sgds-input label="Required" required></sgds-input>
+```
+
+## Validation & Feedback
+
+```html
+<sgds-input
+  label="Email"
+  type="email"
+  required
+  invalidFeedback="Please enter a valid email"
+  hasFeedback
+></sgds-input>
+
+<sgds-input
+  label="Username"
+  pattern="[a-zA-Z0-9]+"
+  invalidFeedback="Only alphanumeric characters allowed"
+  hasFeedback
+></sgds-input>
+```
+
+## Help Text
+
+```html
+<sgds-input label="Password" type="password">
+  <span slot="feedback">Must be at least 8 characters</span>
+</sgds-input>
+```
+
+## With Icons
+
+```html
+<sgds-input label="Search" type="search">
+  <svg slot="icon-left" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor">
+    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+  </svg>
+</sgds-input>
+```
+
+## React Example
+
+```jsx
+import { useState } from 'react';
+import { SgdsInput } from '@govtechsg/sgds-web-component/react';
+
+function LoginForm() {
+  const [email, setEmail] = useState('');
+
+  return (
+    <SgdsInput
+      label="Email"
+      type="email"
+      value={email}
+      onSgdsInput={(e) => setEmail(e.target.value)}
+      required
+    />
+  );
+}
+```
+
+## API Reference
+
+### Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `label` | `string` | - | Input label |
+| `type` | `string` | `'text'` | Input type |
+| `value` | `string` | `''` | Input value |
+| `placeholder` | `string` | - | Placeholder text |
+| `disabled` | `boolean` | `false` | Disables input |
+| `readonly` | `boolean` | `false` | Makes input read-only |
+| `required` | `boolean` | `false` | Makes input required |
+| `pattern` | `string` | - | Validation pattern |
+| `invalidFeedback` | `string` | - | Error message |
+| `hasFeedback` | `boolean` | `false` | Shows validation feedback |
+
+### Events
+
+| Event | Description |
+|-------|-------------|
+| `sgds-input` | Fired on input (real-time) |
+| `sgds-change` | Fired on change (on blur) |
+| `sgds-focus` | Fired when input receives focus |
+| `sgds-blur` | Fired when input loses focus |
+
+### Slots
+
+| Slot | Description |
+|------|-------------|
+| `feedback` | Help text or validation message |
+| `icon-left` | Icon before input |
+| `icon-right` | Icon after input |
+
+## Related Components
+
+<CardGroup cols={2}>
+  <Card title="Textarea" href="/components/textarea">
+    Multi-line text input
+  </Card>
+  <Card title="Select" href="/components/select">
+    Dropdown selection
+  </Card>
+  <Card title="Checkbox" href="/components/checkbox">
+    Boolean input
+  </Card>
+  <Card title="Form Validation" href="/patterns/form-validation">
+    Form validation patterns
+  </Card>
+</CardGroup>

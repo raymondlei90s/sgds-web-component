@@ -1,0 +1,61 @@
+---
+title: "Filters"
+description: "Filter UI patterns"
+icon: "filter"
+---
+
+Filter patterns for search and data filtering.
+
+## Basic Filter Layout
+
+```html
+<div class="sgds:bg-surface-raised sgds:p-6 sgds:rounded-lg sgds:mb-6">
+  <h3 class="sgds:text-lg sgds:font-semibold sgds:mb-4">Filters</h3>
+
+  <div class="sgds:grid sgds:grid-cols-1 md:sgds:grid-cols-3 sgds:gap-4">
+    <sgds-select label="Category">
+      <option value="">All Categories</option>
+      <option value="cat1">Category 1</option>
+      <option value="cat2">Category 2</option>
+    </sgds-select>
+
+    <sgds-select label="Status">
+      <option value="">All Status</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+    </sgds-select>
+
+    <sgds-input label="Search" type="search" placeholder="Search..."></sgds-input>
+  </div>
+
+  <div class="sgds:mt-4">
+    <sgds-button variant="primary">Apply Filters</sgds-button>
+    <sgds-button variant="outline" class="sgds:ml-2">Reset</sgds-button>
+  </div>
+</div>
+```
+
+## Checkbox Filters
+
+```html
+<div class="sgds:bg-surface-raised sgds:p-6 sgds:rounded-lg">
+  <h3 class="sgds:text-lg sgds:font-semibold sgds:mb-4">Filter by Type</h3>
+
+  <div class="sgds:space-y-2">
+    <sgds-checkbox>Type A</sgds-checkbox>
+    <sgds-checkbox>Type B</sgds-checkbox>
+    <sgds-checkbox>Type C</sgds-checkbox>
+  </div>
+</div>
+```
+
+## Related Patterns
+
+<CardGroup cols={2}>
+  <Card title="Form Layouts" href="/patterns/form-layouts">
+    Form patterns
+  </Card>
+  <Card title="Select Component" href="/components/select">
+    Select dropdown
+  </Card>
+</CardGroup>

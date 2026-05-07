@@ -1,0 +1,30 @@
+---
+title: "Pagination"
+description: "Page navigation control"
+icon: "ellipsis"
+---
+
+Pagination component for page navigation.
+
+## Basic Usage
+
+```html
+<sgds-pagination
+  totalPages="10"
+  currentPage="1"
+></sgds-pagination>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `totalPages` | `number` | - | Total number of pages |
+| `currentPage` | `number` | `1` | Current active page |
+| `maxPages` | `number` | `5` | Max page buttons shown |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-page-change` | Fired when page changes |

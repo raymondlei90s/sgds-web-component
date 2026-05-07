@@ -1,0 +1,703 @@
+---
+title: "Angular Integration"
+description: "Using SGDS Web Components with Angular - Configuration and usage patterns"
+icon: "angular"
+---
+
+Web components are [fully supported in Angular](https://custom-elements-everywhere.com/#angular) and can be used directly with minimal configuration.
+
+## Demo Application
+
+<Card title="View Live Demo" icon="code" href="https://stackblitz.com/github/clukhei/angular-stepper?file=README.md">
+  See SGDS components in an Angular application on StackBlitz
+</Card>
+
+## Installation
+
+Install SGDS Web Components with the scoped elements polyfill:
+
+<CodeGroup>
+```bash npm
+npm install @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+
+```bash pnpm
+pnpm add @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+
+```bash yarn
+yarn add @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+</CodeGroup>
+
+### CDN Installation
+
+Alternatively, load via CDN in your `index.html`:
+
+```html
+<!-- index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>My Angular App</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Optional: Load polyfill -->
+  <script src="https://cdn.jsdelivr.net/npm/@webcomponents/scoped-custom-element-registry"></script>
+
+  <!-- Load SGDS Web Components -->
+  <script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1"></script>
+</head>
+<body>
+  <app-root></app-root>
+</body>
+</html>
+```
+
+## Configuration
+
+### Enable CUSTOM_ELEMENTS_SCHEMA
+
+Angular needs to be told to ignore custom elements. Add `CUSTOM_ELEMENTS_SCHEMA` to your module:
+
+<Tabs>
+  <Tab title="Standalone Components (Angular 14+)">
+    ```typescript
+    // app.config.ts or main.ts
+    import { ApplicationConfig, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+    import { provideRouter } from '@angular/router';
+    import { routes } from './app.routes';
+
+    export const appConfig: ApplicationConfig = {
+      providers: [
+        provideRouter(routes)
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    };
+    ```
+
+    Or in individual components:
+
+    ```typescript
+    // component.ts
+    import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+    @Component({
+      selector: 'app-my-component',
+      standalone: true,
+      templateUrl: './my-component.component.html',
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    })
+    export class MyComponent {}
+    ```
+  </Tab>
+
+  <Tab title="NgModule (Traditional)">
+    ```typescript
+    // app.module.ts
+    import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+    import { BrowserModule } from '@angular/platform-browser';
+    import { AppComponent } from './app.component';
+
+    @NgModule({
+      declarations: [AppComponent],
+      imports: [BrowserModule],
+      providers: [],
+      bootstrap: [AppComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    })
+    export class AppModule {}
+    ```
+  </Tab>
+</Tabs>
+
+### Import SGDS Components
+
+Import SGDS Web Components once in your main module or entry point:
+
+<Tabs>
+  <Tab title="Local Installation">
+    ```typescript
+    // app.module.ts or main.ts
+    import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+    import { BrowserModule } from '@angular/platform-browser';
+    import { AppComponent } from './app.component';
+    import '@govtechsg/sgds-web-component';
+
+    @NgModule({
+      declarations: [AppComponent],
+      imports: [BrowserModule],
+      providers: [],
+      bootstrap: [AppComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    })
+    export class AppModule {}
+    ```
+  </Tab>
+
+  <Tab title="CDN">
+    No imports needed - components are loaded via script tag in `index.html`
+  </Tab>
+</Tabs>
+
+## Basic Usage
+
+Use SGDS components in your Angular templates like any HTML element:
+
+```typescript
+// button-example.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-button-example',
+  template: `
+    <sgds-button variant="primary">Click Me</sgds-button>
+
+    <sgds-alert [show]="showAlert" variant="success">
+      <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor">
+        <!-- SVG path -->
+      </svg>
+      Operation successful!
+    </sgds-alert>
+  `
+})
+export class ButtonExampleComponent {
+  showAlert = true;
+}
+```
+
+## Property Binding
+
+Use Angular's property binding syntax `[]` to bind component properties:
+
+```typescript
+// input-example.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-input-example',
+  template: `
+    <sgds-input
+      [label]="inputLabel"
+      [placeholder]="placeholderText"
+      [required]="isRequired"
+      [disabled]="isDisabled"
+      type="email"
+    ></sgds-input>
+  `
+})
+export class InputExampleComponent {
+  inputLabel = 'Email Address';
+  placeholderText = 'Enter your email';
+  isRequired = true;
+  isDisabled = false;
+}
+```
+
+### Binding Objects and Arrays
+
+Use property binding for complex data types:
+
+```typescript
+// table-example.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-table-example',
+  template: `
+    <sgds-table
+      [rowHeader]="headers"
+      [tableData]="data"
+    ></sgds-table>
+  `
+})
+export class TableExampleComponent {
+  headers = ['Name', 'Email', 'Role'];
+  data = [
+    { name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+    { name: 'Jane Smith', email: 'jane@example.com', role: 'User' }
+  ];
+}
+```
+
+## Event Handling
+
+Listen to SGDS custom events using Angular's event binding syntax `()`:
+
+```typescript
+// form-example.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-form-example',
+  template: `
+    <sgds-input
+      [value]="name"
+      (sgds-input)="onNameInput($event)"
+      (sgds-change)="onNameChange($event)"
+      label="Your Name"
+    ></sgds-input>
+
+    <p>Current value: {{ name }}</p>
+  `
+})
+export class FormExampleComponent {
+  name = '';
+
+  onNameInput(event: Event) {
+    const target = event.target as any;
+    this.name = target.value;
+    console.log('Input event:', this.name);
+  }
+
+  onNameChange(event: Event) {
+    console.log('Change event:', this.name);
+  }
+}
+```
+
+### Common Events
+
+```typescript
+// modal-example.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-modal-example',
+  template: `
+    <sgds-button (click)="openModal()">Open Modal</sgds-button>
+
+    <sgds-modal
+      [open]="isModalOpen"
+      (sgds-show)="onModalShow()"
+      (sgds-hide)="onModalHide()"
+      (sgds-after-show)="onModalAfterShow()"
+    >
+      <span slot="header">Modal Title</span>
+      <p>Modal content goes here</p>
+      <div slot="footer">
+        <sgds-button (click)="closeModal()">Close</sgds-button>
+      </div>
+    </sgds-modal>
+  `
+})
+export class ModalExampleComponent {
+  isModalOpen = false;
+
+  openModal() {
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  onModalShow() {
+    console.log('Modal is showing...');
+  }
+
+  onModalHide() {
+    console.log('Modal is hiding...');
+    this.isModalOpen = false;
+  }
+
+  onModalAfterShow() {
+    console.log('Modal fully visible');
+  }
+}
+```
+
+## Two-Way Data Binding
+
+Use `[(ngModel)]` with form components (requires `FormsModule`):
+
+```typescript
+// app.module.ts
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, FormsModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+```typescript
+// form.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-form',
+  template: `
+    <form (submit)="onSubmit($event)">
+      <sgds-input
+        [(ngModel)]="formData.name"
+        name="name"
+        label="Full Name"
+        required
+      ></sgds-input>
+
+      <sgds-input
+        [(ngModel)]="formData.email"
+        name="email"
+        type="email"
+        label="Email"
+        required
+      ></sgds-input>
+
+      <sgds-textarea
+        [(ngModel)]="formData.message"
+        name="message"
+        label="Message"
+        rows="4"
+      ></sgds-textarea>
+
+      <sgds-checkbox [(ngModel)]="formData.subscribe" name="subscribe">
+        Subscribe to newsletter
+      </sgds-checkbox>
+
+      <sgds-button type="submit" variant="primary">
+        Submit
+      </sgds-button>
+    </form>
+
+    <pre>{{ formData | json }}</pre>
+  `
+})
+export class FormComponent {
+  formData = {
+    name: '',
+    email: '',
+    message: '',
+    subscribe: false
+  };
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+    console.log('Form submitted:', this.formData);
+  }
+}
+```
+
+## Accessing Component References
+
+Use `@ViewChild` to access component instances and methods:
+
+```typescript
+// alert.component.ts
+import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { SgdsAlert } from '@govtechsg/sgds-web-component';
+
+@Component({
+  selector: 'app-alert',
+  template: `
+    <sgds-button (click)="showAlert()">Show Alert</sgds-button>
+    <sgds-alert #alert>Alert message</sgds-alert>
+  `
+})
+export class AlertComponent implements AfterViewInit {
+  @ViewChild('alert')
+  alert?: ElementRef<SgdsAlert>;
+
+  ngAfterViewInit() {
+    // Component is now available
+    console.log('Alert component:', this.alert?.nativeElement);
+  }
+
+  showAlert() {
+    if (this.alert?.nativeElement) {
+      this.alert.nativeElement.show = true;
+    }
+  }
+}
+```
+
+## Reactive Forms
+
+Use Angular Reactive Forms with SGDS components:
+
+```typescript
+// reactive-form.component.ts
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-reactive-form',
+  template: `
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+      <sgds-input
+        [value]="contactForm.get('name')?.value"
+        (sgds-input)="updateField('name', $event)"
+        label="Name"
+        [invalidFeedback]="getErrorMessage('name')"
+      ></sgds-input>
+
+      <sgds-input
+        [value]="contactForm.get('email')?.value"
+        (sgds-input)="updateField('email', $event)"
+        type="email"
+        label="Email"
+        [invalidFeedback]="getErrorMessage('email')"
+      ></sgds-input>
+
+      <sgds-button
+        type="submit"
+        variant="primary"
+        [disabled]="!contactForm.valid"
+      >
+        Submit
+      </sgds-button>
+    </form>
+  `
+})
+export class ReactiveFormComponent implements OnInit {
+  contactForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+    this.contactForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
+    });
+  }
+
+  updateField(field: string, event: Event) {
+    const target = event.target as any;
+    this.contactForm.patchValue({ [field]: target.value });
+  }
+
+  getErrorMessage(field: string): string {
+    const control = this.contactForm.get(field);
+    if (control?.hasError('required') && control?.touched) {
+      return `${field} is required`;
+    }
+    if (control?.hasError('email') && control?.touched) {
+      return 'Please enter a valid email';
+    }
+    return '';
+  }
+
+  onSubmit() {
+    if (this.contactForm.valid) {
+      console.log('Form submitted:', this.contactForm.value);
+    }
+  }
+}
+```
+
+## Common Patterns
+
+### Navigation Component
+
+```typescript
+// navigation.component.ts
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-navigation',
+  template: `
+    <sgds-masthead></sgds-masthead>
+
+    <sgds-mainnav>
+      <img slot="brand" src="/assets/logo.svg" alt="Logo" width="150" />
+
+      <sgds-mainnav-item
+        *ngFor="let item of navItems"
+        [href]="item.path"
+        [active]="isActive(item.path)"
+      >
+        {{ item.label }}
+      </sgds-mainnav-item>
+
+      <sgds-mainnav-dropdown slot="end">
+        <span slot="toggler">{{ userName }}</span>
+        <sgds-dropdown-item (click)="navigateToProfile()">
+          Profile
+        </sgds-dropdown-item>
+        <sgds-dropdown-item (click)="logout()">
+          Logout
+        </sgds-dropdown-item>
+      </sgds-mainnav-dropdown>
+    </sgds-mainnav>
+  `
+})
+export class NavigationComponent {
+  userName = 'John Doe';
+  navItems = [
+    { label: 'Home', path: '/' },
+    { label: 'About', path: '/about' },
+    { label: 'Services', path: '/services' }
+  ];
+
+  constructor(private router: Router) {}
+
+  isActive(path: string): boolean {
+    return this.router.url === path;
+  }
+
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  logout() {
+    console.log('Logging out...');
+    this.router.navigate(['/login']);
+  }
+}
+```
+
+### Data Table with Service
+
+```typescript
+// users.service.ts
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface User {
+  name: string;
+  email: string;
+  role: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UsersService {
+  constructor(private http: HttpClient) {}
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>('/api/users');
+  }
+}
+
+// users-table.component.ts
+import { Component, OnInit } from '@angular/core';
+import { UsersService, User } from './users.service';
+
+@Component({
+  selector: 'app-users-table',
+  template: `
+    <sgds-table
+      [rowHeader]="headers"
+      [tableData]="users"
+      tableClasses="table-striped"
+    ></sgds-table>
+  `
+})
+export class UsersTableComponent implements OnInit {
+  headers = ['Name', 'Email', 'Role'];
+  users: any[] = [];
+
+  constructor(private usersService: UsersService) {}
+
+  ngOnInit() {
+    this.usersService.getUsers().subscribe(users => {
+      this.users = users.map(user => ({
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }));
+    });
+  }
+}
+```
+
+## TypeScript Support
+
+Import component types for better type safety:
+
+```typescript
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { SgdsAlert, SgdsModal, SgdsInput } from '@govtechsg/sgds-web-component';
+
+@Component({
+  selector: 'app-typed-component',
+  template: `
+    <sgds-input #inputRef></sgds-input>
+    <sgds-alert #alertRef>Alert</sgds-alert>
+    <sgds-modal #modalRef>Modal</sgds-modal>
+  `
+})
+export class TypedComponent {
+  @ViewChild('inputRef') inputRef?: ElementRef<SgdsInput>;
+  @ViewChild('alertRef') alertRef?: ElementRef<SgdsAlert>;
+  @ViewChild('modalRef') modalRef?: ElementRef<SgdsModal>;
+
+  showAlert() {
+    if (this.alertRef?.nativeElement) {
+      this.alertRef.nativeElement.show = true;
+    }
+  }
+
+  getInputValue(): string {
+    return this.inputRef?.nativeElement.value || '';
+  }
+}
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Always Add CUSTOM_ELEMENTS_SCHEMA">
+    Add the schema to your module or component to prevent Angular from throwing errors for custom elements
+  </Accordion>
+
+  <Accordion title="Import Once in App Module">
+    Import SGDS components once in your app module, not in every component file
+  </Accordion>
+
+  <Accordion title="Use Property Binding for Complex Data">
+    Use `[property]` syntax for objects and arrays, not attribute binding
+  </Accordion>
+
+  <Accordion title="Listen to Custom Events">
+    Use `(sgds-*)` event syntax instead of native events for reliable behavior
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Template parse errors">
+    Make sure `CUSTOM_ELEMENTS_SCHEMA` is added to your module or component
+  </Accordion>
+
+  <Accordion title="ngModel not working">
+    Import `FormsModule` in your module to use `[(ngModel)]`
+  </Accordion>
+
+  <Accordion title="Events not firing">
+    Use `(sgds-*)` syntax for custom events, ensure event names are correct
+  </Accordion>
+
+  <Accordion title="Type errors with event.target">
+    Cast `event.target` to `any` or the specific component type
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="All Components" icon="cubes" href="/components/overview">
+    Browse the complete component library
+  </Card>
+  <Card title="React Integration" icon="react" href="/frameworks/react">
+    Using SGDS with React
+  </Card>
+  <Card title="Form Patterns" icon="file-lines" href="/patterns/form-layouts">
+    Pre-built form layouts and patterns
+  </Card>
+  <Card title="Vue Integration" icon="vuejs" href="/frameworks/vue">
+    Using SGDS with Vue.js
+  </Card>
+</CardGroup>

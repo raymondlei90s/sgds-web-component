@@ -1,0 +1,355 @@
+---
+title: "Migration Guide"
+description: "Upgrade from v1 to v2, or v2 to v3 of SGDS Web Components"
+icon: "code-compare"
+---
+
+This guide helps you migrate between major versions of SGDS Web Components.
+
+<Tabs>
+  <Tab title="v2 → v3 (Latest)">
+    ## Migrating from v2 to v3
+
+    Version 3 brings a complete design refresh, moving away from Bootstrap styles and introducing the SGDS token system with built-in dark mode support.
+
+    ### Major Changes
+
+    <AccordionGroup>
+      <Accordion title="Design System Overhaul">
+        - Completely new visual design moving away from Bootstrap
+        - New CSS variable token system aligned with Figma
+        - Built-in `night` theme support across all components
+        - Foundational styles for consistent app-wide styling
+      </Accordion>
+
+      <Accordion title="New Token System">
+        All CSS variables now follow the `--sgds-*` naming convention:
+        ```css
+        /* Old (v2) */
+        --primary: #5925dc;
+
+        /* New (v3) */
+        --sgds-primary: #5925dc;
+        --sgds-primary-600: #4a1eb8;
+        ```
+      </Accordion>
+
+      <Accordion title="Foundational Styles">
+        V3 introduces Tailwind v4 utilities with the `sgds:` prefix for colors, spacing, and typography:
+        ```html
+        <div class="sgds:bg-primary sgds:text-white sgds:p-4">
+          Styled with SGDS utilities
+        </div>
+        ```
+      </Accordion>
+    </AccordionGroup>
+
+    ### Breaking Changes by Component
+
+    #### Accordion
+
+    **Removed CSS Properties:**
+    - `--accordion-active-color`
+
+    **Renamed Slots (Accordion Item):**
+    - `accordion-header` → `header`
+    - `accordion-caret` → `caret`
+    - `accordion-content` → `content`
+
+    **Removed CSS Properties (Accordion Item):**
+    - `--accordion-item-padding-y`
+    - `--accordion-item-padding-x`
+    - `--accordion-item-border-radius`
+    - `--accordion-item-font-weight`
+    - `--accordion-item-line-height`
+
+    **Removed CSS Parts (Accordion Item):**
+    - `base`
+    - `header`
+    - `content`
+
+    #### Alert
+
+    **Removed Variants:**
+    - `primary`
+    - `secondary`
+    - `light`
+
+    **Changes:**
+    - `variant` now defaults to filled alerts
+    - Default variant is now `info` (previously no default)
+
+    **Removed CSS Properties:**
+    - `--alert-bg`
+    - `--alert-border-color`
+    - `--alert-icon-margin-right`
+
+    **Removed Components:**
+    - `sgds-alert-heading` (use slots instead)
+    - `sgds-alert-link` CSS property `--alert-link-anchor-color` removed
+
+    #### Badge
+
+    **Removed Variants:**
+    - `primary`
+    - `secondary`
+    - `light`
+
+    #### Button
+
+    **Removed Variants:**
+    - `light`
+
+    **Changes:**
+    - Default variant changed from `primary` to `solid`
+    - Button appearance significantly updated
+
+    #### Card
+
+    **Removed Component:**
+    - `sgds-action-card` (use `sgds-card` with slots)
+
+    <Note>
+    For a complete list of breaking changes for all 47 components, refer to the [v2 to v3 migration document](https://github.com/GovTechSG/sgds-web-component/blob/master/docs/Migration_v2_to_v3.md).
+    </Note>
+
+    ### Migration Steps
+
+    <Steps>
+      <Step title="Update Package">
+        ```bash
+        npm install @govtechsg/sgds-web-component@^3.0.0
+        ```
+      </Step>
+
+      <Step title="Update CSS Imports">
+        Import the new theme CSS:
+        ```javascript
+        // Remove old imports
+        // import "@govtechsg/sgds-web-component/themes/day.css";
+
+        // Add new imports
+        import "@govtechsg/sgds-web-component/css/root.css";
+        import "@govtechsg/sgds-web-component/css/day.css"; // or night.css for dark mode
+        import "@govtechsg/sgds-web-component";
+        ```
+      </Step>
+
+      <Step title="Update Variant Names">
+        Replace deprecated variants:
+        ```html
+        <!-- Old (v2) -->
+        <sgds-alert variant="primary">Alert</sgds-alert>
+        <sgds-button variant="light">Button</sgds-button>
+
+        <!-- New (v3) -->
+        <sgds-alert variant="info">Alert</sgds-alert>
+        <sgds-button variant="outline">Button</sgds-button>
+        ```
+      </Step>
+
+      <Step title="Update Slot Names">
+        Update accordion slot names:
+        ```html
+        <!-- Old (v2) -->
+        <sgds-accordion-item>
+          <span slot="accordion-header">Header</span>
+          <div slot="accordion-content">Content</div>
+        </sgds-accordion-item>
+
+        <!-- New (v3) -->
+        <sgds-accordion-item>
+          <span slot="header">Header</span>
+          <div slot="content">Content</div>
+        </sgds-accordion-item>
+        ```
+      </Step>
+
+      <Step title="Update CSS Variables">
+        Replace old CSS custom properties with new token names:
+        ```css
+        /* Old (v2) */
+        :root {
+          --primary: #5925dc;
+          --alert-bg: #f0f0f0;
+        }
+
+        /* New (v3) */
+        :root {
+          --sgds-primary: #5925dc;
+          /* Use component-specific tokens */
+        }
+        ```
+      </Step>
+
+      <Step title="Test Thoroughly">
+        Visual testing is critical as v3 has significant design changes. Review:
+        - Component variants and colors
+        - Spacing and layouts
+        - Custom CSS overrides
+        - Dark mode appearance
+      </Step>
+    </Steps>
+
+    ### New Features in V3
+
+    <CardGroup cols={2}>
+      <Card title="Dark Mode" icon="moon">
+        Built-in night theme support across all components
+      </Card>
+      <Card title="Tailwind Utilities" icon="code">
+        Use `sgds:` prefixed utilities for consistent styling
+      </Card>
+      <Card title="Design Tokens" icon="palette">
+        Aligned token system between Figma and code
+      </Card>
+      <Card title="Better Performance" icon="gauge-high">
+        Optimized bundle sizes and rendering
+      </Card>
+    </CardGroup>
+
+  </Tab>
+
+  <Tab title="v1 → v2">
+    ## Migrating from v1 to v2
+
+    Version 2 introduced architectural changes to reduce bundle size and improve customization.
+
+    ### Major Changes
+
+    <AccordionGroup>
+      <Accordion title="Architecture Overhaul">
+        - Removed `@govtechsg/sgds` dependency for styling
+        - Each component now carries only its specific styles
+        - Introduced global CSS file with token system
+        - Significantly reduced bundle size per component
+      </Accordion>
+
+      <Accordion title="Package Upgrades">
+        - Upgraded Lit from v2 to v3
+        - Upgraded Storybook from v6 to v8
+        - Remained on `@open-wc/scoped-elements` v2 for broader compatibility
+      </Accordion>
+    </AccordionGroup>
+
+    ### Breaking Changes
+
+    #### 1. Global CSS Import Required
+
+    **Before (v1):**
+    ```javascript
+    import "@govtechsg/sgds-web-component";
+    ```
+
+    **After (v2):**
+    ```javascript
+    import "@govtechsg/sgds-web-component/themes/day.css";
+    import "@govtechsg/sgds-web-component";
+    ```
+
+    <Warning>
+    The global CSS file **must be imported before** the component library.
+    </Warning>
+
+    #### 2. Removed `*Classes` Props
+
+    Due to architectural changes, the following components no longer support `*Classes` props:
+
+    | Component | Removed Prop |
+    |-----------|--------------|
+    | sgds-accordion-item | `accordionItemClasses` |
+    | sgds-alert | `alertClasses` |
+    | sgds-badge | `badgeClasses` |
+    | sgds-button | `buttonClasses` |
+    | sgds-input | `inputClasses` |
+    | sgds-progress | `progressClasses` |
+    | sgds-spinner | `spinnerClasses` |
+    | sgds-tab-group | `tabsClasses`, `bodyClasses` |
+    | sgds-textarea | `textareaClasses` |
+    | sgds-toast | `toastClasses` |
+
+    **Migration:** Use CSS parts or custom properties instead.
+
+    #### 3. Renamed CSS Properties
+
+    Many CSS custom properties were renamed for consistency:
+
+    <Accordion title="View All Renamed Properties">
+      | Component | Old Name | New Name |
+      |-----------|----------|----------|
+      | sgds-datepicker | `--datepicker-closebutton-bg-color` | `--datepicker-close-btn-bg` |
+      | sgds-datepicker | `--datepicker-closebutton-hover-bg-color` | `--datepicker-close-btn-hover-bg` |
+      | sgds-datepicker | `--datepicker-hover-bg-color` | `--datepicker-hover-bg` |
+      | sgds-datepicker | `--datepicker-bg-color` | `--datepicker-bg` |
+      | sgds-drawer | `--sgds-drawer-size` | `--drawer-size` |
+      | sgds-drawer | `--sgds-drawer-padding` | `--drawer-padding` |
+      | sgds-drawer | `--sgds-drawer-background-color` | `--drawer-bg` |
+      | sgds-file-upload | `--fileupload-file-icon-fill` | `--file-upload-left-icon-color` |
+      | sgds-mainnav | `--mainnav-background-color` | `--mainnav-bg` |
+      | sgds-modal | `--modal-panel-background-color` | `--modal-panel-bg` |
+      | sgds-pagination | `--pagination-bg-color` | `--pagination-bg` |
+      | sgds-sidenav-item | `--sidenav-item-padding-x` | `--sidenav-item-btn-padding-x` |
+      | sgds-sidenav-item | `--sidenav-item-padding-y` | `--sidenav-item-btn-padding-y` |
+    </Accordion>
+
+    ### Migration Steps
+
+    <Steps>
+      <Step title="Update Package">
+        ```bash
+        npm install @govtechsg/sgds-web-component@^2.0.0
+        ```
+      </Step>
+
+      <Step title="Add Global CSS Import">
+        Add the theme CSS import before the component import:
+        ```javascript
+        import "@govtechsg/sgds-web-component/themes/day.css";
+        import "@govtechsg/sgds-web-component";
+        ```
+      </Step>
+
+      <Step title="Remove *Classes Props">
+        Replace `*Classes` props with CSS parts or custom properties:
+        ```html
+        <!-- Before -->
+        <sgds-button buttonClasses="btn-lg">Button</sgds-button>
+
+        <!-- After -->
+        <sgds-button style="font-size: 1.25rem; padding: 0.75rem 1.5rem;">
+          Button
+        </sgds-button>
+        ```
+      </Step>
+
+      <Step title="Update CSS Variable Names">
+        Find and replace renamed CSS properties in your stylesheets
+      </Step>
+
+      <Step title="Test Your Application">
+        Thoroughly test all components, especially those using:
+        - Custom CSS properties
+        - Removed `*Classes` props
+        - Custom styling
+      </Step>
+    </Steps>
+
+  </Tab>
+</Tabs>
+
+## Need Help?
+
+<CardGroup cols={2}>
+  <Card title="GitHub Issues" icon="github" href="https://github.com/GovTechSG/sgds-web-component/issues">
+    Report migration issues or ask questions
+  </Card>
+  <Card title="Migration Docs" icon="file-lines" href="https://github.com/GovTechSG/sgds-web-component/tree/master/docs">
+    Detailed migration documentation on GitHub
+  </Card>
+  <Card title="Changelog" icon="list" href="/resources/changelog">
+    Full changelog for all versions
+  </Card>
+  <Card title="Components" icon="cubes" href="/components/overview">
+    Browse updated component documentation
+  </Card>
+</CardGroup>

@@ -1,0 +1,47 @@
+---
+title: "Alert"
+description: "Contextual feedback messages"
+icon: "triangle-exclamation"
+---
+
+Alert component for displaying feedback messages.
+
+## Basic Usage
+
+```html
+<sgds-alert show variant="success">Operation successful!</sgds-alert>
+<sgds-alert show variant="warning">Warning message</sgds-alert>
+<sgds-alert show variant="danger">Error occurred</sgds-alert>
+<sgds-alert show variant="info">Information message</sgds-alert>
+```
+
+## Dismissible
+
+```html
+<sgds-alert show variant="success" closable>
+  <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+  </svg>
+  Success! You can dismiss this alert.
+</sgds-alert>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `variant` | `'success' \| 'warning' \| 'danger' \| 'info'` | `'info'` | Alert variant |
+| `show` | `boolean` | `false` | Visibility state |
+| `closable` | `boolean` | `false` | Show close button |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-hide` | Fired when alert is dismissed |
+
+### Slots
+| Slot | Description |
+|------|-------------|
+| `icon` | Alert icon |
+| `default` | Alert content |

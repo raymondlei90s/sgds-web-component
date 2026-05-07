@@ -1,0 +1,479 @@
+---
+title: "React Integration"
+description: "Using SGDS Web Components with React - React wrapper components and best practices"
+icon: "react"
+---
+
+Web components are [not fully supported in React](https://custom-elements-everywhere.com/#react) when passing rich data or handling events. SGDS provides **React wrapper components** for seamless integration.
+
+<Note>
+Use the React wrappers from `@govtechsg/sgds-web-component/react` instead of using web components directly in React applications.
+</Note>
+
+## Demo Application
+
+<Card title="View Live Demo" icon="code" href="https://stackblitz.com/edit/vitejs-vite-gebvf5">
+  See SGDS React components in action on StackBlitz
+</Card>
+
+## Installation
+
+Install SGDS Web Components with the scoped elements polyfill:
+
+<CodeGroup>
+```bash npm
+npm install @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+
+```bash pnpm
+pnpm add @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+
+```bash yarn
+yarn add @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+</CodeGroup>
+
+## Importing Components
+
+SGDS components are exported as named exports using PascalCase naming:
+
+### Import All Components
+
+```jsx
+import { SgdsButton, SgdsTooltip, SgdsInput } from "@govtechsg/sgds-web-component/react";
+```
+
+### Import Individual Components
+
+For better tree-shaking and faster build times:
+
+```jsx
+import { SgdsButton } from "@govtechsg/sgds-web-component/react/button";
+import { SgdsTooltip } from "@govtechsg/sgds-web-component/react/tooltip";
+import { SgdsInput } from "@govtechsg/sgds-web-component/react/input";
+```
+
+### Naming Convention
+
+React components follow PascalCase naming. Here's the mapping:
+
+| Web Component | React Component |
+|---------------|-----------------|
+| `sgds-button` | `SgdsButton` |
+| `sgds-mainnav` | `SgdsMainnav` |
+| `sgds-mainnav-item` | `SgdsMainnavItem` |
+| `sgds-textarea` | `SgdsTextarea` |
+| `sgds-file-upload` | `SgdsFileUpload` |
+
+## Basic Usage
+
+Use SGDS React components like any other React component:
+
+```jsx
+import { SgdsButton, SgdsAlert } from "@govtechsg/sgds-web-component/react";
+
+function MyComponent() {
+  return (
+    <div>
+      <SgdsButton variant="primary">Click Me</SgdsButton>
+
+      <SgdsAlert show variant="success">
+        Operation completed successfully!
+      </SgdsAlert>
+    </div>
+  );
+}
+
+export default MyComponent;
+```
+
+## Event Handling
+
+React wrappers convert `sgds-*` events to React's `on*` convention using camelCase:
+
+### Event Naming Convention
+
+| Web Component Event | React Event |
+|---------------------|-------------|
+| `sgds-change` | `onSgdsChange` |
+| `sgds-input` | `onSgdsInput` |
+| `sgds-toggle` | `onSgdsToggle` |
+| `sgds-after-show` | `onSgdsAfterShow` |
+| `sgds-after-hide` | `onSgdsAfterHide` |
+
+### Event Examples
+
+<CodeGroup>
+```jsx Input Events
+import { useState } from "react";
+import { SgdsInput } from "@govtechsg/sgds-web-component/react";
+
+function InputExample() {
+  const [value, setValue] = useState("");
+
+  return (
+    <SgdsInput
+      value={value}
+      onSgdsInput={(e) => setValue(e.target.value)}
+      label="Your Name"
+      placeholder="Enter your name"
+    />
+  );
+}
+```
+
+```jsx Checkbox Events
+import { useState } from "react";
+import { SgdsCheckbox } from "@govtechsg/sgds-web-component/react";
+
+function CheckboxExample() {
+  const [isChecked, setIsChecked] = useState(false);
+
+  return (
+    <SgdsCheckbox
+      checked={isChecked}
+      onSgdsChange={(e) => setIsChecked(e.target.checked)}
+    >
+      I agree to the terms and conditions
+    </SgdsCheckbox>
+  );
+}
+```
+
+```jsx Modal Events
+import { useState } from "react";
+import { SgdsModal, SgdsButton } from "@govtechsg/sgds-web-component/react";
+
+function ModalExample() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <SgdsButton onClick={() => setIsOpen(true)}>
+        Open Modal
+      </SgdsButton>
+
+      <SgdsModal
+        open={isOpen}
+        onSgdsHide={() => setIsOpen(false)}
+        onSgdsAfterShow={() => console.log("Modal fully opened")}
+      >
+        <span slot="header">Modal Title</span>
+        <p>Modal content goes here</p>
+        <div slot="footer">
+          <SgdsButton onClick={() => setIsOpen(false)}>Close</SgdsButton>
+        </div>
+      </SgdsModal>
+    </>
+  );
+}
+```
+</CodeGroup>
+
+## TypeScript Support
+
+Import component types for proper TypeScript support:
+
+```typescript
+import { useState } from "react";
+import { SgdsInput } from "@govtechsg/sgds-web-component/react";
+import type { SgdsInput as SgdsInputElement } from "@govtechsg/sgds-web-component";
+
+function MyComponent() {
+  const [value, setValue] = useState<string>("");
+
+  const handleInput = (event: Event) => {
+    const target = event.target as SgdsInputElement;
+    setValue(target.value);
+  };
+
+  return (
+    <SgdsInput
+      value={value}
+      onSgdsInput={handleInput}
+      label="Email"
+      type="email"
+    />
+  );
+}
+```
+
+### Accessing Component Methods
+
+Use refs to access component methods:
+
+```typescript
+import { useRef } from "react";
+import { SgdsModal, SgdsButton } from "@govtechsg/sgds-web-component/react";
+import type { SgdsModal as SgdsModalElement } from "@govtechsg/sgds-web-component";
+
+function ModalWithRef() {
+  const modalRef = useRef<SgdsModalElement>(null);
+
+  const openModal = () => {
+    modalRef.current?.show();
+  };
+
+  const closeModal = () => {
+    modalRef.current?.hide();
+  };
+
+  return (
+    <>
+      <SgdsButton onClick={openModal}>Open Modal</SgdsButton>
+
+      <SgdsModal ref={modalRef}>
+        <span slot="header">Modal Title</span>
+        <p>Modal content</p>
+        <div slot="footer">
+          <SgdsButton onClick={closeModal}>Close</SgdsButton>
+        </div>
+      </SgdsModal>
+    </>
+  );
+}
+```
+
+## Form Handling
+
+SGDS form components work seamlessly with React form libraries:
+
+### With React Hook Form
+
+```jsx
+import { useForm } from "react-hook-form";
+import { SgdsInput, SgdsButton, SgdsTextarea } from "@govtechsg/sgds-web-component/react";
+
+function ContactForm() {
+  const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <SgdsInput
+        {...register("name", { required: true })}
+        label="Name"
+        invalidFeedback={errors.name && "Name is required"}
+      />
+
+      <SgdsInput
+        {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+        label="Email"
+        type="email"
+        invalidFeedback={errors.email && "Valid email is required"}
+      />
+
+      <SgdsTextarea
+        {...register("message")}
+        label="Message"
+        rows={4}
+      />
+
+      <SgdsButton type="submit" variant="primary">
+        Submit
+      </SgdsButton>
+    </form>
+  );
+}
+```
+
+### Controlled Components
+
+```jsx
+import { useState } from "react";
+import { SgdsInput, SgdsSelect, SgdsButton } from "@govtechsg/sgds-web-component/react";
+
+function ControlledForm() {
+  const [formData, setFormData] = useState({
+    username: "",
+    country: ""
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <SgdsInput
+        value={formData.username}
+        onSgdsInput={(e) => setFormData({...formData, username: e.target.value})}
+        label="Username"
+      />
+
+      <SgdsSelect
+        value={formData.country}
+        onSgdsChange={(e) => setFormData({...formData, country: e.target.value})}
+        label="Country"
+      >
+        <option value="">Select country</option>
+        <option value="sg">Singapore</option>
+        <option value="my">Malaysia</option>
+      </SgdsSelect>
+
+      <SgdsButton type="submit">Submit</SgdsButton>
+    </form>
+  );
+}
+```
+
+## Common Patterns
+
+### Navigation Bar
+
+```jsx
+import {
+  SgdsMasthead,
+  SgdsMainnav,
+  SgdsMainnavItem,
+  SgdsMainnavDropdown,
+  SgdsDropdownItem
+} from "@govtechsg/sgds-web-component/react";
+
+function Navigation() {
+  return (
+    <>
+      <SgdsMasthead />
+
+      <SgdsMainnav>
+        <img
+          slot="brand"
+          src="/logo.svg"
+          alt="Logo"
+          width="150"
+        />
+
+        <SgdsMainnavItem href="/">Home</SgdsMainnavItem>
+        <SgdsMainnavItem href="/about">About</SgdsMainnavItem>
+
+        <SgdsMainnavDropdown slot="end">
+          <span slot="toggler">Account</span>
+          <SgdsDropdownItem>Profile</SgdsDropdownItem>
+          <SgdsDropdownItem>Settings</SgdsDropdownItem>
+          <SgdsDropdownItem>Logout</SgdsDropdownItem>
+        </SgdsMainnavDropdown>
+      </SgdsMainnav>
+    </>
+  );
+}
+```
+
+### Data Table
+
+```jsx
+import { useState, useEffect } from "react";
+import { SgdsTable } from "@govtechsg/sgds-web-component/react";
+
+function UserTable() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    // Fetch users from API
+    fetchUsers().then(setUsers);
+  }, []);
+
+  const tableData = users.map(user => ({
+    name: user.name,
+    email: user.email,
+    role: user.role
+  }));
+
+  return (
+    <SgdsTable
+      rowHeader={["Name", "Email", "Role"]}
+      tableData={tableData}
+      tableClasses="table-striped"
+    />
+  );
+}
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Always Use React Wrappers">
+    Don't use web components directly in React (`<sgds-button>`). Always use the React wrappers (`<SgdsButton>`) for proper event handling and data binding.
+  </Accordion>
+
+  <Accordion title="Use TypeScript for Better DX">
+    Import type definitions for autocomplete and type safety:
+    ```typescript
+    import type { SgdsInput } from "@govtechsg/sgds-web-component";
+    ```
+  </Accordion>
+
+  <Accordion title="Handle Events with React Conventions">
+    Use `onSgds*` event props instead of adding event listeners manually
+  </Accordion>
+
+  <Accordion title="Import Individual Components">
+    For better tree-shaking and smaller bundles, import components individually:
+    ```jsx
+    import { SgdsButton } from "@govtechsg/sgds-web-component/react/button";
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Known Limitations
+
+<Warning>
+**React 18 and below** has limited support for web components. The React wrappers handle these limitations, but be aware:
+
+- Rich data (objects, arrays) must be passed as props, not attributes
+- Events don't bubble properly without wrappers
+- Refs work differently than native React components
+</Warning>
+
+<Check>
+**React 19+** has improved web component support, but we still recommend using the React wrappers for consistency.
+</Check>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Events not firing">
+    Make sure you're using `onSgds*` event props (camelCase) instead of native events:
+    ```jsx
+    // ✅ Correct
+    <SgdsInput onSgdsInput={handler} />
+
+    // ❌ Wrong
+    <SgdsInput oninput={handler} />
+    ```
+  </Accordion>
+
+  <Accordion title="TypeScript errors with event.target">
+    Cast `event.target` to the correct component type:
+    ```typescript
+    const handler = (e: Event) => {
+      const value = (e.target as SgdsInputElement).value;
+    };
+    ```
+  </Accordion>
+
+  <Accordion title="Component not updating">
+    Ensure you're using controlled components correctly and updating state in event handlers
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="View All Components" icon="cubes" href="/components/overview">
+    Browse the complete component library
+  </Card>
+  <Card title="Form Validation" icon="check-circle" href="/patterns/form-validation">
+    Learn about form validation patterns
+  </Card>
+  <Card title="Vue Integration" icon="vuejs" href="/frameworks/vue">
+    Using SGDS with Vue.js
+  </Card>
+  <Card title="Next.js" icon="react" href="/frameworks/nextjs">
+    Server-side rendering with Next.js
+  </Card>
+</CardGroup>

@@ -1,0 +1,104 @@
+---
+title: "Color Utilities"
+description: "Background, text, and border color utilities with theme support"
+icon: "palette"
+---
+
+SGDS color utilities provide theme-aware classes for backgrounds, text, and borders using the `sgds:` prefix.
+
+## Background Colors
+
+### Surface Colors
+
+```html
+<div class="sgds:bg-default">Default background</div>
+<div class="sgds:bg-surface-default">Surface default</div>
+<div class="sgds:bg-surface-raised">Raised surface</div>
+<div class="sgds:bg-surface-overlay">Overlay surface</div>
+```
+
+### Semantic Colors
+
+```html
+<div class="sgds:bg-primary-default">Primary</div>
+<div class="sgds:bg-success-default">Success</div>
+<div class="sgds:bg-warning-default">Warning</div>
+<div class="sgds:bg-danger-default">Danger</div>
+<div class="sgds:bg-info-default">Info</div>
+```
+
+### Color Shades
+
+Each semantic color has intensity variations:
+
+```html
+<div class="sgds:bg-primary-100">Lightest</div>
+<div class="sgds:bg-primary-300">Light</div>
+<div class="sgds:bg-primary-default">Default (600)</div>
+<div class="sgds:bg-primary-700">Dark</div>
+<div class="sgds:bg-primary-900">Darkest</div>
+```
+
+## Text Colors
+
+### Base Text Colors
+
+```html
+<p class="sgds:text-default">Default text</p>
+<p class="sgds:text-subdued">Subdued text</p>
+<p class="sgds:text-disabled">Disabled text</p>
+<p class="sgds:text-inverse">Inverse text (on dark backgrounds)</p>
+```
+
+### Semantic Text Colors
+
+```html
+<p class="sgds:text-primary-default">Primary text</p>
+<p class="sgds:text-success-default">Success text</p>
+<p class="sgds:text-warning-default">Warning text</p>
+<p class="sgds:text-danger-default">Danger text</p>
+<p class="sgds:text-info-default">Info text</p>
+```
+
+## Border Colors
+
+```html
+<div class="sgds:border sgds:border-default">Default border</div>
+<div class="sgds:border sgds:border-subdued">Subdued border</div>
+<div class="sgds:border sgds:border-primary-default">Primary border</div>
+<div class="sgds:border sgds:border-success-default">Success border</div>
+```
+
+## Complete Example
+
+```html
+<div class="sgds:bg-primary-default sgds:text-white sgds:p-6 sgds:rounded-lg sgds:border sgds:border-primary-700">
+  <h3 class="sgds:text-xl sgds:font-bold">Primary Card</h3>
+  <p class="sgds:text-primary-100 sgds:mt-2">Card content with light text</p>
+</div>
+```
+
+## Dark Mode Support
+
+Colors automatically adapt when the `sgds-theme-night` class is applied:
+
+```html
+<button onclick="document.documentElement.classList.toggle('sgds-theme-night')">
+  Toggle Dark Mode
+</button>
+
+<div class="sgds:bg-surface-default sgds:text-default sgds:p-4">
+  This adapts to theme changes automatically
+</div>
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Typography" icon="font" href="/utilities/typography">
+    Font size, weight, and styling utilities
+  </Card>
+  <Card title="Theming" icon="brush" href="/theming/overview">
+    Customize brand colors
+  </Card>
+</CardGroup>

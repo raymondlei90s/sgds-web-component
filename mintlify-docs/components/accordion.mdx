@@ -1,0 +1,43 @@
+---
+title: "Accordion"
+description: "Collapsible content panels"
+icon: "chevron-down"
+---
+
+Accordion component for collapsible content.
+
+## Basic Usage
+
+```html
+<sgds-accordion>
+  <sgds-accordion-item>
+    <span slot="header">Section 1</span>
+    <div slot="content">Content for section 1</div>
+  </sgds-accordion-item>
+  <sgds-accordion-item>
+    <span slot="header">Section 2</span>
+    <div slot="content">Content for section 2</div>
+  </sgds-accordion-item>
+</sgds-accordion>
+```
+
+## Allow Multiple Open
+
+```html
+<sgds-accordion allowMultiple>
+  <!-- accordion items -->
+</sgds-accordion>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `allowMultiple` | `boolean` | `false` | Allow multiple panels open |
+
+### Slots (Accordion Item)
+| Slot | Description |
+|------|-------------|
+| `header` | Panel header |
+| `content` | Panel content |

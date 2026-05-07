@@ -1,0 +1,36 @@
+---
+title: "Datepicker"
+description: "Calendar date picker"
+icon: "calendar"
+---
+
+Date picker component with calendar interface.
+
+## Basic Usage
+
+```html
+<sgds-datepicker label="Select Date"></sgds-datepicker>
+```
+
+## Date Range
+
+```html
+<sgds-datepicker label="Start Date"></sgds-datepicker>
+<sgds-datepicker label="End Date"></sgds-datepicker>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `label` | `string` | - | Datepicker label |
+| `value` | `string` | - | Selected date (ISO format) |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `minDate` | `string` | - | Minimum selectable date |
+| `maxDate` | `string` | - | Maximum selectable date |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-change` | Fired when date changes |

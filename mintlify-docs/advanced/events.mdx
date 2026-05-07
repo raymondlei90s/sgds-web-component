@@ -1,0 +1,66 @@
+---
+title: "Advanced Events"
+description: "Custom events, event delegation, and shadow DOM event handling"
+icon: "bolt"
+---
+
+Understanding SGDS custom events and shadow DOM event handling.
+
+## Why Custom Events?
+
+Shadow DOM retargets events, which can cause issues with native events. SGDS components emit custom `sgds-*` events that work reliably across shadow boundaries.
+
+## Event Listening
+
+```javascript
+const input = document.querySelector('sgds-input');
+
+// ✅ Correct - Use custom events
+input.addEventListener('sgds-input', (e) => {
+  console.log('Value:', e.target.value);
+});
+
+input.addEventListener('sgds-change', (e) => {
+  console.log('Changed:', e.target.value);
+});
+
+// ❌ Avoid - Native events may not work as expected
+input.addEventListener('input', (e) => {
+  // May not fire or fire multiple times
+});
+```
+
+## Event Delegation
+
+```javascript
+// Listen on parent element
+document.addEventListener('sgds-change', (e) => {
+  if (e.target.tagName === 'SGDS-INPUT') {
+    console.log('Input changed:', e.target.value);
+  }
+});
+```
+
+## Custom Event Details
+
+Most SGDS events include useful detail:
+
+```javascript
+modal.addEventListener('sgds-after-show', (e) => {
+  console.log('Modal shown');
+  // Focus first input
+  const firstInput = modal.querySelector('sgds-input');
+  firstInput?.focus();
+});
+```
+
+## Related Documentation
+
+<CardGroup cols={2}>
+  <Card title="Usage Basics" href="/getting-started/usage-basics">
+    Event fundamentals
+  </Card>
+  <Card title="React Events" href="/frameworks/react">
+    Framework-specific event handling
+  </Card>
+</CardGroup>

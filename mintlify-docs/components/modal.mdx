@@ -1,0 +1,149 @@
+---
+title: "Modal"
+description: "Dialog overlay for focused user interactions"
+icon: "window-maximize"
+---
+
+The modal component displays content in a dialog overlay above the page content.
+
+## Basic Usage
+
+```html
+<sgds-button id="open-modal">Open Modal</sgds-button>
+
+<sgds-modal id="my-modal">
+  <span slot="header">Modal Title</span>
+  <p>Modal content goes here</p>
+  <div slot="footer">
+    <sgds-button id="close-modal">Close</sgds-button>
+  </div>
+</sgds-modal>
+
+<script>
+  const modal = document.getElementById('my-modal');
+  document.getElementById('open-modal').addEventListener('click', () => {
+    modal.open = true;
+  });
+  document.getElementById('close-modal').addEventListener('click', () => {
+    modal.open = false;
+  });
+</script>
+```
+
+## Sizes
+
+```html
+<sgds-modal size="sm">Small modal</sgds-modal>
+<sgds-modal size="md">Medium modal</sgds-modal>
+<sgds-modal size="lg">Large modal</sgds-modal>
+<sgds-modal size="xl">Extra large modal</sgds-modal>
+```
+
+## Without Footer
+
+```html
+<sgds-modal>
+  <span slot="header">Simple Modal</span>
+  <p>Modal content without footer</p>
+</sgds-modal>
+```
+
+## Non-Dismissible
+
+```html
+<sgds-modal noCloseButton>
+  <span slot="header">Important Message</span>
+  <p>User must explicitly confirm</p>
+  <div slot="footer">
+    <sgds-button id="confirm">Confirm</sgds-button>
+  </div>
+</sgds-modal>
+```
+
+## React Example
+
+```jsx
+import { useState } from 'react';
+import { SgdsModal, SgdsButton } from '@govtechsg/sgds-web-component/react';
+
+function ModalExample() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <SgdsButton onClick={() => setIsOpen(true)}>
+        Open Modal
+      </SgdsButton>
+
+      <SgdsModal
+        open={isOpen}
+        onSgdsHide={() => setIsOpen(false)}
+      >
+        <span slot="header">Confirm Action</span>
+        <p>Are you sure you want to proceed?</p>
+        <div slot="footer">
+          <SgdsButton onClick={() => setIsOpen(false)}>
+            Cancel
+          </SgdsButton>
+          <SgdsButton variant="primary" onClick={() => setIsOpen(false)}>
+            Confirm
+          </SgdsButton>
+        </div>
+      </SgdsModal>
+    </>
+  );
+}
+```
+
+## API Reference
+
+### Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `open` | `boolean` | `false` | Controls modal visibility |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Modal size |
+| `noCloseButton` | `boolean` | `false` | Hides close button |
+| `static` | `boolean` | `false` | Prevents closing on backdrop click |
+
+### Events
+
+| Event | Description |
+|-------|-------------|
+| `sgds-show` | Fired when modal starts to show |
+| `sgds-after-show` | Fired after modal is fully shown |
+| `sgds-hide` | Fired when modal starts to hide |
+| `sgds-after-hide` | Fired after modal is fully hidden |
+
+### Slots
+
+| Slot | Description |
+|------|-------------|
+| `header` | Modal header content |
+| `default` | Modal body content |
+| `footer` | Modal footer content |
+
+### Methods
+
+| Method | Description |
+|--------|-------------|
+| `show()` | Opens the modal |
+| `hide()` | Closes the modal |
+
+## Accessibility
+
+- Traps focus within modal when open
+- Closes on Escape key
+- Manages focus return on close
+- Proper ARIA attributes
+
+## Related Components
+
+<CardGroup cols={2}>
+  <Card title="Drawer" href="/components/drawer">
+    Side panel overlay
+  </Card>
+  <Card title="Alert" href="/components/alert">
+    Inline feedback messages
+  </Card>
+</CardGroup>

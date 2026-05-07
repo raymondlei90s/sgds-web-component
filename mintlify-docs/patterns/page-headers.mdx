@@ -1,0 +1,58 @@
+---
+title: "Page Headers"
+description: "Page header patterns with breadcrumbs"
+icon: "heading"
+---
+
+Page header patterns for internal pages.
+
+## Basic Page Header
+
+```html
+<div class="sgds:border-b sgds:border-default sgds:pb-6 sgds:mb-6">
+  <h1 class="sgds:text-4xl sgds:font-bold sgds:mb-2">Page Title</h1>
+  <p class="sgds:text-subdued">Page description or subtitle</p>
+</div>
+```
+
+## With Breadcrumb
+
+```html
+<div class="sgds:mb-6">
+  <sgds-breadcrumb>
+    <sgds-breadcrumb-item href="/">Home</sgds-breadcrumb-item>
+    <sgds-breadcrumb-item href="/section">Section</sgds-breadcrumb-item>
+    <sgds-breadcrumb-item active>Current Page</sgds-breadcrumb-item>
+  </sgds-breadcrumb>
+</div>
+
+<div class="sgds:border-b sgds:border-default sgds:pb-6 sgds:mb-6">
+  <h1 class="sgds:text-4xl sgds:font-bold">Page Title</h1>
+</div>
+```
+
+## With Actions
+
+```html
+<div class="sgds:flex sgds:justify-between sgds:items-start sgds:border-b sgds:border-default sgds:pb-6 sgds:mb-6">
+  <div>
+    <h1 class="sgds:text-4xl sgds:font-bold sgds:mb-2">Page Title</h1>
+    <p class="sgds:text-subdued">Page description</p>
+  </div>
+  <div class="sgds:flex sgds:gap-2">
+    <sgds-button variant="outline">Secondary</sgds-button>
+    <sgds-button variant="primary">Primary Action</sgds-button>
+  </div>
+</div>
+```
+
+## Related Patterns
+
+<CardGroup cols={2}>
+  <Card title="Breadcrumb" href="/components/breadcrumb">
+    Breadcrumb component
+  </Card>
+  <Card title="Hero" href="/patterns/hero">
+    Hero sections
+  </Card>
+</CardGroup>

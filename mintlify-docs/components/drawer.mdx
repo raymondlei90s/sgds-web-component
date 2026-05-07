@@ -1,0 +1,46 @@
+---
+title: "Drawer"
+description: "Side panel overlay"
+icon: "sidebar"
+---
+
+Drawer component for side panel overlays.
+
+## Basic Usage
+
+```html
+<sgds-drawer id="my-drawer" placement="right">
+  <span slot="header">Drawer Title</span>
+  <p>Drawer content goes here</p>
+</sgds-drawer>
+
+<sgds-button onclick="document.getElementById('my-drawer').open = true">
+  Open Drawer
+</sgds-button>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `open` | `boolean` | `false` | Open state |
+| `placement` | `'left' \| 'right'` | `'right'` | Drawer position |
+
+### Slots
+| Slot | Description |
+|------|-------------|
+| `header` | Drawer header |
+| `default` | Drawer content |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-show` | Fired when drawer opens |
+| `sgds-hide` | Fired when drawer closes |
+
+### Methods
+| Method | Description |
+|--------|-------------|
+| `show()` | Open drawer |
+| `hide()` | Close drawer |

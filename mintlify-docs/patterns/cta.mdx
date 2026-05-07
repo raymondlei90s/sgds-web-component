@@ -1,0 +1,66 @@
+---
+title: "Call-to-Action Sections"
+description: "CTA sections to drive user actions"
+icon: "bullhorn"
+---
+
+Call-to-action sections encourage users to take specific actions.
+
+## Contained Primary
+
+```html
+<div class="sgds:bg-primary-default sgds:text-white sgds:py-16 sgds:rounded-lg">
+  <div class="sgds:max-w-4xl sgds:mx-auto sgds:text-center sgds:px-4">
+    <h2 class="sgds:text-3xl sgds:font-bold sgds:mb-4">Ready to Get Started?</h2>
+    <p class="sgds:text-lg sgds:mb-6">Join thousands of users already using our platform</p>
+    <sgds-button variant="secondary" size="lg">Sign Up Now</sgds-button>
+  </div>
+</div>
+```
+
+## Fullbleed with Gradient
+
+```html
+<div class="sgds:bg-gradient-to-r sgds:from-primary-600 sgds:to-secondary-600 sgds:text-white sgds:py-20">
+  <div class="sgds:max-w-7xl sgds:mx-auto sgds:px-4 sgds:text-center">
+    <h2 class="sgds:text-4xl sgds:font-bold sgds:mb-4">Transform Your Workflow</h2>
+    <p class="sgds:text-xl sgds:mb-8 sgds:max-w-2xl sgds:mx-auto">
+      Streamline operations and improve efficiency with our platform
+    </p>
+    <div class="sgds:flex sgds:gap-4 sgds:justify-center">
+      <sgds-button size="lg">Start Free Trial</sgds-button>
+      <sgds-button variant="outline" size="lg">Schedule Demo</sgds-button>
+    </div>
+  </div>
+</div>
+```
+
+## Split Layout
+
+```html
+<div class="sgds:bg-surface-raised sgds:rounded-lg sgds:overflow-hidden">
+  <div class="sgds:grid sgds:grid-cols-1 md:sgds:grid-cols-2 sgds:gap-8 sgds:items-center">
+    <div class="sgds:p-12">
+      <h2 class="sgds:text-3xl sgds:font-bold sgds:mb-4">Need Help Getting Started?</h2>
+      <p class="sgds:text-subdued sgds:mb-6">
+        Our team is here to help you succeed
+      </p>
+      <sgds-button variant="primary">Contact Us</sgds-button>
+    </div>
+    <div class="sgds:bg-primary-100 sgds:p-12 sgds:h-full sgds:flex sgds:items-center sgds:justify-center">
+      <img src="/cta-illustration.svg" alt="Get Started" class="sgds:max-w-sm" />
+    </div>
+  </div>
+</div>
+```
+
+## Related Patterns
+
+<CardGroup cols={2}>
+  <Card title="Hero" href="/patterns/hero">
+    Hero sections
+  </Card>
+  <Card title="Forms" href="/patterns/form-layouts">
+    Form layouts
+  </Card>
+</CardGroup>

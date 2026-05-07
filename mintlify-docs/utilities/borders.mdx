@@ -1,0 +1,76 @@
+---
+title: "Border Utilities"
+description: "Border width, radius, and color utilities"
+icon: "border-all"
+---
+
+SGDS border utilities for width, radius, and styling using the `sgds:` prefix.
+
+## Border Width
+
+```html
+<div class="sgds:border">Default border (1px)</div>
+<div class="sgds:border-2">2px border</div>
+<div class="sgds:border-4">4px border</div>
+<div class="sgds:border-0">No border</div>
+```
+
+### Individual Sides
+
+```html
+<div class="sgds:border-t">Top border</div>
+<div class="sgds:border-r">Right border</div>
+<div class="sgds:border-b">Bottom border</div>
+<div class="sgds:border-l">Left border</div>
+```
+
+## Border Radius
+
+```html
+<div class="sgds:rounded-none">No rounding</div>
+<div class="sgds:rounded-sm">Small (2px)</div>
+<div class="sgds:rounded">Default (4px)</div>
+<div class="sgds:rounded-md">Medium (6px)</div>
+<div class="sgds:rounded-lg">Large (8px)</div>
+<div class="sgds:rounded-xl">Extra large (12px)</div>
+<div class="sgds:rounded-2xl">2XL (16px)</div>
+<div class="sgds:rounded-full">Fully rounded (9999px)</div>
+```
+
+### Individual Corners
+
+```html
+<div class="sgds:rounded-tl-lg">Top-left rounded</div>
+<div class="sgds:rounded-tr-lg">Top-right rounded</div>
+<div class="sgds:rounded-bl-lg">Bottom-left rounded</div>
+<div class="sgds:rounded-br-lg">Bottom-right rounded</div>
+```
+
+## Border Colors
+
+```html
+<div class="sgds:border sgds:border-default">Default border color</div>
+<div class="sgds:border sgds:border-subdued">Subdued border</div>
+<div class="sgds:border sgds:border-primary-default">Primary border</div>
+<div class="sgds:border sgds:border-success-default">Success border</div>
+<div class="sgds:border sgds:border-danger-default">Danger border</div>
+```
+
+## Complete Example
+
+```html
+<div class="sgds:bg-surface-raised sgds:border-2 sgds:border-primary-default sgds:rounded-lg sgds:p-6">
+  Card with border
+</div>
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Colors" icon="palette" href="/utilities/colors">
+    Border color utilities
+  </Card>
+  <Card title="Elevation" icon="layer-group" href="/utilities/elevation">
+    Box shadow utilities
+  </Card>
+</CardGroup>

@@ -1,0 +1,58 @@
+---
+title: "Elevation Utilities"
+description: "Box shadow utilities for depth and hierarchy"
+icon: "layer-group"
+---
+
+SGDS elevation utilities add depth through box shadows using the `sgds:` prefix.
+
+## Shadow Levels
+
+```html
+<div class="sgds:shadow-none">No shadow</div>
+<div class="sgds:shadow-sm">Small shadow</div>
+<div class="sgds:shadow">Default shadow</div>
+<div class="sgds:shadow-md">Medium shadow</div>
+<div class="sgds:shadow-lg">Large shadow</div>
+<div class="sgds:shadow-xl">Extra large shadow</div>
+<div class="sgds:shadow-2xl">2XL shadow</div>
+```
+
+## Use Cases
+
+### Cards
+
+```html
+<div class="sgds:bg-surface-default sgds:shadow-md sgds:rounded-lg sgds:p-6">
+  Card with medium elevation
+</div>
+```
+
+### Hover Effects
+
+```html
+<button class="sgds:shadow transition-shadow hover:sgds:shadow-lg">
+  Hover me
+</button>
+```
+
+### Layered Content
+
+```html
+<div class="sgds:relative">
+  <div class="sgds:shadow-lg sgds:bg-surface-raised sgds:p-6">
+    Top layer with elevation
+  </div>
+</div>
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Borders" icon="border-all" href="/utilities/borders">
+    Border utilities
+  </Card>
+  <Card title="Colors" icon="palette" href="/utilities/colors">
+    Background color utilities
+  </Card>
+</CardGroup>

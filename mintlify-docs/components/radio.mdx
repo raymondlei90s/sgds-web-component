@@ -1,0 +1,30 @@
+---
+title: "Radio"
+description: "Radio button for exclusive selection"
+icon: "circle-dot"
+---
+
+Radio button component for mutually exclusive selections.
+
+## Basic Usage
+
+```html
+<sgds-radio name="size" value="small">Small</sgds-radio>
+<sgds-radio name="size" value="medium" checked>Medium</sgds-radio>
+<sgds-radio name="size" value="large">Large</sgds-radio>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `name` | `string` | - | Radio group name |
+| `value` | `string` | - | Radio value |
+| `checked` | `boolean` | `false` | Checked state |
+| `disabled` | `boolean` | `false` | Disabled state |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-change` | Fired when selection changes |

@@ -1,0 +1,38 @@
+---
+title: "Toast"
+description: "Temporary notification"
+icon: "message"
+---
+
+Toast notification component.
+
+## Basic Usage
+
+```html
+<sgds-toast id="my-toast">Toast message</sgds-toast>
+
+<script>
+  const toast = document.getElementById('my-toast');
+  toast.show();
+</script>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `variant` | `string` | `'default'` | Toast variant |
+| `duration` | `number` | `3000` | Auto-hide duration (ms) |
+
+### Methods
+| Method | Description |
+|--------|-------------|
+| `show()` | Show toast |
+| `hide()` | Hide toast |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-show` | Fired when shown |
+| `sgds-hide` | Fired when hidden |

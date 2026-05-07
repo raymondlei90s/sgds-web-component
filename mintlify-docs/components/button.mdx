@@ -1,0 +1,202 @@
+---
+title: "Button"
+description: "Clickable button component with multiple variants and sizes"
+icon: "square"
+---
+
+The button component provides consistent, accessible buttons for user actions.
+
+## Basic Usage
+
+```html
+<sgds-button>Default Button</sgds-button>
+<sgds-button variant="primary">Primary Button</sgds-button>
+<sgds-button variant="secondary">Secondary Button</sgds-button>
+```
+
+## Variants
+
+<CodeGroup>
+```html Solid (Default)
+<sgds-button variant="solid">Solid Button</sgds-button>
+<sgds-button variant="primary">Primary Button</sgds-button>
+<sgds-button variant="secondary">Secondary Button</sgds-button>
+```
+
+```html Outline
+<sgds-button variant="outline">Outline Button</sgds-button>
+<sgds-button variant="outline-primary">Outline Primary</sgds-button>
+```
+
+```html Ghost
+<sgds-button variant="ghost">Ghost Button</sgds-button>
+```
+
+```html Link
+<sgds-button variant="link">Link Button</sgds-button>
+```
+</CodeGroup>
+
+## Sizes
+
+```html
+<sgds-button size="sm">Small</sgds-button>
+<sgds-button size="md">Medium</sgds-button>
+<sgds-button size="lg">Large</sgds-button>
+```
+
+## States
+
+```html
+<sgds-button disabled>Disabled</sgds-button>
+<sgds-button loading>Loading...</sgds-button>
+<sgds-button active>Active</sgds-button>
+```
+
+## With Icons
+
+```html
+<sgds-button>
+  <svg slot="icon-left" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+  </svg>
+  With Left Icon
+</sgds-button>
+
+<sgds-button variant="primary">
+  With Right Icon
+  <svg slot="icon-right" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    <path d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"/>
+  </svg>
+</sgds-button>
+```
+
+## Framework Examples
+
+<Tabs>
+  <Tab title="React">
+    ```jsx
+    import { SgdsButton } from '@govtechsg/sgds-web-component/react';
+
+    function App() {
+      const handleClick = () => {
+        console.log('Button clicked!');
+      };
+
+      return (
+        <SgdsButton variant="primary" onClick={handleClick}>
+          Click Me
+        </SgdsButton>
+      );
+    }
+    ```
+  </Tab>
+
+  <Tab title="Vue">
+    ```vue
+    <template>
+      <sgds-button variant="primary" @click="handleClick">
+        Click Me
+      </sgds-button>
+    </template>
+
+    <script>
+    export default {
+      methods: {
+        handleClick() {
+          console.log('Button clicked!');
+        }
+      }
+    };
+    </script>
+    ```
+  </Tab>
+
+  <Tab title="Angular">
+    ```typescript
+    import { Component } from '@angular/core';
+
+    @Component({
+      selector: 'app-root',
+      template: `
+        <sgds-button variant="primary" (click)="handleClick()">
+          Click Me
+        </sgds-button>
+      `
+    })
+    export class AppComponent {
+      handleClick() {
+        console.log('Button clicked!');
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## API Reference
+
+### Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `variant` | `'solid' \| 'primary' \| 'secondary' \| 'outline' \| 'outline-primary' \| 'ghost' \| 'link'` | `'solid'` | Button visual style |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Button size |
+| `disabled` | `boolean` | `false` | Disables the button |
+| `loading` | `boolean` | `false` | Shows loading state |
+| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | Button type attribute |
+| `href` | `string` | - | Makes button behave as link |
+
+### Events
+
+| Event | Description |
+|-------|-------------|
+| `click` | Fired when button is clicked |
+| `focus` | Fired when button receives focus |
+| `blur` | Fired when button loses focus |
+
+### Slots
+
+| Slot | Description |
+|------|-------------|
+| `default` | Button text content |
+| `icon-left` | Icon before text |
+| `icon-right` | Icon after text |
+
+### CSS Custom Properties
+
+| Property | Description |
+|----------|-------------|
+| `--button-bg` | Background color |
+| `--button-color` | Text color |
+| `--button-border-color` | Border color |
+| `--button-padding-x` | Horizontal padding |
+| `--button-padding-y` | Vertical padding |
+
+### CSS Parts
+
+| Part | Description |
+|------|-------------|
+| `base` | The button element |
+| `content` | Button content wrapper |
+
+## Accessibility
+
+- Uses native `<button>` element
+- Supports keyboard navigation (Enter, Space)
+- Proper ARIA attributes for disabled/loading states
+- Focus visible styles
+
+## Related Components
+
+<CardGroup cols={2}>
+  <Card title="Icon Button" href="/components/icon-button">
+    Button with only an icon
+  </Card>
+  <Card title="Close Button" href="/components/close-button">
+    Standardized close button
+  </Card>
+  <Card title="Link" href="/components/link">
+    Styled hyperlink component
+  </Card>
+</CardGroup>

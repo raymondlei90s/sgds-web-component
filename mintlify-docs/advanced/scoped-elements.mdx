@@ -1,0 +1,113 @@
+---
+title: "Scoped Custom Elements"
+description: "Using OpenWC scoped elements for library composition"
+icon: "layer-group"
+---
+
+SGDS Web Components uses OpenWC's `ScopedElementsMixin` for better library composition and version management.
+
+## Why Scoped Elements?
+
+Scoped elements solve the problem of multiple versions of the same component being used in a single application:
+
+<AccordionGroup>
+  <Accordion title="Version Conflicts">
+    Without scoping, only one version of a custom element can be registered globally. Scoped elements allow multiple versions to coexist.
+  </Accordion>
+
+  <Accordion title="Library Composition">
+    When building on top of SGDS components, scoped elements prevent naming collisions and version conflicts.
+  </Accordion>
+
+  <Accordion title="Lazy Loading">
+    Components can be loaded and registered on-demand without affecting the global custom elements registry.
+  </Accordion>
+</AccordionGroup>
+
+## How It Works
+
+SGDS components use the scoped custom element registry polyfill:
+
+```javascript
+import '@webcomponents/scoped-custom-element-registry';
+import { ScopedElementsMixin } from '@open-wc/scoped-elements';
+import { LitElement } from 'lit';
+
+class MyComponent extends ScopedElementsMixin(LitElement) {
+  static get scopedElements() {
+    return {
+      'sgds-button': SgdsButton,
+      'sgds-input': SgdsInput
+    };
+  }
+}
+```
+
+## Usage in Your Components
+
+When extending SGDS components, register dependencies in `scopedElements`:
+
+```javascript
+import { ScopedElementsMixin } from '@open-wc/scoped-elements';
+import { LitElement, html } from 'lit';
+import { SgdsButton } from '@govtechsg/sgds-web-component';
+
+class MyForm extends ScopedElementsMixin(LitElement) {
+  static get scopedElements() {
+    return {
+      'sgds-button': SgdsButton
+    };
+  }
+
+  render() {
+    return html`
+      <form>
+        <sgds-button type="submit">Submit</sgds-button>
+      </form>
+    `;
+  }
+}
+```
+
+## Polyfill Requirements
+
+The scoped custom element registry requires a polyfill for browsers without native support:
+
+```html
+<script src="https://unpkg.com/@webcomponents/scoped-custom-element-registry"></script>
+```
+
+Or via npm:
+
+```bash
+npm install @webcomponents/scoped-custom-element-registry
+```
+
+```javascript
+import '@webcomponents/scoped-custom-element-registry';
+```
+
+## Best Practices
+
+<Card title="Load Polyfill First" icon="bolt">
+  Always load the scoped custom element registry polyfill before any components
+</Card>
+
+<Card title="Register Dependencies" icon="list-check">
+  Explicitly register all component dependencies in `scopedElements`
+</Card>
+
+<Card title="Version Pinning" icon="lock">
+  Pin specific versions in your `scopedElements` to avoid unexpected updates
+</Card>
+
+## Related Documentation
+
+<CardGroup cols={2}>
+  <Card title="OpenWC Documentation" href="https://open-wc.org/docs/development/scoped-elements/" icon="link">
+    Official scoped elements guide
+  </Card>
+  <Card title="Performance" href="/advanced/performance">
+    Optimization strategies
+  </Card>
+</CardGroup>

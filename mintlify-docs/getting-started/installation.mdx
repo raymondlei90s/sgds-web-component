@@ -1,0 +1,152 @@
+---
+title: "Installation"
+description: "Install SGDS Web Components via CDN or package manager"
+icon: "download"
+---
+
+You can load SGDS Web Components via CDN or install it locally using npm/pnpm/yarn. The library depends on the [scoped custom elements registry](https://open-wc.org/docs/development/scoped-elements/) and in certain cases requires the polyfill.
+
+<Tip>
+Refer to [OpenWC's scoped elements guide](https://open-wc.org/docs/development/scoped-elements/#:~:text=load%20the%20polyfill%20if%20you%20need%20scoping) to determine when you need the polyfill.
+</Tip>
+
+## Method 1: CDN (Recommended for Prototyping)
+
+The CDN loader registers all SGDS elements up front. This is the fastest way to get started.
+
+### Version Control
+
+<Warning>
+When using CDN, it is **highly recommended** to version control. On initial usage, pick the latest version from [npm](https://www.npmjs.com/package/@govtechsg/sgds-web-component?activeTab=versions).
+
+Stick to a version that works for you and make intentional updates. Versions are immutable and stable.
+
+By not specifying a version, you use the latest version and are subject to changes that haven't been tested in your application.
+</Warning>
+
+### Full Library
+
+Load all components with a single script tag:
+
+```html
+<!-- Optional: Load polyfill first (if needed) -->
+<script src="https://cdn.jsdelivr.net/npm/@webcomponents/scoped-custom-element-registry"></script>
+
+<!-- Load SGDS Web Components (recommended to specify version) -->
+<script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1"></script>
+```
+
+### Individual Components
+
+For better performance, load only the components you need:
+
+```html
+<!-- Load only the Masthead component -->
+<script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1/components/Masthead/index.umd.js"></script>
+
+<!-- Load only Button and Alert -->
+<script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1/components/Button/index.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1/components/Alert/index.umd.js"></script>
+```
+
+## Method 2: Package Manager (Recommended for Production)
+
+Install SGDS Web Components locally for better control and bundling optimization.
+
+<CodeGroup>
+```bash npm
+npm install @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+
+```bash pnpm
+pnpm add @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+
+```bash yarn
+yarn add @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+</CodeGroup>
+
+### Import in Your Entry Point
+
+Import the polyfill and library once in your entry point (e.g., `main.js`, `index.js`, or `App.tsx`):
+
+<Note>
+The scoped custom element registry polyfill **must be imported before** any custom element registration happens.
+</Note>
+
+```javascript
+// Import polyfill first (optional, depends on use case)
+import "@webcomponents/scoped-custom-element-registry";
+
+// Import SGDS Web Components
+import "@govtechsg/sgds-web-component";
+```
+
+Once imported, use the custom elements throughout your project:
+
+```html
+<sgds-button>Hello World</sgds-button>
+```
+
+## When to Use the Polyfill
+
+The scoped custom element registry polyfill is needed when:
+
+- **Building component libraries** on top of SGDS Web Components
+- **Multiple versions** of the same component might coexist in your application
+- **Extending SGDS components** with your own web components
+
+<Check>
+For most applications using SGDS components directly, the polyfill is **optional**.
+</Check>
+
+## Verifying Installation
+
+Test your installation with this simple HTML file:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGDS Test</title>
+  <script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1"></script>
+</head>
+<body>
+  <sgds-button variant="primary">Click Me</sgds-button>
+
+  <sgds-alert show variant="success">
+    <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </svg>
+    SGDS Web Components is working!
+  </sgds-alert>
+
+  <script>
+    const button = document.querySelector('sgds-button');
+    button.addEventListener('click', () => {
+      alert('SGDS Button clicked!');
+    });
+  </script>
+</body>
+</html>
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Quick Start Guide" icon="bolt" href="/getting-started/quick-start">
+    Build your first component in 5 minutes
+  </Card>
+  <Card title="Usage Basics" icon="book" href="/getting-started/usage-basics">
+    Learn about attributes, events, and slots
+  </Card>
+  <Card title="React Integration" icon="react" href="/frameworks/react">
+    Special instructions for React developers
+  </Card>
+  <Card title="Browse Components" icon="cubes" href="/components/overview">
+    Explore all 47 components
+  </Card>
+</CardGroup>

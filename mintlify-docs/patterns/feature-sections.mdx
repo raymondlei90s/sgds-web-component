@@ -1,0 +1,68 @@
+---
+title: "Feature Sections"
+description: "Feature showcase sections with various layouts"
+icon: "star"
+---
+
+Feature sections to showcase product features with images or components.
+
+## 6-6 Layout (Image Left)
+
+```html
+<div class="sgds:grid sgds:grid-cols-1 md:sgds:grid-cols-2 sgds:gap-12 sgds:items-center sgds:py-16">
+  <div>
+    <img src="/feature.jpg" alt="Feature" class="sgds:w-full sgds:rounded-lg" />
+  </div>
+  <div>
+    <h2 class="sgds:text-3xl sgds:font-bold sgds:mb-4">Feature Title</h2>
+    <p class="sgds:text-subdued sgds:mb-6">
+      Detailed description of the feature and its benefits.
+    </p>
+    <sgds-button variant="primary">Learn More</sgds-button>
+  </div>
+</div>
+```
+
+## 6-6 Layout (Image Right)
+
+```html
+<div class="sgds:grid sgds:grid-cols-1 md:sgds:grid-cols-2 sgds:gap-12 sgds:items-center sgds:py-16">
+  <div>
+    <h2 class="sgds:text-3xl sgds:font-bold sgds:mb-4">Feature Title</h2>
+    <p class="sgds:text-subdued sgds:mb-6">
+      Feature description here.
+    </p>
+    <sgds-button variant="primary">Get Started</sgds-button>
+  </div>
+  <div>
+    <img src="/feature.jpg" alt="Feature" class="sgds:w-full sgds:rounded-lg" />
+  </div>
+</div>
+```
+
+## 4-8 Layout
+
+```html
+<div class="sgds:grid sgds:grid-cols-1 md:sgds:grid-cols-12 sgds:gap-8 sgds:items-center sgds:py-16">
+  <div class="md:sgds:col-span-4">
+    <img src="/feature.jpg" alt="Feature" class="sgds:w-full sgds:rounded-lg" />
+  </div>
+  <div class="md:sgds:col-span-8">
+    <h2 class="sgds:text-3xl sgds:font-bold sgds:mb-4">Wide Content</h2>
+    <p class="sgds:text-subdued sgds:mb-6">
+      More space for detailed content and explanations.
+    </p>
+  </div>
+</div>
+```
+
+## Related Patterns
+
+<CardGroup cols={2}>
+  <Card title="Hero" href="/patterns/hero">
+    Hero sections
+  </Card>
+  <Card title="CTA" href="/patterns/cta">
+    Call-to-action sections
+  </Card>
+</CardGroup>

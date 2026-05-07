@@ -1,0 +1,116 @@
+---
+title: "Introduction"
+description: "SGDS Web Components - Framework-agnostic UI components built with Web Standards"
+icon: "rocket"
+---
+
+## What is SGDS Web Components?
+
+SGDS Web Components is Singapore Government's official design system implementation using native Web Components. Built with [Lit](https://lit.dev), these components work seamlessly across all modern frameworks including React, Vue, Angular, and vanilla JavaScript.
+
+<CardGroup cols={2}>
+  <Card title="SGDS v2+ Styles" icon="palette">
+    Components ship with SGDS v2 styles out of the box. No additional CSS imports needed.
+  </Card>
+  <Card title="Framework Agnostic" icon="puzzle-piece">
+    Compatible with all frameworks. React components included for full compatibility.
+  </Card>
+  <Card title="Theming with CSS Variables" icon="brush">
+    Customize colors, typography, and spacing using CSS custom properties.
+  </Card>
+  <Card title="Works with CDNs" icon="truck">
+    Load components via CDN or install locally. Each component has its own CDN bundle.
+  </Card>
+  <Card title="Accessible" icon="universal-access">
+    Built with accessibility in mind, following WAI-ARIA best practices.
+  </Card>
+  <Card title="Open Source" icon="code">
+    MIT licensed and community-driven. Contributions welcome!
+  </Card>
+</CardGroup>
+
+## Key Features
+
+<AccordionGroup>
+  <Accordion title="47 Production-Ready Components">
+    From basic buttons and inputs to complex navigation and modals. Every component is tested and production-ready.
+  </Accordion>
+
+  <Accordion title="Built with Web Standards">
+    Uses native Custom Elements API, Shadow DOM for style encapsulation, and scoped registries for version compatibility.
+  </Accordion>
+
+  <Accordion title="Tailwind v4 Utilities">
+    Access SGDS design tokens through Tailwind utilities with the `sgds:` prefix for colors, spacing, and typography.
+  </Accordion>
+
+  <Accordion title="Block Templates & Patterns">
+    Pre-built page sections including heroes, CTAs, feature layouts, and form patterns. Copy and paste to get started quickly.
+  </Accordion>
+</AccordionGroup>
+
+## Quick Example
+
+Get started in seconds with CDN or local installation:
+
+<CodeGroup>
+```html CDN
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1"></script>
+</head>
+<body>
+  <sgds-button variant="primary">Click Me</sgds-button>
+  <sgds-alert show variant="success">
+    Welcome to SGDS Web Components!
+  </sgds-alert>
+</body>
+</html>
+```
+
+```bash npm
+npm install @govtechsg/sgds-web-component
+```
+
+```javascript import
+import "@govtechsg/sgds-web-component";
+
+// Use in your HTML
+<sgds-button variant="primary">Click Me</sgds-button>
+```
+</CodeGroup>
+
+## Who Uses SGDS?
+
+SGDS Web Components are used across Singapore Government digital services, ensuring consistency and accessibility for millions of citizens.
+
+## Browser Support
+
+SGDS Web Components work in all modern browsers:
+
+- ✅ Chrome/Edge 90+
+- ✅ Firefox 88+
+- ✅ Safari 15+
+- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+
+<Note>
+For legacy browser support, you may need the [scoped custom element registry polyfill](https://github.com/webcomponents/polyfills/tree/master/packages/scoped-custom-element-registry).
+</Note>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Installation" icon="download" href="/getting-started/installation">
+    Install SGDS Web Components in your project
+  </Card>
+  <Card title="Quick Start" icon="bolt" href="/getting-started/quick-start">
+    Build your first component in 5 minutes
+  </Card>
+  <Card title="React Integration" icon="react" href="/frameworks/react">
+    Using SGDS with React
+  </Card>
+  <Card title="Components" icon="cubes" href="/components/overview">
+    Browse all 47 components
+  </Card>
+</CardGroup>

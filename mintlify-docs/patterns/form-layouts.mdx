@@ -1,0 +1,76 @@
+---
+title: "Form Layouts"
+description: "Common form layout patterns with SGDS components"
+icon: "file-lines"
+---
+
+Standard form layouts using SGDS form components.
+
+## Basic Form
+
+```html
+<form class="sgds:max-w-lg">
+  <sgds-input label="Full Name" required></sgds-input>
+  <sgds-input label="Email" type="email" required></sgds-input>
+  <sgds-textarea label="Message" rows="4"></sgds-textarea>
+  <sgds-checkbox>I agree to the terms</sgds-checkbox>
+  <sgds-button type="submit" variant="primary">Submit</sgds-button>
+</form>
+```
+
+## Two-Column Form
+
+```html
+<form class="sgds:max-w-4xl">
+  <div class="sgds:grid sgds:grid-cols-1 md:sgds:grid-cols-2 sgds:gap-6">
+    <sgds-input label="First Name" required></sgds-input>
+    <sgds-input label="Last Name" required></sgds-input>
+    <sgds-input label="Email" type="email" required></sgds-input>
+    <sgds-input label="Phone" type="tel"></sgds-input>
+  </div>
+  <div class="sgds:mt-6">
+    <sgds-textarea label="Comments" rows="4"></sgds-textarea>
+  </div>
+  <div class="sgds:mt-6">
+    <sgds-button type="submit" variant="primary">Submit</sgds-button>
+  </div>
+</form>
+```
+
+## Multi-Step with Stepper
+
+```html
+<sgds-stepper activeIndex="0">
+  <sgds-stepper-item>Step 1</sgds-stepper-item>
+  <sgds-stepper-item>Step 2</sgds-stepper-item>
+  <sgds-stepper-item>Step 3</sgds-stepper-item>
+</sgds-stepper>
+
+<div id="step-1">
+  <sgds-input label="Personal Information"></sgds-input>
+</div>
+
+<div id="step-2" style="display: none;">
+  <sgds-input label="Contact Details"></sgds-input>
+</div>
+
+<div id="step-3" style="display: none;">
+  <sgds-input label="Review & Submit"></sgds-input>
+</div>
+
+<div class="sgds:flex sgds:gap-4 sgds:mt-6">
+  <sgds-button id="prev-btn">Previous</sgds-button>
+  <sgds-button id="next-btn" variant="primary">Next</sgds-button>
+</div>
+```
+
+## Related Patterns
+
+<CardGroup cols={2}>
+  <Card title="Form Validation" href="/patterns/form-validation">
+    Validation patterns
+  </Card>
+  <Card title="Input Component" href="/components/input">
+    Input documentation
+  </Card>
+</CardGroup>

@@ -1,0 +1,196 @@
+---
+title: "Accessibility"
+description: "ARIA patterns and keyboard navigation in SGDS components"
+icon: "universal-access"
+---
+
+SGDS Web Components are built with accessibility in mind, following WCAG 2.1 AA standards and WAI-ARIA best practices.
+
+## Keyboard Navigation
+
+All interactive components support standard keyboard patterns:
+
+<AccordionGroup>
+  <Accordion title="Tab Navigation">
+    Use `Tab` to move forward through interactive elements, `Shift+Tab` to move backward
+  </Accordion>
+
+  <Accordion title="Arrow Keys">
+    Navigate within composite widgets like tabs, menus, and radio groups using arrow keys
+  </Accordion>
+
+  <Accordion title="Enter and Space">
+    Activate buttons and toggle controls with `Enter` or `Space`
+  </Accordion>
+
+  <Accordion title="Escape">
+    Close modals, dropdowns, and overlays with `Escape`
+  </Accordion>
+</AccordionGroup>
+
+## ARIA Patterns
+
+### Form Components
+
+All form components implement proper ARIA attributes:
+
+```html
+<sgds-input
+  label="Email"
+  type="email"
+  required
+  invalidFeedback="Please enter a valid email"
+  hasFeedback>
+</sgds-input>
+```
+
+Generated markup includes:
+- `aria-invalid="true"` when validation fails
+- `aria-describedby` linking to error messages
+- `aria-required="true"` for required fields
+
+### Navigation Components
+
+Navigation components use proper landmark roles:
+
+```html
+<sgds-mainnav role="navigation" aria-label="Main navigation">
+  <!-- nav items -->
+</sgds-mainnav>
+```
+
+### Modal Dialogs
+
+Modals implement the dialog pattern with focus management:
+
+```html
+<sgds-modal>
+  <span slot="header">Dialog Title</span>
+  <p>Dialog content</p>
+  <div slot="footer">
+    <sgds-button>Cancel</sgds-button>
+    <sgds-button variant="primary">Confirm</sgds-button>
+  </div>
+</sgds-modal>
+```
+
+Features:
+- Focus trap when open
+- Focus returns to trigger element on close
+- `role="dialog"` and `aria-modal="true"`
+- `aria-labelledby` for accessible name
+
+## Color Contrast
+
+SGDS color tokens meet WCAG AA contrast requirements:
+
+<CardGroup cols={2}>
+  <Card title="Text on Background" icon="palette">
+    4.5:1 minimum ratio for normal text
+  </Card>
+  <Card title="Interactive Elements" icon="hand-pointer">
+    3:1 minimum ratio for UI components
+  </Card>
+</CardGroup>
+
+## Screen Reader Support
+
+All components are tested with:
+- NVDA (Windows)
+- JAWS (Windows)
+- VoiceOver (macOS/iOS)
+
+### Semantic HTML
+
+Components use native HTML elements where possible:
+
+```html
+<!-- Button uses native button element -->
+<sgds-button>Click me</sgds-button>
+<!-- Renders as -->
+<button>Click me</button>
+
+<!-- Input uses native input element -->
+<sgds-input type="text"></sgds-input>
+<!-- Renders as -->
+<input type="text" />
+```
+
+## Form Validation Announcements
+
+Invalid form fields are announced to screen readers:
+
+```html
+<sgds-input
+  label="Username"
+  required
+  invalidFeedback="Username is required"
+  hasFeedback>
+</sgds-input>
+```
+
+When validation fails:
+1. `aria-invalid="true"` is set
+2. Error message is linked via `aria-describedby`
+3. Screen reader announces the error
+
+## Skip Links
+
+Add skip links for better navigation:
+
+```html
+<a href="#main-content" class="sgds:sr-only sgds:focus:not-sr-only">
+  Skip to main content
+</a>
+
+<sgds-masthead></sgds-masthead>
+<sgds-mainnav></sgds-mainnav>
+
+<main id="main-content">
+  <!-- page content -->
+</main>
+```
+
+## Focus Indicators
+
+All interactive elements have visible focus indicators using the CSS `:focus-visible` pseudo-class.
+
+Customize focus styles using CSS custom properties:
+
+```css
+sgds-button::part(base) {
+  --focus-ring-color: var(--sgds-color-primary-600);
+  --focus-ring-width: 3px;
+}
+```
+
+## Testing Checklist
+
+<Steps>
+  <Step title="Keyboard Testing">
+    Navigate entire interface using only keyboard
+  </Step>
+  <Step title="Screen Reader Testing">
+    Test with NVDA/JAWS/VoiceOver
+  </Step>
+  <Step title="Contrast Checking">
+    Verify all colors meet WCAG AA (4.5:1 for text)
+  </Step>
+  <Step title="Focus Visibility">
+    Ensure all interactive elements show focus indicator
+  </Step>
+  <Step title="Error Announcements">
+    Verify form errors are announced to screen readers
+  </Step>
+</Steps>
+
+## Related Documentation
+
+<CardGroup cols={2}>
+  <Card title="Form Validation" href="/patterns/form-validation">
+    Accessible form patterns
+  </Card>
+  <Card title="WCAG Guidelines" href="https://www.w3.org/WAI/WCAG21/quickref/" icon="link">
+    Web Content Accessibility Guidelines
+  </Card>
+</CardGroup>

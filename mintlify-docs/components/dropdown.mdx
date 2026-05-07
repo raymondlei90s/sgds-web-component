@@ -1,0 +1,33 @@
+---
+title: "Dropdown"
+description: "Dropdown menu"
+icon: "caret-down"
+---
+
+Dropdown menu component.
+
+## Basic Usage
+
+```html
+<sgds-dropdown>
+  <sgds-button slot="trigger">Menu</sgds-button>
+  <sgds-dropdown-item>Action 1</sgds-dropdown-item>
+  <sgds-dropdown-item>Action 2</sgds-dropdown-item>
+  <sgds-dropdown-item divider></sgds-dropdown-item>
+  <sgds-dropdown-item>Action 3</sgds-dropdown-item>
+</sgds-dropdown>
+```
+
+## API Reference
+
+### Slots
+| Slot | Description |
+|------|-------------|
+| `trigger` | Trigger button |
+| `default` | Dropdown items |
+
+### Properties (Dropdown Item)
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `divider` | `boolean` | `false` | Show as divider |
+| `disabled` | `boolean` | `false` | Disabled state |

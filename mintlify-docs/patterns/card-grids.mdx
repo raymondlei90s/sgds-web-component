@@ -1,0 +1,60 @@
+---
+title: "Card Grids"
+description: "Grid layouts for cards"
+icon: "grip"
+---
+
+Card grid layouts for displaying multiple items.
+
+## 3-Column Grid
+
+```html
+<div class="sgds:grid sgds:grid-cols-1 md:sgds:grid-cols-3 sgds:gap-6 sgds:py-16">
+  <sgds-card>
+    <span slot="title">Card 1</span>
+    <p slot="description">Card description</p>
+  </sgds-card>
+  <sgds-card>
+    <span slot="title">Card 2</span>
+    <p slot="description">Card description</p>
+  </sgds-card>
+  <sgds-card>
+    <span slot="title">Card 3</span>
+    <p slot="description">Card description</p>
+  </sgds-card>
+</div>
+```
+
+## 4-Column Grid
+
+```html
+<div class="sgds:grid sgds:grid-cols-1 sm:sgds:grid-cols-2 lg:sgds:grid-cols-4 sgds:gap-6 sgds:py-16">
+  <sgds-icon-card>
+    <svg slot="icon"><!-- icon --></svg>
+    <span slot="title">Feature 1</span>
+  </sgds-icon-card>
+  <sgds-icon-card>
+    <svg slot="icon"><!-- icon --></svg>
+    <span slot="title">Feature 2</span>
+  </sgds-icon-card>
+  <sgds-icon-card>
+    <svg slot="icon"><!-- icon --></svg>
+    <span slot="title">Feature 3</span>
+  </sgds-icon-card>
+  <sgds-icon-card>
+    <svg slot="icon"><!-- icon --></svg>
+    <span slot="title">Feature 4</span>
+  </sgds-icon-card>
+</div>
+```
+
+## Related Patterns
+
+<CardGroup cols={2}>
+  <Card title="Card Component" href="/components/card">
+    Card documentation
+  </Card>
+  <Card title="Icon Card" href="/components/icon-card">
+    Icon card component
+  </Card>
+</CardGroup>

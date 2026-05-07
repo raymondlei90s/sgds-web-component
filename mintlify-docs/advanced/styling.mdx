@@ -1,0 +1,69 @@
+---
+title: "Advanced Styling"
+description: "CSS parts, custom properties, and shadow DOM styling"
+icon: "paintbrush-pencil"
+---
+
+Advanced techniques for styling SGDS components using CSS parts and custom properties.
+
+## CSS Parts
+
+Access shadow DOM elements using `::part()`:
+
+```css
+sgds-footer::part(footer-bottom) {
+  background-color: #f5f5f5;
+  border-top: 2px solid #e0e0e0;
+  padding: 2rem 0;
+}
+
+sgds-card::part(card-body) {
+  padding: 2rem;
+}
+
+sgds-button::part(base) {
+  border-radius: 8px;
+  text-transform: uppercase;
+}
+```
+
+## CSS Custom Properties
+
+Override component-specific tokens:
+
+```css
+sgds-sidenav {
+  --sidenav-theme-color: #1f69ff;
+  --sidenav-width: 280px;
+}
+
+sgds-modal {
+  --modal-panel-bg: #ffffff;
+  --modal-overlay-bg: rgba(0, 0, 0, 0.8);
+}
+```
+
+## Combining Techniques
+
+```css
+/* Target specific component states */
+sgds-button[variant="primary"]::part(base) {
+  box-shadow: 0 4px 12px rgba(89, 37, 220, 0.3);
+}
+
+sgds-button[disabled]::part(base) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+```
+
+## Related Documentation
+
+<CardGroup cols={2}>
+  <Card title="Theming" href="/theming/overview">
+    Theme customization
+  </Card>
+  <Card title="Utilities" href="/utilities/overview">
+    Utility classes
+  </Card>
+</CardGroup>

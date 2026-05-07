@@ -1,0 +1,188 @@
+---
+title: "Spacing Utilities"
+description: "Padding, margin, and gap utilities based on the SGDS spacing scale"
+icon: "arrows-left-right"
+---
+
+SGDS spacing utilities provide consistent padding, margin, and gap values using the `sgds:` prefix.
+
+## Spacing Scale
+
+SGDS uses a spacing scale from 0 to 32:
+
+| Class | Value | Pixels (at 1rem = 16px) |
+|-------|-------|-------------------------|
+| `sgds:p-0` | 0 | 0px |
+| `sgds:p-1` | 0.25rem | 4px |
+| `sgds:p-2` | 0.5rem | 8px |
+| `sgds:p-3` | 0.75rem | 12px |
+| `sgds:p-4` | 1rem | 16px |
+| `sgds:p-6` | 1.5rem | 24px |
+| `sgds:p-8` | 2rem | 32px |
+| `sgds:p-12` | 3rem | 48px |
+| `sgds:p-16` | 4rem | 64px |
+| `sgds:p-24` | 6rem | 96px |
+| `sgds:p-32` | 8rem | 128px |
+
+## Padding
+
+### All Sides
+
+```html
+<div class="sgds:p-4">Padding on all sides</div>
+<div class="sgds:p-6">Larger padding</div>
+```
+
+### Individual Sides
+
+```html
+<div class="sgds:pt-4">Padding top</div>
+<div class="sgds:pr-6">Padding right</div>
+<div class="sgds:pb-8">Padding bottom</div>
+<div class="sgds:pl-12">Padding left</div>
+```
+
+### Horizontal & Vertical
+
+```html
+<div class="sgds:px-4">Padding left and right</div>
+<div class="sgds:py-6">Padding top and bottom</div>
+```
+
+## Margin
+
+### All Sides
+
+```html
+<div class="sgds:m-4">Margin on all sides</div>
+<div class="sgds:m-6">Larger margin</div>
+```
+
+### Individual Sides
+
+```html
+<div class="sgds:mt-4">Margin top</div>
+<div class="sgds:mr-6">Margin right</div>
+<div class="sgds:mb-8">Margin bottom</div>
+<div class="sgds:ml-12">Margin left</div>
+```
+
+### Horizontal & Vertical
+
+```html
+<div class="sgds:mx-4">Margin left and right</div>
+<div class="sgds:my-6">Margin top and bottom</div>
+<div class="sgds:mx-auto">Center horizontally</div>
+```
+
+### Negative Margin
+
+```html
+<div class="sgds:-mt-4">Negative margin top</div>
+<div class="sgds:-ml-6">Negative margin left</div>
+```
+
+## Gap
+
+For flexbox and grid layouts:
+
+```html
+<div class="sgds:flex sgds:gap-4">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</div>
+
+<div class="sgds:grid sgds:gap-6">
+  <div>Grid item 1</div>
+  <div>Grid item 2</div>
+</div>
+```
+
+### Column and Row Gap
+
+```html
+<div class="sgds:grid sgds:gap-x-4 sgds:gap-y-8">
+  Horizontal gap of 4, vertical gap of 8
+</div>
+```
+
+## Responsive Spacing
+
+```html
+<div class="sgds:p-4 md:sgds:p-6 lg:sgds:p-8">
+  Responsive padding: 4 on mobile, 6 on tablet, 8 on desktop
+</div>
+
+<div class="sgds:mt-2 md:sgds:mt-4 lg:sgds:mt-6">
+  Responsive margin top
+</div>
+```
+
+## Common Patterns
+
+### Card Layout
+
+```html
+<div class="sgds:bg-surface-raised sgds:p-6 sgds:rounded-lg">
+  <h3 class="sgds:text-xl sgds:font-bold sgds:mb-4">Card Title</h3>
+  <p class="sgds:text-subdued sgds:mb-4">Card content</p>
+  <button class="sgds:mt-4">Action</button>
+</div>
+```
+
+### Stack Layout
+
+```html
+<div class="sgds:flex sgds:flex-col sgds:gap-4">
+  <div>Stack item 1</div>
+  <div>Stack item 2</div>
+  <div>Stack item 3</div>
+</div>
+```
+
+### Grid Layout
+
+```html
+<div class="sgds:grid sgds:grid-cols-3 sgds:gap-6">
+  <div class="sgds:p-4">Column 1</div>
+  <div class="sgds:p-4">Column 2</div>
+  <div class="sgds:p-4">Column 3</div>
+</div>
+```
+
+### Container with Consistent Spacing
+
+```html
+<div class="sgds:max-w-7xl sgds:mx-auto sgds:px-4 sm:sgds:px-6 lg:sgds:px-8">
+  <div class="sgds:py-8">
+    Container content with responsive horizontal padding
+  </div>
+</div>
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Use Consistent Increments">
+    Stick to the spacing scale (4, 6, 8, 12, 16, 24) for visual consistency
+  </Accordion>
+
+  <Accordion title="Prefer Gap over Margin">
+    In flex/grid layouts, use `gap` instead of margin on children for cleaner code
+  </Accordion>
+
+  <Accordion title="Responsive Spacing">
+    Increase spacing on larger screens for better use of space
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Grid" icon="table-cells" href="/utilities/grid">
+    Grid layout utilities
+  </Card>
+  <Card title="Dimension" icon="ruler" href="/utilities/dimension">
+    Width and height utilities
+  </Card>
+</CardGroup>

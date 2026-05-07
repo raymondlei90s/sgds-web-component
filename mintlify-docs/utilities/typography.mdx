@@ -1,0 +1,142 @@
+---
+title: "Typography Utilities"
+description: "Font size, weight, line height, and letter spacing utilities"
+icon: "font"
+---
+
+SGDS typography utilities provide consistent text styling using the `sgds:` prefix.
+
+## Font Size
+
+```html
+<p class="sgds:text-xs">Extra small (0.75rem)</p>
+<p class="sgds:text-sm">Small (0.875rem)</p>
+<p class="sgds:text-base">Base (1rem)</p>
+<p class="sgds:text-lg">Large (1.125rem)</p>
+<p class="sgds:text-xl">Extra large (1.25rem)</p>
+<p class="sgds:text-2xl">2xl (1.5rem)</p>
+<p class="sgds:text-3xl">3xl (1.875rem)</p>
+<p class="sgds:text-4xl">4xl (2.25rem)</p>
+<p class="sgds:text-5xl">5xl (3rem)</p>
+<p class="sgds:text-6xl">6xl (3.75rem)</p>
+```
+
+## Font Weight
+
+```html
+<p class="sgds:font-light">Light (300)</p>
+<p class="sgds:font-normal">Normal (400)</p>
+<p class="sgds:font-medium">Medium (500)</p>
+<p class="sgds:font-semibold">Semibold (600)</p>
+<p class="sgds:font-bold">Bold (700)</p>
+```
+
+## Line Height
+
+```html
+<p class="sgds:leading-none">No line height (1)</p>
+<p class="sgds:leading-tight">Tight (1.25)</p>
+<p class="sgds:leading-snug">Snug (1.375)</p>
+<p class="sgds:leading-normal">Normal (1.5)</p>
+<p class="sgds:leading-relaxed">Relaxed (1.625)</p>
+<p class="sgds:leading-loose">Loose (2)</p>
+```
+
+## Letter Spacing
+
+```html
+<p class="sgds:tracking-tighter">Tighter spacing</p>
+<p class="sgds:tracking-tight">Tight spacing</p>
+<p class="sgds:tracking-normal">Normal spacing</p>
+<p class="sgds:tracking-wide">Wide spacing</p>
+<p class="sgds:tracking-wider">Wider spacing</p>
+<p class="sgds:tracking-widest">Widest spacing</p>
+```
+
+## Text Alignment
+
+```html
+<p class="sgds:text-left">Left aligned</p>
+<p class="sgds:text-center">Center aligned</p>
+<p class="sgds:text-right">Right aligned</p>
+<p class="sgds:text-justify">Justified</p>
+```
+
+## Typography Patterns
+
+### Heading Styles
+
+```html
+<h1 class="sgds:text-4xl sgds:font-bold sgds:leading-tight sgds:text-default">
+  Page Heading
+</h1>
+
+<h2 class="sgds:text-3xl sgds:font-semibold sgds:leading-snug sgds:text-default">
+  Section Heading
+</h2>
+
+<h3 class="sgds:text-2xl sgds:font-medium sgds:leading-normal sgds:text-default">
+  Subsection Heading
+</h3>
+```
+
+### Body Text
+
+```html
+<p class="sgds:text-base sgds:leading-relaxed sgds:text-default">
+  Regular paragraph text with comfortable line height for reading.
+</p>
+
+<p class="sgds:text-sm sgds:leading-normal sgds:text-subdued">
+  Secondary or helper text in a smaller size.
+</p>
+```
+
+### Labels and Captions
+
+```html
+<label class="sgds:text-sm sgds:font-medium sgds:text-default">
+  Form Label
+</label>
+
+<span class="sgds:text-xs sgds:text-subdued sgds:tracking-wide">
+  Caption or metadata
+</span>
+```
+
+## Complete Example
+
+```html
+<article class="sgds:max-w-prose sgds:mx-auto sgds:p-6">
+  <h1 class="sgds:text-4xl sgds:font-bold sgds:mb-4 sgds:text-default">
+    Article Title
+  </h1>
+
+  <p class="sgds:text-sm sgds:text-subdued sgds:mb-6">
+    Published on January 1, 2025
+  </p>
+
+  <p class="sgds:text-base sgds:leading-relaxed sgds:mb-4 sgds:text-default">
+    First paragraph with proper line height and spacing for comfortable reading.
+  </p>
+
+  <h2 class="sgds:text-2xl sgds:font-semibold sgds:mt-8 sgds:mb-4 sgds:text-default">
+    Section Heading
+  </h2>
+
+  <p class="sgds:text-base sgds:leading-relaxed sgds:text-default">
+    Section content continues here.
+  </p>
+</article>
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Spacing" icon="arrows-left-right" href="/utilities/spacing">
+    Padding, margin, and gap utilities
+  </Card>
+  <Card title="Colors" icon="palette" href="/utilities/colors">
+    Text color utilities
+  </Card>
+</CardGroup>

@@ -1,0 +1,301 @@
+---
+title: "Performance Optimization"
+description: "Code splitting, lazy loading, and FOUC prevention"
+icon: "gauge-high"
+---
+
+Optimize your SGDS application with code splitting, lazy loading, and Flash of Unstyled Content (FOUC) prevention strategies.
+
+## Code Splitting
+
+### Import Individual Components
+
+Instead of importing the entire library, import only the components you need:
+
+```javascript
+// ❌ Avoid - imports entire library
+import '@govtechsg/sgds-web-component';
+
+// ✅ Better - import only what you need
+import '@govtechsg/sgds-web-component/components/button';
+import '@govtechsg/sgds-web-component/components/input';
+import '@govtechsg/sgds-web-component/components/modal';
+```
+
+### Dynamic Imports
+
+Load components on-demand using dynamic imports:
+
+```javascript
+// Load modal only when needed
+async function openModal() {
+  await import('@govtechsg/sgds-web-component/components/modal');
+
+  const modal = document.querySelector('sgds-modal');
+  modal.show();
+}
+```
+
+### Route-Based Code Splitting
+
+In React with React Router:
+
+```jsx
+import { lazy, Suspense } from 'react';
+
+// Lazy load page components
+const Dashboard = lazy(() => import('./pages/Dashboard'));
+const Profile = lazy(() => import('./pages/Profile'));
+
+function App() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </Suspense>
+  );
+}
+```
+
+## Lazy Loading
+
+### Intersection Observer
+
+Load components when they enter the viewport:
+
+```javascript
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(async (entry) => {
+    if (entry.isIntersecting) {
+      await import('@govtechsg/sgds-web-component/components/chart');
+      observer.unobserve(entry.target);
+    }
+  });
+});
+
+// Observe chart placeholder
+const chartPlaceholder = document.querySelector('.chart-placeholder');
+observer.observe(chartPlaceholder);
+```
+
+### Below-the-Fold Components
+
+Defer loading components not visible on initial page load:
+
+```html
+<sgds-masthead></sgds-masthead>
+<sgds-mainnav></sgds-mainnav>
+
+<main>
+  <!-- Above the fold content loads immediately -->
+  <section>Hero content</section>
+</main>
+
+<script>
+  // Load footer after page load
+  window.addEventListener('load', () => {
+    import('@govtechsg/sgds-web-component/components/footer');
+  });
+</script>
+```
+
+## FOUC Prevention
+
+Flash of Unstyled Content occurs when custom elements render before being defined.
+
+### Method 1: CSS-based Hiding
+
+Hide undefined elements with CSS:
+
+```html
+<style>
+  /* Hide undefined custom elements */
+  sgds-button:not(:defined),
+  sgds-input:not(:defined),
+  sgds-modal:not(:defined) {
+    visibility: hidden;
+  }
+</style>
+```
+
+### Method 2: Display After Definition
+
+Show components only after they're defined:
+
+```html
+<style>
+  sgds-button {
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  sgds-button:defined {
+    opacity: 1;
+  }
+</style>
+```
+
+### Method 3: JavaScript-based Loading
+
+Use `customElements.whenDefined()`:
+
+```javascript
+async function initializeApp() {
+  // Wait for critical components
+  await Promise.all([
+    customElements.whenDefined('sgds-button'),
+    customElements.whenDefined('sgds-input'),
+    customElements.whenDefined('sgds-modal')
+  ]);
+
+  // Remove loading indicator
+  document.body.classList.remove('loading');
+}
+
+initializeApp();
+```
+
+```html
+<style>
+  body.loading sgds-button,
+  body.loading sgds-input,
+  body.loading sgds-modal {
+    visibility: hidden;
+  }
+</style>
+
+<body class="loading">
+  <!-- components -->
+</body>
+```
+
+## Bundle Size Optimization
+
+### Tree Shaking
+
+Ensure your bundler supports tree shaking:
+
+```javascript
+// vite.config.js
+export default {
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'sgds-forms': [
+            '@govtechsg/sgds-web-component/components/input',
+            '@govtechsg/sgds-web-component/components/select',
+            '@govtechsg/sgds-web-component/components/textarea'
+          ]
+        }
+      }
+    }
+  }
+};
+```
+
+### Analyze Bundle
+
+Use webpack-bundle-analyzer or similar tools:
+
+```bash
+npm install --save-dev webpack-bundle-analyzer
+```
+
+```javascript
+// webpack.config.js
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+module.exports = {
+  plugins: [
+    new BundleAnalyzerPlugin()
+  ]
+};
+```
+
+## CDN Optimization
+
+### Version Pinning
+
+Pin specific versions to enable long-term caching:
+
+```html
+<!-- ✅ Pinned version - cacheable -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1/components/button.js"></script>
+
+<!-- ❌ Latest version - not cacheable -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component/components/button.js"></script>
+```
+
+### Preload Critical Resources
+
+```html
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1/components/button.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1/components/input.js">
+```
+
+## Server-Side Rendering (SSR)
+
+Web Components have limited SSR support. For Next.js:
+
+### Declarative Shadow DOM
+
+Use Declarative Shadow DOM for SSR (experimental):
+
+```jsx
+// next.config.js
+module.exports = {
+  experimental: {
+    webComponentsDeclarativeShadowDom: true
+  }
+};
+```
+
+### Client-Side Only Components
+
+```jsx
+'use client';
+
+import dynamic from 'next/dynamic';
+
+const SgdsButton = dynamic(
+  () => import('@govtechsg/sgds-web-component/react').then(mod => mod.SgdsButton),
+  { ssr: false }
+);
+```
+
+## Performance Checklist
+
+<Steps>
+  <Step title="Import Only What You Need">
+    Use individual component imports instead of full library
+  </Step>
+  <Step title="Enable Code Splitting">
+    Split code by routes or features
+  </Step>
+  <Step title="Lazy Load Below-the-Fold">
+    Defer loading components not immediately visible
+  </Step>
+  <Step title="Prevent FOUC">
+    Hide undefined elements with CSS or JavaScript
+  </Step>
+  <Step title="Pin CDN Versions">
+    Use specific version numbers for better caching
+  </Step>
+  <Step title="Analyze Bundle Size">
+    Use bundle analyzer to identify optimization opportunities
+  </Step>
+</Steps>
+
+## Related Documentation
+
+<CardGroup cols={2}>
+  <Card title="Next.js Integration" href="/frameworks/nextjs">
+    SSR and client-side rendering
+  </Card>
+  <Card title="Installation" href="/getting-started/installation">
+    Setup and import methods
+  </Card>
+</CardGroup>

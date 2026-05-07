@@ -1,0 +1,274 @@
+---
+title: "Dark Mode"
+description: "Implement day/night theme switching in your SGDS application"
+icon: "moon"
+---
+
+SGDS supports automatic dark mode through the built-in night theme.
+
+## Setup
+
+Import both day and night theme files:
+
+```css
+/* main.css */
+@import "@govtechsg/sgds-web-component/themes/day.css";
+@import "@govtechsg/sgds-web-component/themes/night.css";
+```
+
+## Activating Dark Mode
+
+Add the `sgds-theme-night` class to the `<html>` element:
+
+```javascript
+// Toggle dark mode
+document.documentElement.classList.toggle('sgds-theme-night');
+
+// Enable dark mode
+document.documentElement.classList.add('sgds-theme-night');
+
+// Disable dark mode
+document.documentElement.classList.remove('sgds-theme-night');
+```
+
+## Complete Theme Toggle
+
+```html
+<button id="theme-toggle">
+  <span id="theme-icon">🌙</span>
+  <span id="theme-text">Dark Mode</span>
+</button>
+
+<script>
+  const toggle = document.getElementById('theme-toggle');
+  const icon = document.getElementById('theme-icon');
+  const text = document.getElementById('theme-text');
+
+  toggle.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('sgds-theme-night');
+
+    // Update button
+    icon.textContent = isDark ? '☀️' : '🌙';
+    text.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+
+    // Save preference
+    localStorage.setItem('theme', isDark ? 'night' : 'day');
+  });
+
+  // Restore saved preference on page load
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'night') {
+    document.documentElement.classList.add('sgds-theme-night');
+    icon.textContent = '☀️';
+    text.textContent = 'Light Mode';
+  }
+</script>
+```
+
+## System Preference Detection
+
+Detect user's system theme preference:
+
+```javascript
+// Check system preference
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+// Apply on page load if no saved preference
+const savedTheme = localStorage.getItem('theme');
+if (!savedTheme && prefersDark) {
+  document.documentElement.classList.add('sgds-theme-night');
+}
+
+// Listen for system preference changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  if (!localStorage.getItem('theme')) {
+    if (e.matches) {
+      document.documentElement.classList.add('sgds-theme-night');
+    } else {
+      document.documentElement.classList.remove('sgds-theme-night');
+    }
+  }
+});
+```
+
+## Framework Integration
+
+<Tabs>
+  <Tab title="React">
+    ```jsx
+    import { useEffect, useState } from 'react';
+
+    export function ThemeToggle() {
+      const [isDark, setIsDark] = useState(false);
+
+      useEffect(() => {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'night') {
+          setIsDark(true);
+          document.documentElement.classList.add('sgds-theme-night');
+        }
+      }, []);
+
+      const toggleTheme = () => {
+        setIsDark(!isDark);
+        document.documentElement.classList.toggle('sgds-theme-night');
+        localStorage.setItem('theme', !isDark ? 'night' : 'day');
+      };
+
+      return (
+        <button onClick={toggleTheme}>
+          {isDark ? '☀️ Light' : '🌙 Dark'}
+        </button>
+      );
+    }
+    ```
+  </Tab>
+
+  <Tab title="Vue">
+    ```vue
+    <template>
+      <button @click="toggleTheme">
+        {{ isDark ? '☀️ Light' : '🌙 Dark' }}
+      </button>
+    </template>
+
+    <script>
+    import { ref, onMounted } from 'vue';
+
+    export default {
+      setup() {
+        const isDark = ref(false);
+
+        onMounted(() => {
+          const saved = localStorage.getItem('theme');
+          if (saved === 'night') {
+            isDark.value = true;
+            document.documentElement.classList.add('sgds-theme-night');
+          }
+        });
+
+        const toggleTheme = () => {
+          isDark.value = !isDark.value;
+          document.documentElement.classList.toggle('sgds-theme-night');
+          localStorage.setItem('theme', isDark.value ? 'night' : 'day');
+        };
+
+        return { isDark, toggleTheme };
+      }
+    };
+    </script>
+    ```
+  </Tab>
+
+  <Tab title="Angular">
+    ```typescript
+    import { Component, OnInit } from '@angular/core';
+
+    @Component({
+      selector: 'app-theme-toggle',
+      template: `
+        <button (click)="toggleTheme()">
+          {{ isDark ? '☀️ Light' : '🌙 Dark' }}
+        </button>
+      `
+    })
+    export class ThemeToggleComponent implements OnInit {
+      isDark = false;
+
+      ngOnInit() {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'night') {
+          this.isDark = true;
+          document.documentElement.classList.add('sgds-theme-night');
+        }
+      }
+
+      toggleTheme() {
+        this.isDark = !this.isDark;
+        document.documentElement.classList.toggle('sgds-theme-night');
+        localStorage.setItem('theme', this.isDark ? 'night' : 'day');
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Theme-Aware Utilities
+
+Use theme-aware utility classes that automatically adapt:
+
+```html
+<div class="sgds:bg-surface-default sgds:text-default sgds:border sgds:border-default sgds:p-6">
+  This content adapts to the current theme
+</div>
+```
+
+## Custom Dark Mode Overrides
+
+Customize dark mode colors:
+
+```css
+/* your-theme.css */
+.sgds-theme-night {
+  /* Override specific night theme values */
+  --sgds-bg-default: #1a1a1a;
+  --sgds-text-default: #f0f0f0;
+
+  /* Adjust primary color for dark mode */
+  --sgds-primary-default: var(--sgds-product-primary-400); /* Lighter in dark */
+}
+```
+
+## Testing Dark Mode
+
+Test all UI states in both themes:
+
+```html
+<!-- Test in both themes -->
+<div id="test-container" class="sgds:p-6 sgds:space-y-4">
+  <sgds-button variant="primary">Primary Button</sgds-button>
+  <sgds-alert show>Alert Message</sgds-alert>
+  <sgds-input label="Input Field" />
+  <div class="sgds:bg-surface-raised sgds:p-4">Surface Card</div>
+</div>
+
+<button onclick="document.documentElement.classList.toggle('sgds-theme-night')">
+  Toggle to Test
+</button>
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Save User Preference">
+    Always save theme choice to localStorage so it persists across sessions
+  </Accordion>
+
+  <Accordion title="Respect System Preference">
+    Default to system preference if user hasn't made a choice
+  </Accordion>
+
+  <Accordion title="Test Thoroughly">
+    Check all components, forms, and custom UI in both themes
+  </Accordion>
+
+  <Accordion title="Smooth Transitions">
+    Add CSS transitions for theme switching (optional):
+    ```css
+    * {
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Brand Colors" icon="palette" href="/theming/brand-colors">
+    Customize your brand colors
+  </Card>
+  <Card title="Utilities" icon="paintbrush" href="/utilities/overview">
+    Theme-aware utility classes
+  </Card>
+</CardGroup>

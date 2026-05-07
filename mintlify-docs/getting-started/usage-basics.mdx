@@ -1,0 +1,352 @@
+---
+title: "Usage Basics"
+description: "Understanding attributes, properties, events, and slots in SGDS Web Components"
+icon: "book"
+---
+
+Learn the fundamentals of working with SGDS Web Components including attributes, properties, events, and slots.
+
+## Attributes and Properties
+
+Web components use attributes and properties to configure behavior and appearance.
+
+### String Attributes
+
+Set string properties using HTML attributes:
+
+```html
+<sgds-button variant="secondary">Click Me</sgds-button>
+<sgds-input placeholder="Enter your name" type="email"></sgds-input>
+<sgds-alert variant="warning">Warning message</sgds-alert>
+```
+
+### Boolean Attributes
+
+Boolean properties are `false` by default. Add the attribute (with no value) to set it to `true`:
+
+```html
+<!-- Disabled input -->
+<sgds-input disabled></sgds-input>
+
+<!-- Accordion allowing multiple open panels -->
+<sgds-accordion allowMultiple>
+  <!-- accordion items -->
+</sgds-accordion>
+
+<!-- Required checkbox -->
+<sgds-checkbox required>I agree to terms</sgds-checkbox>
+```
+
+<Note>
+To set a boolean attribute to `false`, simply remove the attribute. Don't use `disabled="false"` as the presence of the attribute makes it `true`.
+</Note>
+
+### Objects, Arrays, and Functions
+
+Complex data types must be set via JavaScript:
+
+<CodeGroup>
+```html JSON String (Simple Cases)
+<sgds-table rowHeader='["Name", "BirthDate", "Email"]'></sgds-table>
+```
+
+```javascript JavaScript (Recommended)
+const table = document.querySelector('sgds-table');
+table.rowHeader = ["Name", "BirthDate", "Email"];
+
+const footer = document.querySelector('sgds-footer');
+footer.links = [
+  {
+    title: "About",
+    links: [
+      { href: "/about", label: "About Us" },
+      { href: "/team", label: "Team" }
+    ]
+  }
+];
+```
+
+```typescript TypeScript
+import { SgdsTable } from '@govtechsg/sgds-web-component/components';
+
+const table = document.querySelector('sgds-table') as SgdsTable;
+table.rowHeader = ["Name", "BirthDate", "Email"];
+```
+</CodeGroup>
+
+## Events
+
+SGDS components emit custom events prefixed with `sgds-` for better Shadow DOM compatibility.
+
+### Why Custom Events?
+
+<Warning>
+**Avoid native HTML events** like `onclick`, `onchange`, or `oninput` on SGDS components.
+
+Events within a component's Shadow DOM are retargeted to appear as if they came from the host element. Some events [never cross shadow boundaries](https://web.dev/shadowdom-301/#events-that-are-always-stopped).
+
+This can cause multiple handlers to fire or events not to fire at all.
+</Warning>
+
+### Listening to Custom Events
+
+Use `sgds-*` custom events instead:
+
+```javascript
+const checkbox = document.querySelector('sgds-checkbox');
+
+// ✅ Correct: Use sgds-change event
+checkbox.addEventListener('sgds-change', (event) => {
+  console.log(event.target.checked ? 'checked' : 'unchecked');
+});
+
+// ❌ Incorrect: Avoid native change event
+checkbox.addEventListener('change', (event) => {
+  // May not work reliably
+});
+```
+
+### Common Events
+
+Most form components emit these events:
+
+| Event | Description | Available On |
+|-------|-------------|--------------|
+| `sgds-input` | Fires when value changes (real-time) | Input, Textarea, Select, ComboBox |
+| `sgds-change` | Fires when value changes and input loses focus | All form components |
+| `sgds-focus` | Fires when component receives focus | Most form components |
+| `sgds-blur` | Fires when component loses focus | Most form components |
+
+Interactive components have additional events:
+
+| Event | Description | Available On |
+|-------|-------------|--------------|
+| `sgds-show` | Fires when component becomes visible | Modal, Drawer, Toast, Alert |
+| `sgds-hide` | Fires when component becomes hidden | Modal, Drawer, Toast, Alert |
+| `sgds-after-show` | Fires after show transition completes | Modal, Drawer |
+| `sgds-after-hide` | Fires after hide transition completes | Modal, Drawer |
+
+### Event Examples
+
+<CodeGroup>
+```javascript Input Events
+const input = document.querySelector('sgds-input');
+
+// Real-time input changes
+input.addEventListener('sgds-input', (e) => {
+  console.log('Current value:', e.target.value);
+});
+
+// Value change on blur
+input.addEventListener('sgds-change', (e) => {
+  console.log('Final value:', e.target.value);
+});
+```
+
+```javascript Modal Events
+const modal = document.querySelector('sgds-modal');
+
+modal.addEventListener('sgds-show', () => {
+  console.log('Modal is showing...');
+});
+
+modal.addEventListener('sgds-after-show', () => {
+  console.log('Modal is fully visible');
+  // Focus first input, etc.
+});
+
+modal.addEventListener('sgds-hide', () => {
+  console.log('Modal is hiding...');
+});
+```
+
+```javascript Select Events
+const select = document.querySelector('sgds-select');
+
+select.addEventListener('sgds-change', (e) => {
+  console.log('Selected value:', e.target.value);
+  console.log('Selected option:', e.target.selectedOption);
+});
+```
+</CodeGroup>
+
+## Slots
+
+[HTML slots](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) are placeholders that you can fill with your own content.
+
+### Default Slots
+
+Default slots accept any content without a `slot` attribute:
+
+```html
+<sgds-button>
+  <span>Hello World</span>
+</sgds-button>
+
+<sgds-alert show variant="info">
+  This is important information for users.
+</sgds-alert>
+```
+
+### Named Slots
+
+Named slots require the `slot` attribute to target specific areas:
+
+```html
+<sgds-button>
+  <span>Hello World</span>
+  <svg slot="icon-left" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor">
+    <!-- SVG path -->
+  </svg>
+</sgds-button>
+
+<sgds-card>
+  <span slot="title">Card Title</span>
+  <p slot="description">Card description goes here</p>
+  <a slot="link" href="/learn-more">Learn More</a>
+</sgds-card>
+```
+
+### Multiple Slots Example
+
+Components can have multiple slots for complex layouts:
+
+```html
+<sgds-modal>
+  <span slot="header">Confirm Action</span>
+
+  <!-- Default slot for modal body -->
+  <p>Are you sure you want to delete this item?</p>
+
+  <div slot="footer">
+    <sgds-button variant="secondary" class="me-2">Cancel</sgds-button>
+    <sgds-button variant="danger">Delete</sgds-button>
+  </div>
+</sgds-modal>
+```
+
+<Note>
+Check each component's API documentation to see available slots. The slot name `default` indicates the default slot.
+</Note>
+
+## Styling Components
+
+SGDS components come with built-in styles, but you can customize them in several ways:
+
+### CSS Custom Properties
+
+Some components expose CSS variables for theming:
+
+```css
+sgds-sidenav {
+  --sidenav-theme-color: #1f69ff;
+  --sidenav-width: 280px;
+}
+
+sgds-button {
+  --sgds-primary: #5925dc;
+}
+```
+
+### CSS Parts
+
+Access shadow DOM elements using the `::part()` pseudo-element:
+
+```css
+sgds-footer::part(footer-bottom) {
+  background-color: #f5f5f5;
+  border-top: 2px solid #e0e0e0;
+}
+
+sgds-card::part(card-body) {
+  padding: 24px;
+}
+```
+
+### Classes Prop
+
+Some components accept Bootstrap-like utility classes via a `*Classes` prop:
+
+```html
+<sgds-button buttonClasses="btn-lg me-2">Large Button</sgds-button>
+<sgds-input inputClasses="form-control-lg"></sgds-input>
+```
+
+<Warning>
+Don't use the `class` attribute to style shadow DOM elements. The `class` attribute only styles the host element (light DOM).
+
+Use `class` for positioning and layout, not for styling internal component parts.
+</Warning>
+
+### External Positioning
+
+Use standard CSS or SGDS utilities for positioning:
+
+```html
+<div class="d-flex gap-3">
+  <sgds-button>Button 1</sgds-button>
+  <sgds-button>Button 2</sgds-button>
+</div>
+
+<sgds-alert show variant="success" class="mb-4">
+  Success message
+</sgds-alert>
+```
+
+## TypeScript Support
+
+Import component types for TypeScript projects:
+
+```typescript
+import { SgdsButton, SgdsInput, SgdsModal } from '@govtechsg/sgds-web-component/components';
+
+const button = document.querySelector('sgds-button') as SgdsButton;
+button.variant = 'primary';
+
+const input = document.querySelector('sgds-input') as SgdsInput;
+input.addEventListener('sgds-input', (e) => {
+  const value: string = (e.target as SgdsInput).value;
+  console.log(value);
+});
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Use Custom Events">
+    Always use `sgds-*` custom events instead of native events for reliable behavior
+  </Accordion>
+
+  <Accordion title="Set Complex Data via JavaScript">
+    Don't try to pass objects or arrays as HTML attributes. Use JavaScript to set properties.
+  </Accordion>
+
+  <Accordion title="Check API Documentation">
+    Each component has different props, events, and slots. Always check the component's API reference.
+  </Accordion>
+
+  <Accordion title="Validate Forms Properly">
+    SGDS form components support HTML5 validation. Use `required`, `pattern`, and other validation attributes.
+  </Accordion>
+
+  <Accordion title="Accessibility Matters">
+    Always provide labels for form inputs and meaningful alt text for icons
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Components" icon="cubes" href="/components/overview">
+    Explore all 47 components with examples
+  </Card>
+  <Card title="Framework Integration" icon="code" href="/frameworks/react">
+    Using SGDS with React, Vue, or Angular
+  </Card>
+  <Card title="Advanced Styling" icon="brush" href="/advanced/styling">
+    Deep dive into CSS parts and custom properties
+  </Card>
+  <Card title="Form Validation" icon="check-circle" href="/advanced/form-internals">
+    Advanced form validation patterns
+  </Card>
+</CardGroup>

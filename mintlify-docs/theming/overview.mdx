@@ -1,0 +1,213 @@
+---
+title: "Theming Overview"
+description: "Customize SGDS colors, dark mode, and branding for your product"
+icon: "brush"
+---
+
+SGDS theming allows you to customize your application's visual identity while maintaining design consistency through CSS design tokens.
+
+## What Can Be Themed?
+
+<CardGroup cols={3}>
+  <Card title="Brand Colors" icon="palette">
+    Override primary product colors
+  </Card>
+  <Card title="Dark Mode" icon="moon">
+    Enable day/night theme switching
+  </Card>
+  <Card title="Typography" icon="font">
+    Customize fonts and typefaces
+  </Card>
+</CardGroup>
+
+## Quick Decision Guide
+
+| What You Want | Solution |
+|---------------|----------|
+| Change product brand color (custom) | Override `--sgds-product-primary-{100–900}` |
+| Use GovTech brand colors | Import `themes/gt/<color>.css` + map to `--sgds-product-primary-*` |
+| Enable dark/night mode | Import `themes/night.css` + add `.sgds-theme-night` class |
+| Change font | Override `--sgds-font-family-brand` |
+
+## Prerequisites
+
+Import theme files before your custom CSS:
+
+```css
+/* main.css or globals.css */
+@import "@govtechsg/sgds-web-component/themes/day.css";
+@import "./your-custom-theme.css";
+```
+
+<Note>
+Your custom CSS must be imported **after** SGDS theme files so your overrides take effect.
+</Note>
+
+## Design Token System
+
+SGDS uses a three-layer token system:
+
+### 1. Primitive Tokens (Root Layer)
+
+Base color values that don't change across themes:
+
+```css
+:root {
+  --sgds-product-primary-100: #F5F0FF;
+  --sgds-product-primary-600: #5925DC;
+  --sgds-product-primary-900: #2D0F70;
+}
+```
+
+### 2. Semantic Tokens (Theme Layer)
+
+Context-specific tokens that reference primitives and adapt to themes:
+
+```css
+/* day.css */
+:root {
+  --sgds-primary-default: var(--sgds-product-primary-600);
+  --sgds-bg-default: var(--sgds-gray-0);
+  --sgds-text-default: var(--sgds-gray-900);
+}
+
+/* night.css */
+.sgds-theme-night {
+  --sgds-primary-default: var(--sgds-product-primary-400);
+  --sgds-bg-default: var(--sgds-gray-900);
+  --sgds-text-default: var(--sgds-gray-0);
+}
+```
+
+### 3. Component Tokens
+
+Components reference semantic tokens:
+
+```css
+sgds-button {
+  background-color: var(--sgds-primary-default);
+  color: var(--sgds-text-inverse);
+}
+```
+
+## Theme Switching Example
+
+```html
+<button id="theme-toggle">Toggle Dark Mode</button>
+
+<div class="sgds:bg-surface-default sgds:p-6">
+  <h1 class="sgds:text-default">Content adapts to theme</h1>
+  <p class="sgds:text-subdued">Secondary text</p>
+</div>
+
+<script>
+  const toggleButton = document.getElementById('theme-toggle');
+  toggleButton.addEventListener('click', () => {
+    document.documentElement.classList.toggle('sgds-theme-night');
+
+    // Save preference
+    const isDark = document.documentElement.classList.contains('sgds-theme-night');
+    localStorage.setItem('theme', isDark ? 'night' : 'day');
+  });
+
+  // Restore saved preference
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'night') {
+    document.documentElement.classList.add('sgds-theme-night');
+  }
+</script>
+```
+
+## Theme Structure
+
+```css
+/* your-custom-theme.css */
+
+/* Override primitive tokens */
+:root {
+  /* Brand colors */
+  --sgds-product-primary-100: #YOUR_COLOR;
+  --sgds-product-primary-600: #YOUR_COLOR;
+  --sgds-product-primary-900: #YOUR_COLOR;
+
+  /* Font */
+  --sgds-font-family-brand: "Your Font", sans-serif;
+}
+
+/* Day theme overrides */
+:root {
+  --sgds-custom-token: value;
+}
+
+/* Night theme overrides */
+.sgds-theme-night {
+  --sgds-custom-token: different-value;
+}
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Override Full Color Scales">
+    When changing brand colors, override the complete 100-900 scale for consistency
+  </Accordion>
+
+  <Accordion title="Test Both Themes">
+    If supporting dark mode, test all UI states in both day and night themes
+  </Accordion>
+
+  <Accordion title="Use Semantic Tokens">
+    Prefer semantic tokens (`--sgds-primary-default`) over primitives in components
+  </Accordion>
+
+  <Accordion title="Maintain Contrast Ratios">
+    Ensure text meets WCAG AA contrast requirements (4.5:1 for normal text)
+  </Accordion>
+</AccordionGroup>
+
+## Testing Your Theme
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="sgds:bg-default sgds:p-6">
+  <!-- Test brand colors -->
+  <sgds-button variant="primary">Primary Button</sgds-button>
+  <sgds-alert show variant="info">Info Alert</sgds-alert>
+
+  <!-- Test text colors -->
+  <p class="sgds:text-default">Default text</p>
+  <p class="sgds:text-subdued">Subdued text</p>
+
+  <!-- Test surfaces -->
+  <div class="sgds:bg-surface-raised sgds:p-4 sgds:rounded-lg">
+    Raised surface
+  </div>
+
+  <!-- Theme toggle -->
+  <button onclick="document.documentElement.classList.toggle('sgds-theme-night')">
+    Toggle Theme
+  </button>
+</body>
+</html>
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Brand Colors" icon="palette" href="/theming/brand-colors">
+    Customize your product's primary colors
+  </Card>
+  <Card title="Dark Mode" icon="moon" href="/theming/dark-mode">
+    Implement day/night theme switching
+  </Card>
+  <Card title="Utilities" icon="paintbrush" href="/utilities/overview">
+    Use theme-aware utility classes
+  </Card>
+  <Card title="Components" icon="cubes" href="/components/overview">
+    Components automatically use your theme
+  </Card>
+</CardGroup>

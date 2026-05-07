@@ -1,0 +1,58 @@
+---
+title: "Simple App Shell"
+description: "Basic application layout with masthead, navigation, and footer"
+icon: "browser"
+---
+
+Standard public-facing application shell with masthead, mainnav, and footer.
+
+## Complete Layout
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My App</title>
+  <script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1"></script>
+</head>
+<body>
+  <!-- Masthead -->
+  <sgds-masthead></sgds-masthead>
+
+  <!-- Main Navigation -->
+  <sgds-mainnav>
+    <img slot="brand" src="/logo.svg" alt="Logo" width="150" />
+    <sgds-mainnav-item href="/">Home</sgds-mainnav-item>
+    <sgds-mainnav-item href="/services">Services</sgds-mainnav-item>
+    <sgds-mainnav-item href="/about">About</sgds-mainnav-item>
+    <sgds-mainnav-item href="/contact">Contact</sgds-mainnav-item>
+  </sgds-mainnav>
+
+  <!-- Page Content -->
+  <main class="sgds:max-w-7xl sgds:mx-auto sgds:px-4 sgds:py-8">
+    <h1>Welcome</h1>
+    <!-- Your content here -->
+  </main>
+
+  <!-- Footer -->
+  <sgds-footer
+    title="Singapore Government Design System"
+    description="Build better government digital services"
+    lastUpdatedDate="Last Updated: 1 Jan 2025"
+  ></sgds-footer>
+</body>
+</html>
+```
+
+## Related Patterns
+
+<CardGroup cols={2}>
+  <Card title="Sidebar App Shell" href="/patterns/app-shell-sidebar">
+    Dashboard layout with sidebar
+  </Card>
+  <Card title="Masthead" href="/components/masthead">
+    Masthead component
+  </Card>
+</CardGroup>

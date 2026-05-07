@@ -1,0 +1,29 @@
+---
+title: "Checkbox"
+description: "Single checkbox control"
+icon: "square-check"
+---
+
+Checkbox component for boolean selections.
+
+## Basic Usage
+
+```html
+<sgds-checkbox>I agree to the terms</sgds-checkbox>
+<sgds-checkbox checked>Checked by default</sgds-checkbox>
+<sgds-checkbox disabled>Disabled</sgds-checkbox>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `checked` | `boolean` | `false` | Checked state |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `required` | `boolean` | `false` | Required field |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-change` | Fired when checked state changes |

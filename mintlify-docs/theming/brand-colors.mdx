@@ -1,0 +1,157 @@
+---
+title: "Brand Colors"
+description: "Customize your product's primary brand colors"
+icon: "palette"
+---
+
+Override SGDS default colors to match your product's brand identity.
+
+## Custom Brand Colors
+
+Override the full primitive color scale (100-900) in your custom CSS:
+
+```css
+/* your-theme.css */
+:root {
+  /* Pink brand colors */
+  --sgds-product-primary-100: #F5B6DA;
+  --sgds-product-primary-200: #F186C0;
+  --sgds-product-primary-300: #EE4FA6;
+  --sgds-product-primary-400: #EE0290;
+  --sgds-product-primary-500: #EF0078;
+  --sgds-product-primary-600: #DD0074;
+  --sgds-product-primary-700: #C6006E;
+  --sgds-product-primary-800: #B0006A;
+  --sgds-product-primary-900: #880061;
+}
+```
+
+Import after SGDS theme files:
+
+```css
+/* main.css */
+@import "@govtechsg/sgds-web-component/themes/day.css";
+@import "./your-theme.css";
+```
+
+<Note>
+The semantic tokens (`--sgds-primary-*`) automatically reference these primitive values, so all components update.
+</Note>
+
+## GovTech Brand Colors
+
+GovTech products should use pre-approved palettes from `themes/gt/`:
+
+### Available Colors
+
+| Color | Import |
+|-------|--------|
+| Blue | `@import "@govtechsg/sgds-web-component/themes/gt/blue.css";` |
+| Cyan | `@import "@govtechsg/sgds-web-component/themes/gt/cyan.css";` |
+| Magenta | `@import "@govtechsg/sgds-web-component/themes/gt/magenta.css";` |
+| Pink | `@import "@govtechsg/sgds-web-component/themes/gt/pink.css";` |
+| Purple | `@import "@govtechsg/sgds-web-component/themes/gt/purple.css";` (default) |
+| Red | `@import "@govtechsg/sgds-web-component/themes/gt/red.css";` |
+
+### Using GovTech Colors
+
+```css
+/* your-theme.css */
+@import "@govtechsg/sgds-web-component/themes/gt/blue.css";
+
+:root {
+  /* Map GovTech blue to product primary */
+  --sgds-product-primary-100: var(--gt-color-100);
+  --sgds-product-primary-200: var(--gt-color-200);
+  --sgds-product-primary-300: var(--gt-color-300);
+  --sgds-product-primary-400: var(--gt-color-400);
+  --sgds-product-primary-500: var(--gt-color-500);
+  --sgds-product-primary-600: var(--gt-color-600);
+  --sgds-product-primary-700: var(--gt-color-700);
+  --sgds-product-primary-800: var(--gt-color-800);
+  --sgds-product-primary-900: var(--gt-color-900);
+}
+```
+
+<Warning>
+Choose **exactly one** GovTech color. Do not mix multiple palettes.
+</Warning>
+
+## Testing Brand Colors
+
+Test your colors across all component states:
+
+```html
+<!-- Buttons -->
+<sgds-button variant="primary">Primary Button</sgds-button>
+<sgds-button variant="outline">Outline Button</sgds-button>
+
+<!-- Alerts -->
+<sgds-alert show variant="info">Info uses primary color</sgds-alert>
+
+<!-- Badges -->
+<sgds-badge variant="primary">Primary Badge</sgds-badge>
+
+<!-- Links -->
+<sgds-link href="#">Link color</sgds-link>
+
+<!-- Active states -->
+<sgds-tab-group>
+  <sgds-tab active>Active Tab</sgds-tab>
+  <sgds-tab>Inactive Tab</sgds-tab>
+</sgds-tab-group>
+```
+
+## Accessibility Considerations
+
+Ensure sufficient contrast ratios:
+
+```css
+:root {
+  /* Good contrast examples */
+  --sgds-product-primary-600: #0066CC; /* 4.5:1 on white */
+
+  /* Test with online contrast checkers */
+}
+```
+
+<Check>
+Aim for WCAG AA compliance: 4.5:1 for normal text, 3:1 for large text
+</Check>
+
+## Complete Example
+
+```css
+/* themes/my-brand.css */
+@import "@govtechsg/sgds-web-component/themes/day.css";
+
+:root {
+  /* Custom teal brand */
+  --sgds-product-primary-100: #E0F7FA;
+  --sgds-product-primary-200: #B2EBF2;
+  --sgds-product-primary-300: #80DEEA;
+  --sgds-product-primary-400: #4DD0E1;
+  --sgds-product-primary-500: #26C6DA;
+  --sgds-product-primary-600: #00BCD4; /* Main brand color */
+  --sgds-product-primary-700: #00ACC1;
+  --sgds-product-primary-800: #0097A7;
+  --sgds-product-primary-900: #00838F;
+}
+```
+
+```javascript
+// main.js
+import './themes/my-brand.css';
+import '@govtechsg/sgds-web-component';
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Dark Mode" icon="moon" href="/theming/dark-mode">
+    Add night theme support
+  </Card>
+  <Card title="Components" icon="cubes" href="/components/overview">
+    Components using your brand colors
+  </Card>
+</CardGroup>

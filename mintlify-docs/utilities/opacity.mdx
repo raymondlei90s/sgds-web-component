@@ -1,0 +1,52 @@
+---
+title: "Opacity Utilities"
+description: "Opacity levels for transparency effects"
+icon: "droplet"
+---
+
+SGDS opacity utilities control element transparency using the `sgds:` prefix.
+
+## Opacity Levels
+
+```html
+<div class="sgds:opacity-0">Fully transparent</div>
+<div class="sgds:opacity-25">25% opacity</div>
+<div class="sgds:opacity-50">50% opacity</div>
+<div class="sgds:opacity-75">75% opacity</div>
+<div class="sgds:opacity-100">Fully opaque</div>
+```
+
+## Use Cases
+
+### Disabled States
+
+```html
+<button class="sgds:opacity-50 sgds:cursor-not-allowed" disabled>
+  Disabled Button
+</button>
+```
+
+### Overlays
+
+```html
+<div class="sgds:fixed sgds:inset-0 sgds:bg-black sgds:opacity-50">
+  Modal overlay
+</div>
+```
+
+### Hover Effects
+
+```html
+<img class="sgds:opacity-100 hover:sgds:opacity-75 transition-opacity" src="image.jpg" alt="Image">
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Colors" icon="palette" href="/utilities/colors">
+    Color utilities
+  </Card>
+  <Card title="Elevation" icon="layer-group" href="/utilities/elevation">
+    Shadow utilities
+  </Card>
+</CardGroup>

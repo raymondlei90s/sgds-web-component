@@ -1,0 +1,305 @@
+---
+title: "Quick Start"
+description: "Build your first SGDS component in 5 minutes"
+icon: "bolt"
+---
+
+Get up and running with SGDS Web Components in just a few minutes. This guide will help you create a simple interactive form with validation.
+
+## Step 1: Set Up Your HTML File
+
+Create a new HTML file with the SGDS Web Components CDN:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGDS Quick Start</title>
+  <script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <!-- We'll add components here -->
+</body>
+</html>
+```
+
+## Step 2: Add Form Components
+
+Add a form with various SGDS components:
+
+```html
+<body>
+  <h1>Contact Form</h1>
+
+  <form id="contact-form">
+    <!-- Name Input -->
+    <sgds-input
+      id="name"
+      label="Full Name"
+      placeholder="Enter your name"
+      required
+    ></sgds-input>
+
+    <!-- Email Input -->
+    <sgds-input
+      id="email"
+      type="email"
+      label="Email Address"
+      placeholder="your.email@example.com"
+      required
+    ></sgds-input>
+
+    <!-- Message Textarea -->
+    <sgds-textarea
+      id="message"
+      label="Message"
+      placeholder="Enter your message"
+      rows="4"
+      required
+    ></sgds-textarea>
+
+    <!-- Subscribe Checkbox -->
+    <sgds-checkbox id="subscribe">
+      Subscribe to newsletter
+    </sgds-checkbox>
+
+    <!-- Submit Button -->
+    <sgds-button
+      type="submit"
+      variant="primary"
+      style="margin-top: 16px;"
+    >
+      Submit
+    </sgds-button>
+  </form>
+
+  <!-- Success Alert (hidden by default) -->
+  <sgds-alert id="success-alert" variant="success" closable style="margin-top: 20px;">
+    <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </svg>
+    Form submitted successfully!
+  </sgds-alert>
+</body>
+```
+
+## Step 3: Add Interactivity
+
+Add JavaScript to handle form submission and validation:
+
+```html
+<script>
+  const form = document.getElementById('contact-form');
+  const successAlert = document.getElementById('success-alert');
+
+  // Handle form submission
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Get form values
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    const subscribe = document.getElementById('subscribe').checked;
+
+    // Validate form (SGDS components handle HTML5 validation)
+    if (form.checkValidity()) {
+      console.log('Form Data:', { name, email, message, subscribe });
+
+      // Show success alert
+      successAlert.show = true;
+
+      // Reset form
+      form.reset();
+
+      // Auto-hide alert after 5 seconds
+      setTimeout(() => {
+        successAlert.show = false;
+      }, 5000);
+    }
+  });
+
+  // Listen to input changes
+  const nameInput = document.getElementById('name');
+  nameInput.addEventListener('sgds-input', (e) => {
+    console.log('Name changed:', e.target.value);
+  });
+</script>
+```
+
+## Complete Example
+
+Here's the full working example:
+
+<Accordion title="View Complete Code">
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGDS Quick Start</title>
+  <script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Contact Form</h1>
+
+  <form id="contact-form">
+    <sgds-input
+      id="name"
+      label="Full Name"
+      placeholder="Enter your name"
+      required
+    ></sgds-input>
+
+    <sgds-input
+      id="email"
+      type="email"
+      label="Email Address"
+      placeholder="your.email@example.com"
+      required
+    ></sgds-input>
+
+    <sgds-textarea
+      id="message"
+      label="Message"
+      placeholder="Enter your message"
+      rows="4"
+      required
+    ></sgds-textarea>
+
+    <sgds-checkbox id="subscribe">
+      Subscribe to newsletter
+    </sgds-checkbox>
+
+    <sgds-button
+      type="submit"
+      variant="primary"
+      style="margin-top: 16px;"
+    >
+      Submit
+    </sgds-button>
+  </form>
+
+  <sgds-alert id="success-alert" variant="success" closable style="margin-top: 20px;">
+    <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+    </svg>
+    Form submitted successfully!
+  </sgds-alert>
+
+  <script>
+    const form = document.getElementById('contact-form');
+    const successAlert = document.getElementById('success-alert');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      const subscribe = document.getElementById('subscribe').checked;
+
+      if (form.checkValidity()) {
+        console.log('Form Data:', { name, email, message, subscribe });
+        successAlert.show = true;
+        form.reset();
+
+        setTimeout(() => {
+          successAlert.show = false;
+        }, 5000);
+      }
+    });
+
+    const nameInput = document.getElementById('name');
+    nameInput.addEventListener('sgds-input', (e) => {
+      console.log('Name changed:', e.target.value);
+    });
+  </script>
+</body>
+</html>
+```
+</Accordion>
+
+## What's Happening?
+
+<Steps>
+  <Step title="Load SGDS Components">
+    The CDN script makes all SGDS components available globally
+  </Step>
+  <Step title="Declare Components">
+    Use components like `<sgds-input>` and `<sgds-button>` in your HTML
+  </Step>
+  <Step title="Configure with Attributes">
+    Set properties using HTML attributes like `variant`, `label`, and `required`
+  </Step>
+  <Step title="Listen to Events">
+    Components emit custom events like `sgds-input` and `sgds-change`
+  </Step>
+  <Step title="Control Programmatically">
+    Access component properties and methods via JavaScript
+  </Step>
+</Steps>
+
+## Key Concepts
+
+### Attributes vs Properties
+
+- **String attributes** can be set in HTML: `<sgds-button variant="primary">`
+- **Boolean attributes** are true when present: `<sgds-input required disabled>`
+- **Complex data** (objects, arrays, functions) must be set via JavaScript
+
+### Custom Events
+
+SGDS components emit custom events prefixed with `sgds-`:
+
+```javascript
+// Listen for input changes
+input.addEventListener('sgds-input', (e) => {
+  console.log(e.target.value);
+});
+
+// Listen for checkbox changes
+checkbox.addEventListener('sgds-change', (e) => {
+  console.log(e.target.checked);
+});
+```
+
+<Warning>
+Avoid using native events like `onclick` or `onchange` directly on web components. Use the custom `sgds-*` events instead for reliable behavior across shadow DOM boundaries.
+</Warning>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Usage Basics" icon="book" href="/getting-started/usage-basics">
+    Learn more about attributes, events, and slots
+  </Card>
+  <Card title="Components" icon="cubes" href="/components/overview">
+    Explore all 47 components
+  </Card>
+  <Card title="Patterns" icon="layer-group" href="/patterns/form-layouts">
+    Check out pre-built form layouts
+  </Card>
+  <Card title="Form Validation" icon="check-circle" href="/patterns/form-validation">
+    Advanced form validation techniques
+  </Card>
+</CardGroup>

@@ -1,0 +1,99 @@
+---
+title: "Form Internals & Validation"
+description: "ElementInternals API, FormData, and advanced validation"
+icon: "code-branch"
+---
+
+Advanced form handling using ElementInternals API and FormData.
+
+## ElementInternals API
+
+SGDS form components use the ElementInternals API for native form integration:
+
+```javascript
+const form = document.querySelector('form');
+const input = document.querySelector('sgds-input');
+
+// Check validity
+if (input.checkValidity()) {
+  console.log('Valid');
+}
+
+// Get validation message
+console.log(input.validationMessage);
+
+// Set custom validity
+input.setCustomValidity('Custom error message');
+```
+
+## FormData Integration
+
+SGDS components automatically participate in FormData:
+
+```javascript
+const form = document.querySelector('form');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  // Iterate form data
+  for (const [key, value] of formData.entries()) {
+    console.log(key, value);
+  }
+
+  // Send to server
+  fetch('/api/submit', {
+    method: 'POST',
+    body: formData
+  });
+});
+```
+
+## Constraint Validation
+
+```javascript
+const input = document.querySelector('sgds-input');
+
+// Built-in constraints
+input.required = true;
+input.minLength = 8;
+input.pattern = '[a-zA-Z0-9]+';
+
+// Custom validation
+input.addEventListener('sgds-input', (e) => {
+  const value = e.target.value;
+
+  if (value.includes(' ')) {
+    input.setCustomValidity('No spaces allowed');
+  } else {
+    input.setCustomValidity('');
+  }
+});
+```
+
+## hasFeedback Prop
+
+Enable visual validation feedback:
+
+```html
+<sgds-input
+  label="Email"
+  type="email"
+  required
+  hasFeedback
+  invalidFeedback="Please enter a valid email"
+></sgds-input>
+```
+
+## Related Documentation
+
+<CardGroup cols={2}>
+  <Card title="Form Validation" href="/patterns/form-validation">
+    Validation patterns
+  </Card>
+  <Card title="Input Component" href="/components/input">
+    Input documentation
+  </Card>
+</CardGroup>

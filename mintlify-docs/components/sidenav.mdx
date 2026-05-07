@@ -1,0 +1,35 @@
+---
+title: "Sidenav"
+description: "Collapsible sidebar navigation"
+icon: "sidebar"
+---
+
+Sidebar navigation with collapsible sections.
+
+## Basic Usage
+
+```html
+<sgds-sidenav>
+  <sgds-sidenav-item>
+    <span slot="title">Dashboard</span>
+  </sgds-sidenav-item>
+  <sgds-sidenav-item>
+    <span slot="title">Reports</span>
+    <sgds-sidenav-link href="/reports/monthly">Monthly</sgds-sidenav-link>
+    <sgds-sidenav-link href="/reports/quarterly">Quarterly</sgds-sidenav-link>
+  </sgds-sidenav-item>
+</sgds-sidenav>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `expanded` | `boolean` | `false` | Expand all items |
+
+### CSS Custom Properties
+| Property | Description |
+|----------|-------------|
+| `--sidenav-theme-color` | Theme color |
+| `--sidenav-width` | Sidenav width |

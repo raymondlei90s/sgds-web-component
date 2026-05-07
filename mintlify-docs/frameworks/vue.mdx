@@ -1,0 +1,771 @@
+---
+title: "Vue Integration"
+description: "Using SGDS Web Components with Vue.js - Configuration and usage patterns"
+icon: "vuejs"
+---
+
+Web components are [fully supported in Vue](https://custom-elements-everywhere.com/#vue) and can be used directly without wrappers.
+
+## Demo Application
+
+<Card title="View Live Demo" icon="code" href="https://stackblitz.com/github/clukhei/web-components-with-vue?file=README.md">
+  See SGDS components in a Vue application on StackBlitz
+</Card>
+
+## Installation
+
+Install SGDS Web Components with the scoped elements polyfill:
+
+<CodeGroup>
+```bash npm
+npm install @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+
+```bash pnpm
+pnpm add @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+
+```bash yarn
+yarn add @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+</CodeGroup>
+
+## Configuration
+
+Tell Vue to ignore SGDS web components and skip component resolution.
+
+### Vite Configuration
+
+If you're using Vite with Vue:
+
+```javascript
+// vite.config.js
+import vue from "@vitejs/plugin-vue";
+
+export default {
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          // Treat all tags starting with 'sgds-' as custom elements
+          isCustomElement: tag => tag.includes("sgds-")
+        }
+      }
+    })
+  ]
+};
+```
+
+### Vue CLI Configuration
+
+If you're using Vue CLI:
+
+```javascript
+// vue.config.js
+module.exports = {
+  chainWebpack: config => {
+    config.module
+      .rule("vue")
+      .use("vue-loader")
+      .tap(options => ({
+        ...options,
+        compilerOptions: {
+          // Treat any tag starting with 'sgds-' as custom elements
+          isCustomElement: tag => tag.startsWith("sgds-")
+        }
+      }));
+  }
+};
+```
+
+### Nuxt 3 Configuration
+
+For Nuxt 3 projects:
+
+```javascript
+// nuxt.config.ts
+export default defineNuxtConfig({
+  vue: {
+    compilerOptions: {
+      isCustomElement: tag => tag.startsWith("sgds-")
+    }
+  }
+});
+```
+
+## Importing the Library
+
+Import SGDS once in your entry point (e.g., `main.js` or `App.vue`):
+
+```javascript
+// main.js
+import { createApp } from 'vue';
+import App from './App.vue';
+import "@govtechsg/sgds-web-component";
+
+createApp(App).mount('#app');
+```
+
+Or import in your root component:
+
+```vue
+<!-- App.vue -->
+<script>
+import "@govtechsg/sgds-web-component";
+
+export default {
+  name: "App"
+};
+</script>
+```
+
+## Basic Usage
+
+Once configured and imported, use SGDS components in your Vue templates:
+
+```vue
+<template>
+  <div>
+    <sgds-button variant="primary">Click Me</sgds-button>
+
+    <sgds-alert show variant="success">
+      <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+      </svg>
+      Operation successful!
+    </sgds-alert>
+  </div>
+</template>
+```
+
+## Attribute Binding
+
+Use Vue's attribute binding syntax (`:` or `v-bind:`) to pass data to components:
+
+### String Attributes
+
+```vue
+<template>
+  <sgds-input
+    :label="inputLabel"
+    :placeholder="placeholderText"
+    type="email"
+  ></sgds-input>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      inputLabel: "Email Address",
+      placeholderText: "Enter your email"
+    };
+  }
+};
+</script>
+```
+
+### Boolean Attributes
+
+```vue
+<template>
+  <sgds-input
+    :required="isRequired"
+    :disabled="isDisabled"
+  ></sgds-input>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      isRequired: true,
+      isDisabled: false
+    };
+  }
+};
+</script>
+```
+
+### Objects and Arrays
+
+Use `.prop` modifier or `:` prefix for complex data:
+
+```vue
+<template>
+  <sgds-footer
+    :title="footerData.title"
+    :description="footerData.description"
+    :lastUpdatedDate="footerData.date"
+    :links="footerData.links"
+  ></sgds-footer>
+</template>
+
+<script>
+import { ref, computed } from "vue";
+
+export default {
+  setup() {
+    const footerData = computed(() => ({
+      title: "Singapore Design System",
+      description: "Building better government services",
+      date: new Date().toDateString(),
+      links: [
+        {
+          title: "About",
+          links: [
+            { href: "/about", label: "About Us" },
+            { href: "/team", label: "Our Team" }
+          ]
+        },
+        {
+          title: "Resources",
+          links: [
+            { href: "/docs", label: "Documentation" },
+            { href: "/support", label: "Support" }
+          ]
+        }
+      ]
+    }));
+
+    return { footerData };
+  }
+};
+</script>
+```
+
+## Event Handling
+
+Listen to SGDS custom events using `@sgds-*` syntax:
+
+```vue
+<template>
+  <sgds-input
+    v-model="inputValue"
+    @sgds-input="handleInput"
+    @sgds-change="handleChange"
+    label="Your Name"
+  ></sgds-input>
+
+  <p>Current value: {{ inputValue }}</p>
+</template>
+
+<script>
+import { ref } from "vue";
+
+export default {
+  setup() {
+    const inputValue = ref("");
+
+    const handleInput = (event) => {
+      console.log("Input event:", event.target.value);
+    };
+
+    const handleChange = (event) => {
+      console.log("Change event:", event.target.value);
+    };
+
+    return {
+      inputValue,
+      handleInput,
+      handleChange
+    };
+  }
+};
+</script>
+```
+
+## v-model Support
+
+SGDS form components support Vue's `v-model` directive:
+
+### Input Components
+
+```vue
+<template>
+  <form @submit.prevent="handleSubmit">
+    <sgds-input
+      v-model="formData.name"
+      label="Full Name"
+      required
+    ></sgds-input>
+
+    <sgds-input
+      v-model="formData.email"
+      type="email"
+      label="Email"
+      required
+    ></sgds-input>
+
+    <sgds-textarea
+      v-model="formData.message"
+      label="Message"
+      rows="4"
+    ></sgds-textarea>
+
+    <sgds-button type="submit" variant="primary">
+      Submit
+    </sgds-button>
+  </form>
+</template>
+
+<script>
+import { reactive } from "vue";
+
+export default {
+  setup() {
+    const formData = reactive({
+      name: "",
+      email: "",
+      message: ""
+    });
+
+    const handleSubmit = () => {
+      console.log("Form submitted:", formData);
+    };
+
+    return {
+      formData,
+      handleSubmit
+    };
+  }
+};
+</script>
+```
+
+### Checkbox and Radio
+
+```vue
+<template>
+  <sgds-checkbox v-model="acceptTerms">
+    I accept the terms and conditions
+  </sgds-checkbox>
+
+  <div>
+    <sgds-radio v-model="selectedPlan" value="basic">
+      Basic Plan
+    </sgds-radio>
+    <sgds-radio v-model="selectedPlan" value="premium">
+      Premium Plan
+    </sgds-radio>
+  </div>
+
+  <p>Selected plan: {{ selectedPlan }}</p>
+</template>
+
+<script>
+import { ref } from "vue";
+
+export default {
+  setup() {
+    const acceptTerms = ref(false);
+    const selectedPlan = ref("basic");
+
+    return {
+      acceptTerms,
+      selectedPlan
+    };
+  }
+};
+</script>
+```
+
+### Select and ComboBox
+
+```vue
+<template>
+  <sgds-select v-model="selectedCountry" label="Country">
+    <option value="">Select a country</option>
+    <option value="sg">Singapore</option>
+    <option value="my">Malaysia</option>
+    <option value="id">Indonesia</option>
+  </sgds-select>
+
+  <p>Selected: {{ selectedCountry }}</p>
+</template>
+
+<script>
+import { ref } from "vue";
+
+export default {
+  setup() {
+    const selectedCountry = ref("");
+
+    return { selectedCountry };
+  }
+};
+</script>
+```
+
+## Using Slots
+
+Pass content to named slots using the `slot` attribute:
+
+```vue
+<template>
+  <sgds-card>
+    <span slot="title">Card Title</span>
+    <p slot="description">This is the card description</p>
+    <a slot="link" href="/learn-more">Learn More</a>
+  </sgds-card>
+
+  <sgds-button>
+    <span>Button Text</span>
+    <svg slot="icon-left" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor">
+      <!-- SVG path -->
+    </svg>
+  </sgds-button>
+</template>
+```
+
+### Dynamic Slots
+
+```vue
+<template>
+  <sgds-modal :open="isModalOpen" @sgds-hide="isModalOpen = false">
+    <span slot="header">{{ modalTitle }}</span>
+
+    <p>{{ modalContent }}</p>
+
+    <div slot="footer">
+      <sgds-button @click="isModalOpen = false">Close</sgds-button>
+    </div>
+  </sgds-modal>
+</template>
+
+<script>
+import { ref } from "vue";
+
+export default {
+  setup() {
+    const isModalOpen = ref(false);
+    const modalTitle = ref("Confirmation");
+    const modalContent = ref("Are you sure?");
+
+    return {
+      isModalOpen,
+      modalTitle,
+      modalContent
+    };
+  }
+};
+</script>
+```
+
+## Common Patterns
+
+### Navigation Component
+
+```vue
+<template>
+  <sgds-masthead />
+
+  <sgds-mainnav>
+    <img slot="brand" src="/logo.svg" alt="Logo" width="150" />
+
+    <sgds-mainnav-item
+      v-for="item in navItems"
+      :key="item.path"
+      :href="item.path"
+      :active="$route.path === item.path"
+    >
+      {{ item.label }}
+    </sgds-mainnav-item>
+
+    <sgds-mainnav-dropdown slot="end">
+      <span slot="toggler">{{ user.name }}</span>
+      <sgds-dropdown-item @click="handleProfile">Profile</sgds-dropdown-item>
+      <sgds-dropdown-item @click="handleLogout">Logout</sgds-dropdown-item>
+    </sgds-mainnav-dropdown>
+  </sgds-mainnav>
+</template>
+
+<script>
+import { ref } from "vue";
+
+export default {
+  setup() {
+    const navItems = ref([
+      { label: "Home", path: "/" },
+      { label: "About", path: "/about" },
+      { label: "Services", path: "/services" }
+    ]);
+
+    const user = ref({ name: "John Doe" });
+
+    const handleProfile = () => {
+      console.log("Navigate to profile");
+    };
+
+    const handleLogout = () => {
+      console.log("Logout user");
+    };
+
+    return {
+      navItems,
+      user,
+      handleProfile,
+      handleLogout
+    };
+  }
+};
+</script>
+```
+
+### Data Table
+
+```vue
+<template>
+  <sgds-table
+    :rowHeader="tableHeaders"
+    :tableData="tableRows"
+    tableClasses="table-striped"
+  ></sgds-table>
+</template>
+
+<script>
+import { ref, onMounted } from "vue";
+
+export default {
+  setup() {
+    const tableHeaders = ref(["Name", "Email", "Role", "Status"]);
+    const tableRows = ref([]);
+
+    onMounted(async () => {
+      // Fetch data from API
+      const response = await fetch("/api/users");
+      const users = await response.json();
+
+      tableRows.value = users.map(user => ({
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        status: user.isActive ? "Active" : "Inactive"
+      }));
+    });
+
+    return {
+      tableHeaders,
+      tableRows
+    };
+  }
+};
+</script>
+```
+
+### Form with Validation
+
+```vue
+<template>
+  <form @submit.prevent="handleSubmit">
+    <sgds-input
+      v-model="form.email"
+      type="email"
+      label="Email"
+      :invalidFeedback="errors.email"
+      required
+    ></sgds-input>
+
+    <sgds-input
+      v-model="form.password"
+      type="password"
+      label="Password"
+      :invalidFeedback="errors.password"
+      required
+    ></sgds-input>
+
+    <sgds-button type="submit" variant="primary">
+      Sign In
+    </sgds-button>
+  </form>
+
+  <sgds-alert v-if="successMessage" show variant="success">
+    {{ successMessage }}
+  </sgds-alert>
+</template>
+
+<script>
+import { reactive, ref } from "vue";
+
+export default {
+  setup() {
+    const form = reactive({
+      email: "",
+      password: ""
+    });
+
+    const errors = reactive({
+      email: "",
+      password: ""
+    });
+
+    const successMessage = ref("");
+
+    const validateForm = () => {
+      errors.email = "";
+      errors.password = "";
+      let isValid = true;
+
+      if (!form.email || !form.email.includes("@")) {
+        errors.email = "Please enter a valid email";
+        isValid = false;
+      }
+
+      if (!form.password || form.password.length < 8) {
+        errors.password = "Password must be at least 8 characters";
+        isValid = false;
+      }
+
+      return isValid;
+    };
+
+    const handleSubmit = async () => {
+      if (validateForm()) {
+        // Submit form
+        console.log("Form submitted:", form);
+        successMessage.value = "Login successful!";
+      }
+    };
+
+    return {
+      form,
+      errors,
+      successMessage,
+      handleSubmit
+    };
+  }
+};
+</script>
+```
+
+## Composition API vs Options API
+
+Both APIs work seamlessly with SGDS components:
+
+<Tabs>
+  <Tab title="Composition API">
+    ```vue
+    <template>
+      <sgds-input v-model="name" @sgds-input="handleInput" />
+    </template>
+
+    <script>
+    import { ref } from "vue";
+
+    export default {
+      setup() {
+        const name = ref("");
+
+        const handleInput = (e) => {
+          console.log(e.target.value);
+        };
+
+        return { name, handleInput };
+      }
+    };
+    </script>
+    ```
+  </Tab>
+
+  <Tab title="Options API">
+    ```vue
+    <template>
+      <sgds-input v-model="name" @sgds-input="handleInput" />
+    </template>
+
+    <script>
+    export default {
+      data() {
+        return {
+          name: ""
+        };
+      },
+      methods: {
+        handleInput(e) {
+          console.log(e.target.value);
+        }
+      }
+    };
+    </script>
+    ```
+  </Tab>
+</Tabs>
+
+## TypeScript Support
+
+Define types for better developer experience:
+
+```vue
+<script setup lang="ts">
+import { ref } from "vue";
+import type { SgdsInput } from "@govtechsg/sgds-web-component";
+
+const inputValue = ref<string>("");
+
+const handleInput = (event: Event) => {
+  const target = event.target as SgdsInput;
+  inputValue.value = target.value;
+};
+</script>
+
+<template>
+  <sgds-input
+    :value="inputValue"
+    @sgds-input="handleInput"
+    label="Name"
+  ></sgds-input>
+</template>
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Configure Custom Element Recognition">
+    Always add `isCustomElement` configuration to prevent Vue from treating SGDS components as Vue components
+  </Accordion>
+
+  <Accordion title="Import Once, Use Everywhere">
+    Import SGDS components once in your main entry point, not in every component file
+  </Accordion>
+
+  <Accordion title="Use v-model for Form Inputs">
+    Take advantage of Vue's v-model for two-way data binding with SGDS form components
+  </Accordion>
+
+  <Accordion title="Listen to Custom Events">
+    Use `@sgds-*` events instead of native events for reliable behavior
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Component not recognized">
+    Ensure you've configured `isCustomElement` in your Vite/Vue CLI config to treat `sgds-*` tags as custom elements
+  </Accordion>
+
+  <Accordion title="v-model not working">
+    Make sure the component supports v-model. Most form components do, but check the component documentation
+  </Accordion>
+
+  <Accordion title="Events not firing">
+    Use `@sgds-*` syntax for custom events, not native event names
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="All Components" icon="cubes" href="/components/overview">
+    Browse the complete component library
+  </Card>
+  <Card title="React Integration" icon="react" href="/frameworks/react">
+    Using SGDS with React
+  </Card>
+  <Card title="Form Patterns" icon="file-lines" href="/patterns/form-layouts">
+    Pre-built form layouts and patterns
+  </Card>
+  <Card title="Angular Integration" icon="angular" href="/frameworks/angular">
+    Using SGDS with Angular
+  </Card>
+</CardGroup>

@@ -1,0 +1,100 @@
+---
+title: "Dimension Utilities"
+description: "Width, height, and max-width utilities"
+icon: "ruler"
+---
+
+SGDS dimension utilities control element sizing using the `sgds:` prefix.
+
+## Width
+
+```html
+<div class="sgds:w-auto">Auto width</div>
+<div class="sgds:w-full">100% width</div>
+<div class="sgds:w-1/2">50% width</div>
+<div class="sgds:w-1/3">33.33% width</div>
+<div class="sgds:w-1/4">25% width</div>
+<div class="sgds:w-screen">100vw width</div>
+```
+
+### Fixed Widths
+
+```html
+<div class="sgds:w-64">256px width</div>
+<div class="sgds:w-80">320px width</div>
+<div class="sgds:w-96">384px width</div>
+```
+
+## Height
+
+```html
+<div class="sgds:h-auto">Auto height</div>
+<div class="sgds:h-full">100% height</div>
+<div class="sgds:h-screen">100vh height</div>
+```
+
+### Fixed Heights
+
+```html
+<div class="sgds:h-12">48px height</div>
+<div class="sgds:h-16">64px height</div>
+<div class="sgds:h-24">96px height</div>
+```
+
+## Max Width
+
+```html
+<div class="sgds:max-w-sm">Max width: 384px</div>
+<div class="sgds:max-w-md">Max width: 448px</div>
+<div class="sgds:max-w-lg">Max width: 512px</div>
+<div class="sgds:max-w-xl">Max width: 576px</div>
+<div class="sgds:max-w-2xl">Max width: 672px</div>
+<div class="sgds:max-w-4xl">Max width: 896px</div>
+<div class="sgds:max-w-7xl">Max width: 1280px</div>
+<div class="sgds:max-w-full">Max width: 100%</div>
+```
+
+## Min Width/Height
+
+```html
+<div class="sgds:min-w-0">Min width: 0</div>
+<div class="sgds:min-w-full">Min width: 100%</div>
+<div class="sgds:min-h-screen">Min height: 100vh</div>
+```
+
+## Responsive Sizing
+
+```html
+<div class="sgds:w-full md:sgds:w-1/2 lg:sgds:w-1/3">
+  Responsive width
+</div>
+```
+
+## Common Patterns
+
+### Containers
+
+```html
+<div class="sgds:max-w-7xl sgds:mx-auto sgds:px-4">
+  Centered container with max width
+</div>
+```
+
+### Content Width
+
+```html
+<article class="sgds:max-w-prose sgds:mx-auto">
+  Optimal reading width (65ch)
+</article>
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Spacing" icon="arrows-left-right" href="/utilities/spacing">
+    Padding and margin utilities
+  </Card>
+  <Card title="Grid" icon="table-cells" href="/utilities/grid">
+    Grid layout utilities
+  </Card>
+</CardGroup>

@@ -1,0 +1,29 @@
+---
+title: "Quantity Toggle"
+description: "Numeric stepper control"
+icon: "plus-minus"
+---
+
+Quantity toggle for numeric input with increment/decrement buttons.
+
+## Basic Usage
+
+```html
+<sgds-quantity-toggle value="1" min="0" max="10"></sgds-quantity-toggle>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `value` | `number` | `0` | Current value |
+| `min` | `number` | `0` | Minimum value |
+| `max` | `number` | - | Maximum value |
+| `step` | `number` | `1` | Increment step |
+| `disabled` | `boolean` | `false` | Disabled state |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-change` | Fired when value changes |

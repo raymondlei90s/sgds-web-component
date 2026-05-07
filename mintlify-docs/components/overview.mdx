@@ -1,0 +1,274 @@
+---
+title: "Components Overview"
+description: "All 47 SGDS web components organized by category"
+icon: "cubes"
+---
+
+SGDS provides 47 production-ready web components built with Lit and designed for Singapore Government digital services.
+
+## Component Categories
+
+### Navigation & Layout
+
+<CardGroup cols={2}>
+  <Card title="Masthead" icon="header" href="/components/masthead">
+    Government Singapore branding header
+  </Card>
+  <Card title="Mainnav" icon="bars" href="/components/mainnav">
+    Primary navigation bar with dropdown support
+  </Card>
+  <Card title="Subnav" icon="list" href="/components/subnav">
+    Secondary navigation for subsections
+  </Card>
+  <Card title="Sidenav" icon="sidebar" href="/components/sidenav">
+    Collapsible sidebar navigation
+  </Card>
+  <Card title="Sidebar" icon="square-kanban" href="/components/sidebar">
+    Sidebar layout component
+  </Card>
+  <Card title="Footer" icon="th" href="/components/footer">
+    Site footer with links and branding
+  </Card>
+  <Card title="Breadcrumb" icon="angles-right" href="/components/breadcrumb">
+    Page hierarchy navigation
+  </Card>
+  <Card title="Table of Contents" icon="list-ol" href="/components/table-of-contents">
+    Auto-generated page navigation
+  </Card>
+</CardGroup>
+
+### Form Components
+
+<CardGroup cols={2}>
+  <Card title="Input" icon="input-text" href="/components/input">
+    Text input with validation
+  </Card>
+  <Card title="Textarea" icon="align-left" href="/components/textarea">
+    Multi-line text input
+  </Card>
+  <Card title="Checkbox" icon="square-check" href="/components/checkbox">
+    Single checkbox control
+  </Card>
+  <Card title="Radio" icon="circle-dot" href="/components/radio">
+    Radio button for exclusive selection
+  </Card>
+  <Card title="Select" icon="caret-down" href="/components/select">
+    Dropdown selection
+  </Card>
+  <Card title="Combo Box" icon="list-dropdown" href="/components/combo-box">
+    Searchable dropdown
+  </Card>
+  <Card title="Datepicker" icon="calendar" href="/components/datepicker">
+    Calendar date picker
+  </Card>
+  <Card title="File Upload" icon="upload" href="/components/file-upload">
+    File upload with drag & drop
+  </Card>
+  <Card title="Quantity Toggle" icon="plus-minus" href="/components/quantity-toggle">
+    Numeric stepper control
+  </Card>
+  <Card title="Switch" icon="toggle-on" href="/components/switch">
+    Toggle switch for binary options
+  </Card>
+</CardGroup>
+
+### Buttons & Actions
+
+<CardGroup cols={2}>
+  <Card title="Button" icon="square" href="/components/button">
+    Primary action button
+  </Card>
+  <Card title="Icon Button" icon="circle" href="/components/icon-button">
+    Button with icon only
+  </Card>
+  <Card title="Close Button" icon="xmark" href="/components/close-button">
+    Standardized close button
+  </Card>
+  <Card title="Link" icon="link" href="/components/link">
+    Styled hyperlink component
+  </Card>
+</CardGroup>
+
+### Display & Feedback
+
+<CardGroup cols={2}>
+  <Card title="Alert" icon="triangle-exclamation" href="/components/alert">
+    Contextual feedback messages
+  </Card>
+  <Card title="Badge" icon="tag" href="/components/badge">
+    Small status indicator
+  </Card>
+  <Card title="Toast" icon="message" href="/components/toast">
+    Temporary notification
+  </Card>
+  <Card title="Progress Bar" icon="bars-progress" href="/components/progress-bar">
+    Linear progress indicator
+  </Card>
+  <Card title="Spinner" icon="spinner" href="/components/spinner">
+    Loading spinner animation
+  </Card>
+  <Card title="Skeleton" icon="grip-lines" href="/components/skeleton">
+    Content placeholder
+  </Card>
+  <Card title="System Banner" icon="rectangle-ad" href="/components/system-banner">
+    Site-wide announcement banner
+  </Card>
+</CardGroup>
+
+### Cards
+
+<CardGroup cols={2}>
+  <Card title="Card" icon="square" href="/components/card">
+    Basic content card
+  </Card>
+  <Card title="Icon Card" icon="icons" href="/components/icon-card">
+    Card with icon header
+  </Card>
+  <Card title="Image Card" icon="image" href="/components/image-card">
+    Card with image
+  </Card>
+  <Card title="Thumbnail Card" icon="images" href="/components/thumbnail-card">
+    Compact card with thumbnail
+  </Card>
+</CardGroup>
+
+### Layout & Structure
+
+<CardGroup cols={2}>
+  <Card title="Accordion" icon="chevron-down" href="/components/accordion">
+    Collapsible content panels
+  </Card>
+  <Card title="Tab" icon="folder-open" href="/components/tab">
+    Tabbed content switcher
+  </Card>
+  <Card title="Stepper" icon="list-ol" href="/components/stepper">
+    Multi-step process indicator
+  </Card>
+  <Card title="Description List" icon="list" href="/components/description-list">
+    Key-value pair list
+  </Card>
+  <Card title="Icon List" icon="list-check" href="/components/icon-list">
+    List with icon markers
+  </Card>
+  <Card title="Divider" icon="minus" href="/components/divider">
+    Visual content separator
+  </Card>
+  <Card title="Table" icon="table" href="/components/table">
+    Data table component
+  </Card>
+</CardGroup>
+
+### Overlays & Modals
+
+<CardGroup cols={2}>
+  <Card title="Modal" icon="window-maximize" href="/components/modal">
+    Dialog overlay
+  </Card>
+  <Card title="Drawer" icon="sidebar" href="/components/drawer">
+    Side panel overlay
+  </Card>
+  <Card title="Dropdown" icon="caret-down" href="/components/dropdown">
+    Dropdown menu
+  </Card>
+  <Card title="Tooltip" icon="comment" href="/components/tooltip">
+    Contextual help popover
+  </Card>
+  <Card title="Overflow Menu" icon="ellipsis" href="/components/overflow-menu">
+    Compact action menu
+  </Card>
+</CardGroup>
+
+### Utilities
+
+<CardGroup cols={2}>
+  <Card title="Icon" icon="icons" href="/components/icon">
+    Icon component
+  </Card>
+  <Card title="Pagination" icon="ellipsis" href="/components/pagination">
+    Page navigation control
+  </Card>
+</CardGroup>
+
+## Quick Start
+
+All components follow the same pattern:
+
+```html
+<!-- Import once in your app -->
+<script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1"></script>
+
+<!-- Use anywhere -->
+<sgds-button variant="primary">Click Me</sgds-button>
+<sgds-input label="Email" type="email"></sgds-input>
+<sgds-alert show variant="success">Success!</sgds-alert>
+```
+
+## Framework Support
+
+<Tabs>
+  <Tab title="React">
+    ```jsx
+    import { SgdsButton, SgdsInput, SgdsAlert } from '@govtechsg/sgds-web-component/react';
+
+    function App() {
+      return (
+        <>
+          <SgdsButton variant="primary">Click Me</SgdsButton>
+          <SgdsInput label="Email" type="email" />
+          <SgdsAlert show variant="success">Success!</SgdsAlert>
+        </>
+      );
+    }
+    ```
+  </Tab>
+
+  <Tab title="Vue">
+    ```vue
+    <template>
+      <sgds-button variant="primary">Click Me</sgds-button>
+      <sgds-input label="Email" type="email"></sgds-input>
+      <sgds-alert show variant="success">Success!</sgds-alert>
+    </template>
+
+    <script>
+    import '@govtechsg/sgds-web-component';
+    </script>
+    ```
+  </Tab>
+
+  <Tab title="Angular">
+    ```html
+    <sgds-button variant="primary">Click Me</sgds-button>
+    <sgds-input label="Email" type="email"></sgds-input>
+    <sgds-alert [show]="true" variant="success">Success!</sgds-alert>
+    ```
+  </Tab>
+</Tabs>
+
+## Component Features
+
+All SGDS components share these features:
+
+- ✅ **Accessible**: Built with ARIA best practices
+- ✅ **Themeable**: Support for day/night mode
+- ✅ **Customizable**: CSS parts and custom properties
+- ✅ **Event-driven**: Custom events for framework integration
+- ✅ **Typed**: Full TypeScript support
+- ✅ **Tested**: Comprehensive test coverage
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Button" icon="square" href="/components/button">
+    Start with the button component
+  </Card>
+  <Card title="Form Patterns" icon="file-lines" href="/patterns/form-layouts">
+    Pre-built form layouts
+  </Card>
+  <Card title="React Guide" icon="react" href="/frameworks/react">
+    Using components in React
+  </Card>
+  <Card title="Theming" icon="brush" href="/theming/overview">
+    Customize component styles
+  </Card>
+</CardGroup>

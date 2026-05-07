@@ -1,0 +1,31 @@
+---
+title: "Combo Box"
+description: "Searchable dropdown"
+icon: "list-dropdown"
+---
+
+Searchable combo box component.
+
+## Basic Usage
+
+```html
+<sgds-combo-box label="Search Country">
+  <sgds-combo-box-item value="sg">Singapore</sgds-combo-box-item>
+  <sgds-combo-box-item value="my">Malaysia</sgds-combo-box-item>
+  <sgds-combo-box-item value="id">Indonesia</sgds-combo-box-item>
+</sgds-combo-box>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `label` | `string` | - | Combo box label |
+| `placeholder` | `string` | - | Placeholder text |
+| `disabled` | `boolean` | `false` | Disabled state |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-change` | Fired when selection changes |

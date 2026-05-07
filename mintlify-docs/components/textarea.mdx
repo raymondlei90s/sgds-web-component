@@ -1,0 +1,42 @@
+---
+title: "Textarea"
+description: "Multi-line text input"
+icon: "align-left"
+---
+
+Multi-line text input component.
+
+## Basic Usage
+
+```html
+<sgds-textarea label="Message" rows="4" placeholder="Enter your message"></sgds-textarea>
+```
+
+## With Validation
+
+```html
+<sgds-textarea
+  label="Comments"
+  required
+  hasFeedback
+  invalidFeedback="Please enter comments"
+  rows="6"
+></sgds-textarea>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `label` | `string` | - | Textarea label |
+| `rows` | `number` | `3` | Number of rows |
+| `value` | `string` | `''` | Textarea value |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `required` | `boolean` | `false` | Required field |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-input` | Fired on input |
+| `sgds-change` | Fired on change |

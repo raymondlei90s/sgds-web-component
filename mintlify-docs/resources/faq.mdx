@@ -1,0 +1,53 @@
+---
+title: "FAQ"
+description: "Frequently asked questions about SGDS Web Components"
+icon: "circle-question"
+---
+
+Common questions and answers about using SGDS Web Components.
+
+## General Questions
+
+<AccordionGroup>
+  <Accordion title="Can I use SGDS with my framework?">
+    Yes! SGDS works with React, Vue, Angular, and vanilla JavaScript. React has dedicated wrapper components for better integration.
+  </Accordion>
+
+  <Accordion title="Do I need to install anything besides the component library?">
+    For most use cases, just install `@govtechsg/sgds-web-component`. The scoped elements polyfill (`@webcomponents/scoped-custom-element-registry`) is optional unless you're building libraries on top of SGDS.
+  </Accordion>
+
+  <Accordion title="Can I customize component styles?">
+    Yes, through three methods: CSS custom properties, CSS parts, and the `*Classes` props (where available).
+  </Accordion>
+
+  <Accordion title="Is dark mode supported?">
+    Yes! Import `themes/night.css` and toggle the `sgds-theme-night` class on the `<html>` element.
+  </Accordion>
+</AccordionGroup>
+
+## Technical Questions
+
+<AccordionGroup>
+  <Accordion title="Why aren't my utilities working?">
+    Make sure you've imported `utility.css` in your main CSS file (not JavaScript). The file must be processed by Tailwind's build pipeline.
+  </Accordion>
+
+  <Accordion title="Why do I get 'Custom element not defined' errors?">
+    Ensure SGDS is imported before the components are used. For SSR frameworks like Next.js, use client-side imports.
+  </Accordion>
+
+  <Accordion title="Can I use SGDS without Tailwind?">
+    The components work without Tailwind, but the `sgds:` utility classes require Tailwind v4 to be configured.
+  </Accordion>
+
+  <Accordion title="How do I handle form submissions?">
+    SGDS components use ElementInternals API and work with native FormData. Listen for form `submit` events and access values via FormData or component `.value` properties.
+  </Accordion>
+</AccordionGroup>
+
+## Getting Help
+
+<Card title="GitHub Issues" icon="github" href="https://github.com/GovTechSG/sgds-web-component/issues">
+  Report bugs or request features
+</Card>

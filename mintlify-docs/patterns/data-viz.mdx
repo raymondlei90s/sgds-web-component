@@ -1,0 +1,128 @@
+---
+title: "Data Visualization"
+description: "Data visualization with ECharts and SGDS colors"
+icon: "chart-line"
+---
+
+Integrate data visualization using ECharts with SGDS color palette.
+
+## Setup
+
+Install ECharts:
+
+```bash
+npm install echarts
+```
+
+## SGDS Color Palette
+
+Use SGDS colors in your charts:
+
+```javascript
+const sgdsColors = {
+  primary: '#5925DC',
+  secondary: '#1F69FF',
+  success: '#3BB346',
+  warning: '#F5B847',
+  danger: '#D9364F',
+  info: '#31CCEC'
+};
+```
+
+## Basic Chart Example
+
+```html
+<div id="chart" style="width: 100%; height: 400px;"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<script>
+  const chartDom = document.getElementById('chart');
+  const myChart = echarts.init(chartDom);
+
+  const option = {
+    color: ['#5925DC', '#1F69FF', '#3BB346', '#F5B847', '#D9364F'],
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      data: ['Series 1', 'Series 2']
+    },
+    xAxis: {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        name: 'Series 1',
+        type: 'line',
+        data: [120, 132, 101, 134, 90, 230, 210]
+      },
+      {
+        name: 'Series 2',
+        type: 'line',
+        data: [220, 182, 191, 234, 290, 330, 310]
+      }
+    ]
+  };
+
+  myChart.setOption(option);
+</script>
+```
+
+## React Example
+
+```jsx
+import { useEffect, useRef } from 'react';
+import * as echarts from 'echarts';
+
+function Chart() {
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    const myChart = echarts.init(chartRef.current);
+
+    const option = {
+      color: ['#5925DC', '#1F69FF', '#3BB346'],
+      // ... chart configuration
+    };
+
+    myChart.setOption(option);
+
+    return () => {
+      myChart.dispose();
+    };
+  }, []);
+
+  return <div ref={chartRef} style={{ width: '100%', height: '400px' }} />;
+}
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Use SGDS Color Palette">
+    Always use SGDS colors for consistency across your application
+  </Accordion>
+
+  <Accordion title="Responsive Charts">
+    Make charts responsive by listening to window resize events
+  </Accordion>
+
+  <Accordion title="Accessible Colors">
+    Ensure sufficient contrast for data visualization accessibility
+  </Accordion>
+</AccordionGroup>
+
+## Related Documentation
+
+<CardGroup cols={2}>
+  <Card title="Theming" href="/theming/overview">
+    SGDS color tokens
+  </Card>
+  <Card title="ECharts Docs" href="https://echarts.apache.org" icon="link">
+    Official ECharts documentation
+  </Card>
+</CardGroup>

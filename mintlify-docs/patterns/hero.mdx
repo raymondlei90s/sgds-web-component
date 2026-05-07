@@ -1,0 +1,104 @@
+---
+title: "Hero Sections"
+description: "Full-width hero sections for page headers with various layouts"
+icon: "panorama"
+---
+
+Hero sections create impactful page headers with headings, descriptions, and call-to-action buttons.
+
+## Variants
+
+### Basic Hero
+
+```html
+<div class="sgds:bg-primary-default sgds:text-white sgds:py-16">
+  <div class="sgds:max-w-7xl sgds:mx-auto sgds:px-4">
+    <h1 class="sgds:text-5xl sgds:font-bold sgds:mb-4">Page Title</h1>
+    <p class="sgds:text-xl sgds:mb-6">Compelling description of the page content</p>
+    <sgds-button variant="secondary">Get Started</sgds-button>
+  </div>
+</div>
+```
+
+### Center Aligned
+
+```html
+<div class="sgds:bg-surface-default sgds:py-20">
+  <div class="sgds:max-w-4xl sgds:mx-auto sgds:text-center sgds:px-4">
+    <h1 class="sgds:text-5xl sgds:font-bold sgds:mb-4">Welcome</h1>
+    <p class="sgds:text-xl sgds:text-subdued sgds:mb-8">
+      Start your journey with us today
+    </p>
+    <div class="sgds:flex sgds:gap-4 sgds:justify-center">
+      <sgds-button variant="primary">Primary Action</sgds-button>
+      <sgds-button variant="outline">Secondary Action</sgds-button>
+    </div>
+  </div>
+</div>
+```
+
+### With Background Image
+
+```html
+<div style="background-image: url('/hero-bg.jpg'); background-size: cover; background-position: center;">
+  <div class="sgds:bg-black sgds:bg-opacity-50 sgds:text-white sgds:py-24">
+    <div class="sgds:max-w-7xl sgds:mx-auto sgds:px-4">
+      <h1 class="sgds:text-6xl sgds:font-bold sgds:mb-4">Hero with Image</h1>
+      <p class="sgds:text-2xl sgds:mb-8">Overlay text on background image</p>
+      <sgds-button>Learn More</sgds-button>
+    </div>
+  </div>
+</div>
+```
+
+### Fullbleed (Edge-to-Edge)
+
+```html
+<div class="sgds:bg-gradient-to-r sgds:from-primary-600 sgds:to-primary-800 sgds:text-white sgds:py-32">
+  <div class="sgds:max-w-7xl sgds:mx-auto sgds:px-4">
+    <div class="sgds:grid sgds:grid-cols-1 md:sgds:grid-cols-2 sgds:gap-12 sgds:items-center">
+      <div>
+        <h1 class="sgds:text-5xl sgds:font-bold sgds:mb-6">Build Better Services</h1>
+        <p class="sgds:text-xl sgds:mb-8">
+          Tools and components for Singapore Government digital services
+        </p>
+        <sgds-button variant="secondary">Get Started</sgds-button>
+      </div>
+      <div>
+        <img src="/illustration.svg" alt="Illustration" class="sgds:w-full" />
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Keep Headlines Concise">
+    Use 5-10 words for hero headlines for maximum impact
+  </Accordion>
+
+  <Accordion title="Single Clear CTA">
+    Focus on one primary call-to-action with optional secondary action
+  </Accordion>
+
+  <Accordion title="Accessible Contrast">
+    Ensure text has sufficient contrast against background images/colors
+  </Accordion>
+
+  <Accordion title="Responsive Design">
+    Test on mobile - reduce text sizes and padding appropriately
+  </Accordion>
+</AccordionGroup>
+
+## Related Patterns
+
+<CardGroup cols={2}>
+  <Card title="CTAs" href="/patterns/cta">
+    Call-to-action sections
+  </Card>
+  <Card title="Features" href="/patterns/feature-sections">
+    Feature showcase sections
+  </Card>
+</CardGroup>

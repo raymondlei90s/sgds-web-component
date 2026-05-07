@@ -1,0 +1,49 @@
+---
+title: "Sidebar App Shell"
+description: "Dashboard layout with sidebar navigation for internal tools"
+icon: "sidebar"
+---
+
+Application shell for dashboards and internal tools with sidebar navigation.
+
+## Complete Layout
+
+```html
+<body>
+  <sgds-masthead></sgds-masthead>
+
+  <div class="sgds:flex">
+    <!-- Sidebar -->
+    <sgds-sidenav class="sgds:w-64">
+      <sgds-sidenav-item>
+        <span slot="title">Dashboard</span>
+      </sgds-sidenav-item>
+      <sgds-sidenav-item>
+        <span slot="title">Reports</span>
+        <sgds-sidenav-link href="/reports/monthly">Monthly</sgds-sidenav-link>
+        <sgds-sidenav-link href="/reports/quarterly">Quarterly</sgds-sidenav-link>
+      </sgds-sidenav-item>
+      <sgds-sidenav-item>
+        <span slot="title">Settings</span>
+      </sgds-sidenav-item>
+    </sgds-sidenav>
+
+    <!-- Main Content -->
+    <main class="sgds:flex-1 sgds:p-8">
+      <h1>Dashboard</h1>
+      <!-- Content -->
+    </main>
+  </div>
+</body>
+```
+
+## Related Patterns
+
+<CardGroup cols={2}>
+  <Card title="Simple App Shell" href="/patterns/app-shell-simple">
+    Basic application layout
+  </Card>
+  <Card title="Sidenav" href="/components/sidenav">
+    Sidenav component
+  </Card>
+</CardGroup>

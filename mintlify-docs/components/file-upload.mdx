@@ -1,0 +1,34 @@
+---
+title: "File Upload"
+description: "File upload with drag and drop"
+icon: "upload"
+---
+
+File upload component with drag and drop support.
+
+## Basic Usage
+
+```html
+<sgds-file-upload label="Upload Files" accept=".pdf,.doc"></sgds-file-upload>
+```
+
+## Multiple Files
+
+```html
+<sgds-file-upload label="Upload Images" accept="image/*" multiple></sgds-file-upload>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `label` | `string` | - | Upload label |
+| `accept` | `string` | - | Accepted file types |
+| `multiple` | `boolean` | `false` | Allow multiple files |
+| `maxSize` | `number` | - | Max file size (bytes) |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-change` | Fired when files selected |

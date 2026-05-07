@@ -1,0 +1,262 @@
+{
+  "name": "SGDS Web Components",
+  "theme": "mint",
+  "logo": {
+    "light": "/logo-light.svg",
+    "dark": "/logo-dark.svg"
+  },
+  "favicon": "/favicon.png",
+  "colors": {
+    "primary": "#5925DC",
+    "light": "#8B5CF6",
+    "dark": "#4A1EB8"
+  },
+  "topbarLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/GovTechSG/sgds-web-component"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "/getting-started/installation"
+  },
+  "anchors": [
+    {
+      "name": "Storybook",
+      "icon": "book",
+      "url": "https://storybook.designsystem.tech.gov.sg"
+    },
+    {
+      "name": "npm Package",
+      "icon": "npm",
+      "url": "https://www.npmjs.com/package/@govtechsg/sgds-web-component"
+    }
+  ],
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": [
+              "getting-started/introduction",
+              "getting-started/installation",
+              "getting-started/quick-start",
+              "getting-started/usage-basics",
+              "getting-started/migration-guide"
+            ]
+          },
+          {
+            "group": "Framework Integration",
+            "pages": [
+              "frameworks/react",
+              "frameworks/vue",
+              "frameworks/angular",
+              "frameworks/nextjs"
+            ]
+          },
+          {
+            "group": "Utilities",
+            "pages": [
+              "utilities/overview",
+              "utilities/colors",
+              "utilities/typography",
+              "utilities/spacing",
+              "utilities/grid",
+              "utilities/borders",
+              "utilities/elevation",
+              "utilities/opacity",
+              "utilities/dimension"
+            ]
+          },
+          {
+            "group": "Theming",
+            "pages": [
+              "theming/overview",
+              "theming/brand-colors",
+              "theming/dark-mode"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Components",
+        "icon": "cube",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "components/overview"
+            ]
+          },
+          {
+            "group": "Navigation & Layout",
+            "pages": [
+              "components/masthead",
+              "components/mainnav",
+              "components/subnav",
+              "components/sidenav",
+              "components/sidebar",
+              "components/footer",
+              "components/breadcrumb",
+              "components/table-of-contents"
+            ]
+          },
+          {
+            "group": "Form Components",
+            "pages": [
+              "components/input",
+              "components/textarea",
+              "components/checkbox",
+              "components/radio",
+              "components/select",
+              "components/combo-box",
+              "components/datepicker",
+              "components/file-upload",
+              "components/quantity-toggle",
+              "components/switch"
+            ]
+          },
+          {
+            "group": "Buttons & Actions",
+            "pages": [
+              "components/button",
+              "components/icon-button",
+              "components/close-button",
+              "components/link"
+            ]
+          },
+          {
+            "group": "Display & Feedback",
+            "pages": [
+              "components/alert",
+              "components/badge",
+              "components/toast",
+              "components/progress-bar",
+              "components/spinner",
+              "components/skeleton",
+              "components/system-banner"
+            ]
+          },
+          {
+            "group": "Cards",
+            "pages": [
+              "components/card",
+              "components/icon-card",
+              "components/image-card",
+              "components/thumbnail-card"
+            ]
+          },
+          {
+            "group": "Layout & Structure",
+            "pages": [
+              "components/accordion",
+              "components/tab",
+              "components/stepper",
+              "components/description-list",
+              "components/icon-list",
+              "components/divider",
+              "components/table"
+            ]
+          },
+          {
+            "group": "Overlays & Modals",
+            "pages": [
+              "components/modal",
+              "components/drawer",
+              "components/dropdown",
+              "components/tooltip",
+              "components/overflow-menu"
+            ]
+          },
+          {
+            "group": "Utility Components",
+            "pages": [
+              "components/icon",
+              "components/pagination"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Patterns",
+        "icon": "grid-2",
+        "groups": [
+          {
+            "group": "Hero & CTA",
+            "pages": [
+              "patterns/hero",
+              "patterns/cta"
+            ]
+          },
+          {
+            "group": "Layout Patterns",
+            "pages": [
+              "patterns/feature-sections",
+              "patterns/card-grids",
+              "patterns/stats",
+              "patterns/filters",
+              "patterns/page-headers"
+            ]
+          },
+          {
+            "group": "Form Patterns",
+            "pages": [
+              "patterns/form-layouts",
+              "patterns/form-validation"
+            ]
+          },
+          {
+            "group": "Application Layouts",
+            "pages": [
+              "patterns/app-shell-simple",
+              "patterns/app-shell-sidebar"
+            ]
+          },
+          {
+            "group": "Data Visualization",
+            "pages": [
+              "patterns/data-viz"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Advanced",
+        "icon": "code",
+        "groups": [
+          {
+            "group": "Advanced Topics",
+            "pages": [
+              "advanced/styling",
+              "advanced/events",
+              "advanced/scoped-elements",
+              "advanced/form-internals",
+              "advanced/accessibility",
+              "advanced/performance"
+            ]
+          },
+          {
+            "group": "Resources",
+            "pages": [
+              "resources/faq",
+              "resources/changelog",
+              "resources/contributing"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footerSocials": {
+    "github": "https://github.com/GovTechSG/sgds-web-component"
+  },
+  "analytics": {
+    "ga4": {
+      "measurementId": "G-XXXXXXXXXX"
+    }
+  }
+}

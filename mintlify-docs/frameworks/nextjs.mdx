@@ -1,0 +1,575 @@
+---
+title: "Next.js Integration"
+description: "Using SGDS Web Components with Next.js - SSR, client components, and best practices"
+icon: "react"
+---
+
+Next.js support for SGDS Web Components is evolving. This guide covers both the App Router and Pages Router with client-side and server-side rendering considerations.
+
+<Warning>
+Server-side rendering (SSR) support for web components in Next.js is limited. SGDS components must be rendered client-side using the `'use client'` directive or dynamic imports.
+</Warning>
+
+## Installation
+
+Install SGDS Web Components and required dependencies:
+
+<CodeGroup>
+```bash npm
+npm install @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+
+```bash pnpm
+pnpm add @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+
+```bash yarn
+yarn add @govtechsg/sgds-web-component @webcomponents/scoped-custom-element-registry
+```
+</CodeGroup>
+
+## App Router (Next.js 13+)
+
+The App Router uses React Server Components by default. SGDS components must be explicitly marked as client components.
+
+### Client Component Wrapper
+
+Create a client component wrapper for SGDS components:
+
+```typescript
+// components/SGDSProvider.tsx
+'use client';
+
+import { useEffect } from 'react';
+
+export function SGDSProvider({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    // Import SGDS components on client side only
+    import('@govtechsg/sgds-web-component');
+  }, []);
+
+  return <>{children}</>;
+}
+```
+
+### Root Layout
+
+Wrap your app with the SGDS provider in the root layout:
+
+```typescript
+// app/layout.tsx
+import { SGDSProvider } from '@/components/SGDSProvider';
+import './globals.css';
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        <SGDSProvider>
+          {children}
+        </SGDSProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### Using Components
+
+Create client components that use SGDS:
+
+```typescript
+// app/components/ContactForm.tsx
+'use client';
+
+import { useState } from 'react';
+import { SgdsButton, SgdsInput, SgdsTextarea } from '@govtechsg/sgds-web-component/react';
+
+export function ContactForm() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <SgdsInput
+        label="Name"
+        value={formData.name}
+        onSgdsInput={(e) => setFormData({ ...formData, name: (e.target as any).value })}
+      />
+
+      <SgdsInput
+        label="Email"
+        type="email"
+        value={formData.email}
+        onSgdsInput={(e) => setFormData({ ...formData, email: (e.target as any).value })}
+      />
+
+      <SgdsTextarea
+        label="Message"
+        value={formData.message}
+        onSgdsInput={(e) => setFormData({ ...formData, message: (e.target as any).value })}
+        rows={4}
+      />
+
+      <SgdsButton type="submit" variant="primary">
+        Submit
+      </SgdsButton>
+    </form>
+  );
+}
+```
+
+### Using in Pages
+
+```typescript
+// app/contact/page.tsx
+import { ContactForm } from '../components/ContactForm';
+
+export default function ContactPage() {
+  return (
+    <main>
+      <h1>Contact Us</h1>
+      <ContactForm />
+    </main>
+  );
+}
+```
+
+## Pages Router (Next.js 12 and below)
+
+For the Pages Router, use dynamic imports to load components client-side only.
+
+### Dynamic Import Method
+
+```typescript
+// pages/index.tsx
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+
+// Dynamically import SGDS
+const loadSGDS = () => import('@govtechsg/sgds-web-component');
+
+export default function Home() {
+  const [sgdsLoaded, setSgdsLoaded] = useState(false);
+
+  useEffect(() => {
+    loadSGDS().then(() => setSgdsLoaded(true));
+  }, []);
+
+  if (!sgdsLoaded) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <h1>Welcome</h1>
+      <sgds-button variant="primary">Click Me</sgds-button>
+    </div>
+  );
+}
+```
+
+### React Wrapper with Dynamic Import
+
+Create a wrapper component with no SSR:
+
+```typescript
+// components/SGDSButton.tsx
+'use client';
+
+import { SgdsButton } from '@govtechsg/sgds-web-component/react';
+
+export { SgdsButton };
+```
+
+```typescript
+// pages/index.tsx
+import dynamic from 'next/dynamic';
+
+const SGDSButton = dynamic(
+  () => import('../components/SGDSButton').then(mod => mod.SgdsButton),
+  { ssr: false }
+);
+
+export default function Home() {
+  return (
+    <div>
+      <SGDSButton variant="primary">Click Me</SGDSButton>
+    </div>
+  );
+}
+```
+
+### Custom App Setup
+
+Import SGDS in `_app.tsx` with client-side check:
+
+```typescript
+// pages/_app.tsx
+import type { AppProps } from 'next/app';
+import { useEffect, useState } from 'react';
+import '../styles/globals.css';
+
+export default function App({ Component, pageProps }: AppProps) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // Only import on client side
+    if (typeof window !== 'undefined') {
+      import('@govtechsg/sgds-web-component').then(() => {
+        setMounted(true);
+      });
+    }
+  }, []);
+
+  if (!mounted) {
+    return <div>Loading...</div>;
+  }
+
+  return <Component {...pageProps} />;
+}
+```
+
+## Script Tag Method (Alternative)
+
+For simpler setups, load SGDS via script tag in `_document.tsx`:
+
+```typescript
+// pages/_document.tsx
+import { Html, Head, Main, NextScript } from 'next/document';
+
+export default function Document() {
+  return (
+    <Html lang="en">
+      <Head>
+        <script src="https://cdn.jsdelivr.net/npm/@webcomponents/scoped-custom-element-registry"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3.18.1"></script>
+      </Head>
+      <body>
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
+```
+
+Then use components directly in pages:
+
+```typescript
+// pages/index.tsx
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'sgds-button': any;
+      'sgds-input': any;
+      'sgds-alert': any;
+    }
+  }
+}
+
+export default function Home() {
+  return (
+    <div>
+      <sgds-button variant="primary">Click Me</sgds-button>
+      <sgds-input label="Name" />
+    </div>
+  );
+}
+```
+
+## TypeScript Configuration
+
+Add custom element types to your TypeScript configuration:
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["@govtechsg/sgds-web-component"]
+  }
+}
+```
+
+Create type declarations for JSX:
+
+```typescript
+// types/sgds.d.ts
+import { SgdsButton, SgdsInput } from '@govtechsg/sgds-web-component';
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'sgds-button': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & Partial<SgdsButton>;
+      'sgds-input': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & Partial<SgdsInput>;
+      // Add more components as needed
+    }
+  }
+}
+```
+
+## Common Patterns
+
+### Navigation Layout
+
+```typescript
+// components/Navigation.tsx
+'use client';
+
+import { usePathname } from 'next/navigation';
+import { SgdsMasthead, SgdsMainnav, SgdsMainnavItem } from '@govtechsg/sgds-web-component/react';
+
+export function Navigation() {
+  const pathname = usePathname();
+
+  const navItems = [
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'Services', href: '/services' }
+  ];
+
+  return (
+    <>
+      <SgdsMasthead />
+      <SgdsMainnav>
+        <img slot="brand" src="/logo.svg" alt="Logo" width="150" />
+
+        {navItems.map(item => (
+          <SgdsMainnavItem
+            key={item.href}
+            href={item.href}
+            active={pathname === item.href}
+          >
+            {item.label}
+          </SgdsMainnavItem>
+        ))}
+      </SgdsMainnav>
+    </>
+  );
+}
+```
+
+### Form with Server Actions (App Router)
+
+```typescript
+// app/actions.ts
+'use server';
+
+export async function submitForm(formData: FormData) {
+  const name = formData.get('name');
+  const email = formData.get('email');
+
+  // Process form data
+  console.log({ name, email });
+
+  return { success: true };
+}
+```
+
+```typescript
+// app/components/ServerForm.tsx
+'use client';
+
+import { SgdsButton, SgdsInput } from '@govtechsg/sgds-web-component/react';
+import { submitForm } from '../actions';
+import { useState } from 'react';
+
+export function ServerForm() {
+  const [result, setResult] = useState<any>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const result = await submitForm(formData);
+    setResult(result);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <SgdsInput label="Name" name="name" required />
+      <SgdsInput label="Email" name="email" type="email" required />
+      <SgdsButton type="submit" variant="primary">Submit</SgdsButton>
+
+      {result?.success && <p>Form submitted successfully!</p>}
+    </form>
+  );
+}
+```
+
+### API Route Integration
+
+```typescript
+// app/api/users/route.ts
+import { NextResponse } from 'next/server';
+
+export async function GET() {
+  const users = [
+    { id: 1, name: 'John Doe', email: 'john@example.com' },
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
+  ];
+
+  return NextResponse.json(users);
+}
+```
+
+```typescript
+// app/components/UsersList.tsx
+'use client';
+
+import { useEffect, useState } from 'react';
+import { SgdsTable } from '@govtechsg/sgds-web-component/react';
+
+export function UsersList() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(data => setUsers(data));
+  }, []);
+
+  return (
+    <SgdsTable
+      rowHeader={['Name', 'Email']}
+      tableData={users.map((u: any) => ({ name: u.name, email: u.email }))}
+    />
+  );
+}
+```
+
+## Preventing Flash of Unstyled Content (FOUC)
+
+Web components can cause a flash of unstyled content during hydration. Use this CSS to hide components until they're defined:
+
+```css
+/* app/globals.css */
+sgds-button:not(:defined),
+sgds-input:not(:defined),
+sgds-modal:not(:defined) {
+  visibility: hidden;
+}
+
+sgds-button:defined,
+sgds-input:defined,
+sgds-modal:defined {
+  visibility: visible;
+}
+```
+
+Or create a loading wrapper:
+
+```typescript
+// components/SGDSWrapper.tsx
+'use client';
+
+import { useEffect, useState } from 'react';
+
+export function SGDSWrapper({ children }: { children: React.ReactNode }) {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    Promise.all([
+      customElements.whenDefined('sgds-button'),
+      customElements.whenDefined('sgds-input')
+    ]).then(() => setIsReady(true));
+  }, []);
+
+  if (!isReady) {
+    return <div>Loading components...</div>;
+  }
+
+  return <>{children}</>;
+}
+```
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="Always Use 'use client' Directive">
+    SGDS components require client-side JavaScript. Always mark components using SGDS as client components with `'use client'`
+  </Accordion>
+
+  <Accordion title="Use React Wrappers">
+    Import from `@govtechsg/sgds-web-component/react` for better Next.js compatibility
+  </Accordion>
+
+  <Accordion title="Dynamic Imports for Pages Router">
+    Use `dynamic(() => import(), { ssr: false })` in Pages Router to prevent SSR errors
+  </Accordion>
+
+  <Accordion title="Prevent FOUC">
+    Add CSS to hide undefined custom elements or use a loading wrapper
+  </Accordion>
+
+  <Accordion title="Type Safety">
+    Create TypeScript declarations for better autocomplete and type checking
+  </Accordion>
+</AccordionGroup>
+
+## Known Issues
+
+<Warning>
+**Server-Side Rendering**
+- Web components cannot be server-rendered in Next.js
+- Always use client components or dynamic imports with `ssr: false`
+- Script tag method works but loses React integration benefits
+
+**Hydration Mismatches**
+- May occur if components render differently on server vs client
+- Use client-only rendering to avoid these issues
+
+**Route Transitions**
+- Component states may not persist across page navigations
+- Store state in URL params or external state management if needed
+</Warning>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="ReferenceError: window is not defined">
+    You're trying to import SGDS on the server. Use `'use client'` directive or check `typeof window !== 'undefined'`
+  </Accordion>
+
+  <Accordion title="Custom elements not defined">
+    SGDS components haven't loaded yet. Use `customElements.whenDefined()` or the SGDS wrapper component
+  </Accordion>
+
+  <Accordion title="Hydration errors">
+    Remove SSR for SGDS components using dynamic import with `{ ssr: false }`
+  </Accordion>
+
+  <Accordion title="TypeScript errors">
+    Add type declarations for JSX intrinsic elements or use React wrappers
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="All Components" icon="cubes" href="/components/overview">
+    Browse the complete component library
+  </Card>
+  <Card title="React Guide" icon="react" href="/frameworks/react">
+    Detailed React integration guide
+  </Card>
+  <Card title="Form Patterns" icon="file-lines" href="/patterns/form-layouts">
+    Pre-built form layouts
+  </Card>
+  <Card title="Advanced Patterns" icon="code" href="/advanced/performance">
+    Performance optimization techniques
+  </Card>
+</CardGroup>

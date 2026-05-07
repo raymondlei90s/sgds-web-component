@@ -1,0 +1,33 @@
+---
+title: "Select"
+description: "Dropdown selection"
+icon: "caret-down"
+---
+
+Select dropdown component.
+
+## Basic Usage
+
+```html
+<sgds-select label="Country">
+  <option value="">Select country</option>
+  <option value="sg">Singapore</option>
+  <option value="my">Malaysia</option>
+  <option value="id">Indonesia</option>
+</sgds-select>
+```
+
+## API Reference
+
+### Properties
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `label` | `string` | - | Select label |
+| `value` | `string` | `''` | Selected value |
+| `disabled` | `boolean` | `false` | Disabled state |
+| `required` | `boolean` | `false` | Required field |
+
+### Events
+| Event | Description |
+|-------|-------------|
+| `sgds-change` | Fired when selection changes |

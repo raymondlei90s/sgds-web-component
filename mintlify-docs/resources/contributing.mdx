@@ -1,0 +1,99 @@
+---
+title: "Contributing"
+description: "How to contribute to SGDS Web Components"
+icon: "code-pull-request"
+---
+
+SGDS Web Components is open source and welcomes contributions from the community.
+
+## Ways to Contribute
+
+<CardGroup cols={2}>
+  <Card title="Report Bugs" icon="bug">
+    Found a bug? [Open an issue](https://github.com/GovTechSG/sgds-web-component/issues)
+  </Card>
+  <Card title="Request Features" icon="lightbulb">
+    Have an idea? Submit a feature request
+  </Card>
+  <Card title="Fix Bugs" icon="wrench">
+    Pick an issue and submit a pull request
+  </Card>
+  <Card title="Improve Docs" icon="book">
+    Help improve our documentation
+  </Card>
+</CardGroup>
+
+## Development Setup
+
+```bash
+# Clone repository
+git clone https://github.com/GovTechSG/sgds-web-component.git
+cd sgds-web-component
+
+# Install dependencies
+pnpm install
+
+# Start development server
+pnpm dev
+
+# Run tests
+pnpm test
+
+# Build for production
+pnpm build
+```
+
+## Pull Request Process
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Write/update tests
+5. Run tests (`pnpm test`)
+6. Commit your changes (`git commit -m 'Add amazing feature'`)
+7. Push to branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request
+
+## Code Style
+
+- Follow existing code patterns
+- Use TypeScript
+- Include JSDoc comments
+- Follow component structure conventions
+- Add Storybook stories for new components
+
+## Testing
+
+All components must have:
+- Unit tests using `@open-wc/testing`
+- Accessibility tests
+- Visual regression tests (Chromatic)
+
+## Documentation
+
+When adding features:
+- Update component API documentation
+- Add/update Storybook stories
+- Include usage examples
+- Update migration guides if needed
+
+## Community
+
+- Join discussions on [GitHub](https://github.com/GovTechSG/sgds-web-component/discussions)
+- Follow coding standards
+- Be respectful and inclusive
+
+## License
+
+By contributing, you agree that your contributions will be licensed under the MIT License.
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="GitHub" icon="github" href="https://github.com/GovTechSG/sgds-web-component">
+    View repository
+  </Card>
+  <Card title="Issues" icon="circle-exclamation" href="https://github.com/GovTechSG/sgds-web-component/issues">
+    Browse open issues
+  </Card>
+</CardGroup>

@@ -1,0 +1,138 @@
+---
+title: "Form Validation"
+description: "Form validation patterns with SGDS components"
+icon: "check-circle"
+---
+
+SGDS form components support HTML5 validation and custom validation patterns.
+
+## Built-in Validation
+
+```html
+<form id="signup-form">
+  <sgds-input
+    label="Email"
+    type="email"
+    required
+    invalidFeedback="Please enter a valid email"
+    hasFeedback
+  ></sgds-input>
+
+  <sgds-input
+    label="Password"
+    type="password"
+    required
+    minlength="8"
+    invalidFeedback="Password must be at least 8 characters"
+    hasFeedback
+  ></sgds-input>
+
+  <sgds-button type="submit" variant="primary">Sign Up</sgds-button>
+</form>
+```
+
+## Custom Validation
+
+```html
+<sgds-input id="username" label="Username" required hasFeedback></sgds-input>
+
+<script>
+  const input = document.getElementById('username');
+
+  input.addEventListener('sgds-input', async (e) => {
+    const value = e.target.value;
+
+    // Custom validation logic
+    if (value.length < 3) {
+      input.setCustomValidity('Username must be at least 3 characters');
+      input.invalidFeedback = 'Username must be at least 3 characters';
+    } else if (!/^[a-zA-Z0-9]+$/.test(value)) {
+      input.setCustomValidity('Username can only contain letters and numbers');
+      input.invalidFeedback = 'Username can only contain letters and numbers';
+    } else {
+      // Check if username is available
+      const available = await checkUsernameAvailability(value);
+      if (!available) {
+        input.setCustomValidity('Username is already taken');
+        input.invalidFeedback = 'Username is already taken';
+      } else {
+        input.setCustomValidity('');
+      }
+    }
+  });
+</script>
+```
+
+## React Form Validation
+
+```jsx
+import { useState } from 'react';
+import { SgdsInput, SgdsButton } from '@govtechsg/sgds-web-component/react';
+
+function ValidationForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    const newErrors = {};
+
+    if (!email.includes('@')) {
+      newErrors.email = 'Invalid email format';
+    }
+
+    if (password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validate()) {
+      console.log('Form is valid');
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <SgdsInput
+        label="Email"
+        type="email"
+        value={email}
+        onSgdsInput={(e) => setEmail(e.target.value)}
+        invalidFeedback={errors.email}
+        hasFeedback={!!errors.email}
+        required
+      />
+
+      <SgdsInput
+        label="Password"
+        type="password"
+        value={password}
+        onSgdsInput={(e) => setPassword(e.target.value)}
+        invalidFeedback={errors.password}
+        hasFeedback={!!errors.password}
+        required
+      />
+
+      <SgdsButton type="submit" variant="primary">
+        Submit
+      </SgdsButton>
+    </form>
+  );
+}
+```
+
+## Related Documentation
+
+<CardGroup cols={2}>
+  <Card title="Form Layouts" href="/patterns/form-layouts">
+    Form layout patterns
+  </Card>
+  <Card title="Form Internals" href="/advanced/form-internals">
+    Advanced form validation
+  </Card>
+</CardGroup>
