@@ -51,12 +51,7 @@
           },
           {
             "group": "Framework Integration",
-            "pages": [
-              "frameworks/react",
-              "frameworks/vue",
-              "frameworks/angular",
-              "frameworks/nextjs"
-            ]
+            "pages": ["frameworks/react", "frameworks/vue", "frameworks/angular", "frameworks/nextjs"]
           },
           {
             "group": "Utilities",
@@ -74,11 +69,7 @@
           },
           {
             "group": "Theming",
-            "pages": [
-              "theming/overview",
-              "theming/brand-colors",
-              "theming/dark-mode"
-            ]
+            "pages": ["theming/overview", "theming/brand-colors", "theming/dark-mode"]
           }
         ]
       },
@@ -88,9 +79,7 @@
         "groups": [
           {
             "group": "Overview",
-            "pages": [
-              "components/overview"
-            ]
+            "pages": ["components/overview"]
           },
           {
             "group": "Navigation & Layout",
@@ -122,12 +111,7 @@
           },
           {
             "group": "Buttons & Actions",
-            "pages": [
-              "components/button",
-              "components/icon-button",
-              "components/close-button",
-              "components/link"
-            ]
+            "pages": ["components/button", "components/icon-button", "components/close-button", "components/link"]
           },
           {
             "group": "Display & Feedback",
@@ -143,12 +127,7 @@
           },
           {
             "group": "Cards",
-            "pages": [
-              "components/card",
-              "components/icon-card",
-              "components/image-card",
-              "components/thumbnail-card"
-            ]
+            "pages": ["components/card", "components/icon-card", "components/image-card", "components/thumbnail-card"]
           },
           {
             "group": "Layout & Structure",
@@ -174,10 +153,7 @@
           },
           {
             "group": "Utility Components",
-            "pages": [
-              "components/icon",
-              "components/pagination"
-            ]
+            "pages": ["components/icon", "components/pagination"]
           }
         ]
       },
@@ -187,10 +163,7 @@
         "groups": [
           {
             "group": "Hero & CTA",
-            "pages": [
-              "patterns/hero",
-              "patterns/cta"
-            ]
+            "pages": ["patterns/hero", "patterns/cta"]
           },
           {
             "group": "Layout Patterns",
@@ -204,23 +177,15 @@
           },
           {
             "group": "Form Patterns",
-            "pages": [
-              "patterns/form-layouts",
-              "patterns/form-validation"
-            ]
+            "pages": ["patterns/form-layouts", "patterns/form-validation"]
           },
           {
             "group": "Application Layouts",
-            "pages": [
-              "patterns/app-shell-simple",
-              "patterns/app-shell-sidebar"
-            ]
+            "pages": ["patterns/app-shell-simple", "patterns/app-shell-sidebar"]
           },
           {
             "group": "Data Visualization",
-            "pages": [
-              "patterns/data-viz"
-            ]
+            "pages": ["patterns/data-viz"]
           }
         ]
       },
@@ -241,11 +206,7 @@
           },
           {
             "group": "Resources",
-            "pages": [
-              "resources/faq",
-              "resources/changelog",
-              "resources/contributing"
-            ]
+            "pages": ["resources/faq", "resources/changelog", "resources/contributing"]
           }
         ]
       }

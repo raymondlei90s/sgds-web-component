@@ -87,20 +87,16 @@ async function captureComponent(page, componentName) {
     console.log(`  📷 ${componentName}...`);
 
     await page.goto(storyUrl, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(1500);
 
-    // Wait for the canvas to load
-    const canvas = page.frameLocator('iframe[id="storybook-preview-iframe"]');
-    await canvas.locator('body').waitFor({ timeout: 5000 });
+    // Wait for the iframe to load
+    const iframe = page.locator('iframe[id="storybook-preview-iframe"]');
+    await iframe.waitFor({ timeout: 5000 });
 
-    // Take screenshot of the preview iframe
-    const previewFrame = page.frame({ name: 'storybook-preview-iframe' });
-    if (previewFrame) {
-      await previewFrame.screenshot({
-        path: path.join(componentDir, 'default.png'),
-        fullPage: false
-      });
-    }
+    // Take screenshot of the iframe element
+    await iframe.screenshot({
+      path: path.join(componentDir, 'default.png')
+    });
   } catch (error) {
     console.error(`  ❌ Failed to capture ${componentName}:`, error.message);
   }
@@ -115,15 +111,16 @@ async function capturePattern(page, category, patternName) {
     console.log(`  📷 ${category}/${patternName}...`);
 
     await page.goto(storyUrl, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(1500);
 
-    const previewFrame = page.frame({ name: 'storybook-preview-iframe' });
-    if (previewFrame) {
-      await previewFrame.screenshot({
-        path: path.join(patternDir, `${patternName}.png`),
-        fullPage: true
-      });
-    }
+    // Wait for the iframe to load
+    const iframe = page.locator('iframe[id="storybook-preview-iframe"]');
+    await iframe.waitFor({ timeout: 5000 });
+
+    // Take screenshot of the iframe element
+    await iframe.screenshot({
+      path: path.join(patternDir, `${patternName}.png`)
+    });
   } catch (error) {
     console.error(`  ❌ Failed to capture ${category}/${patternName}:`, error.message);
   }
@@ -138,15 +135,16 @@ async function captureUtility(page, utilityName) {
     console.log(`  📷 ${utilityName}...`);
 
     await page.goto(storyUrl, { waitUntil: 'networkidle' });
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(1500);
 
-    const previewFrame = page.frame({ name: 'storybook-preview-iframe' });
-    if (previewFrame) {
-      await previewFrame.screenshot({
-        path: path.join(utilityDir, `${utilityName}.png`),
-        fullPage: false
-      });
-    }
+    // Wait for the iframe to load
+    const iframe = page.locator('iframe[id="storybook-preview-iframe"]');
+    await iframe.waitFor({ timeout: 5000 });
+
+    // Take screenshot of the iframe element
+    await iframe.screenshot({
+      path: path.join(utilityDir, `${utilityName}.png`)
+    });
   } catch (error) {
     console.error(`  ❌ Failed to capture ${utilityName}:`, error.message);
   }
